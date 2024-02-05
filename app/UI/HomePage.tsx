@@ -6,16 +6,36 @@ const HomePage = () => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Feather name="search" size={24} color="black" style={styles.searchIcon} />
+        <Feather
+          name="search"
+          size={24}
+          color="black"
+          style={styles.searchIcon}
+        />
         <TextInput style={styles.searchInput} placeholder="Search..." />
       </View>
       <View style={styles.content}>
         <Text>Content goes here</Text>
       </View>
       <View style={styles.footer}>
-        <Feather name="user" size={24} color="black" style={styles.footerIcon} />
-        <Feather name="shopping-cart" size={24} color="black" style={styles.footerIcon} />
-        <Feather name="more-horizontal" size={24} color="black" style={styles.footerIcon} />
+        <Feather
+          name="user"
+          size={24}
+          color="black"
+          style={styles.footerIcon}
+        />
+        <Feather
+          name="shopping-cart"
+          size={24}
+          color="black"
+          style={styles.footerIcon}
+        />
+        <Feather
+          name="more-horizontal"
+          size={24}
+          color="black"
+          style={styles.footerIcon}
+        />
       </View>
     </View>
   );

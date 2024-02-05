@@ -8,10 +8,10 @@ const SecondPage = () => {
   const [countryCode, setCountryCode] = useState("+91");
   const [phoneNumber, setPhoneNumber] = useState("");
 
-  const handleContinue = () => {
-    // Implement your logic for continuing with the phone number
-    console.log("Continue with phone number:", countryCode, phoneNumber);
-  };
+  // const handleContinue = () => {
+  //   // Implement your logic for continuing with the phone number
+  //   console.log("Continue with phone number:", countryCode, phoneNumber);
+  // };
 
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
@@ -77,7 +77,7 @@ const SecondPage = () => {
 
       {/* Continue with number button */}
       <TouchableOpacity
-        onPress={handleContinue}
+        // onPress={handleContinue}
         style={{
           backgroundColor: "blue",
           paddingVertical: 10,
