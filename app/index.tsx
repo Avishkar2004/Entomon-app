@@ -1,6 +1,6 @@
+import { Link } from "expo-router";
 import React from "react";
 import { View, Text, Image, StyleSheet } from "react-native";
-import Colors from "../constant/Colors";
 const Page = () => {
   return (
     <View style={styles.container}>
@@ -34,7 +34,9 @@ const Page = () => {
         <Text style={styles.shopping}>
           Explore the new ways of Agriculture Shopping
         </Text>
-        <Text style={styles.continueText}>Continue With Phone Number</Text>
+        <Text style={styles.continueText}>
+          <Link href={"/SecondPage"}>Continue With Phone Number</Link>
+        </Text>
       </View>
       <View style={styles.footerContainer}>
         <Text style={styles.footerText}>
