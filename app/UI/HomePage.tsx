@@ -2,6 +2,9 @@ import React from "react";
 import { View, Text, TextInput, StyleSheet } from "react-native";
 import { Feather } from "@expo/vector-icons";
 
+import { AntDesign } from "@expo/vector-icons";
+import { Link } from "expo-router";
+
 const HomePage = () => {
   return (
     <View style={styles.container}>
@@ -18,18 +21,12 @@ const HomePage = () => {
         <Text>Content goes here</Text>
       </View>
       <View style={styles.footer}>
-        <Feather
-          name="user"
-          size={24}
-          color="black"
-          style={styles.footerIcon}
-        />
-        <Feather
-          name="shopping-cart"
-          size={24}
-          color="black"
-          style={styles.footerIcon}
-        />
+        <Link href={"Components/Profile"} style={styles.footerIcon}>
+          <AntDesign name="user" size={24} color="black" />
+        </Link>
+        <Link href={"Components/Cart"} style={styles.footerIcon}>
+          <AntDesign name="shoppingcart" size={25} color="black" />
+        </Link>
         <Feather
           name="more-horizontal"
           size={24}

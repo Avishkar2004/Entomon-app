@@ -1,7 +1,7 @@
 How to run code in our system ?
 1. git clone https://github.com/Avishkar2004/Entomon-app
-2. cd Entomon App
-3. npm install
+2. cd Entomon App (should be parent directory) then =>
+3. npm install =>
 4. npm start
 
 

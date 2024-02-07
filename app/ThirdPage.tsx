@@ -13,7 +13,7 @@ const ThirdPage = () => {
   return (
     <GestureHandlerRootView style={styles.container}>
       <View style={styles.content}>
-        <Text style={styles.title}>Setup your Entomon Account</Text>
+        <Text style={styles.title}>Setup Your Entomon Account</Text>
         <Text style={styles.subtitle}>
           Your name helps sellers identify you.
         </Text>
@@ -22,13 +22,16 @@ const ThirdPage = () => {
         </Text>
 
         <View style={styles.inputContainer}>
-          <Text style={styles.label}>Full Name</Text>
-          <TextInput style={styles.input} placeholder="Type your name here" />
+          <Text style={styles.label}>Full Name*</Text>
+          <TextInput style={styles.input} placeholder="Type your name " />
         </View>
 
         <View style={styles.inputContainer}>
           <Text style={styles.label}>Email</Text>
-          <TextInput style={styles.input} placeholder="Type your email here" />
+          <TextInput
+            style={styles.input}
+            placeholder="Type your email (optional)"
+          />
         </View>
 
         <TouchableOpacity style={styles.registerButton}>
@@ -51,17 +54,20 @@ const styles = StyleSheet.create({
   content: {
     width: "80%",
     alignItems: "center",
+    marginTop: 20,
   },
   title: {
     fontSize: 24,
     fontWeight: "bold",
     marginBottom: 20,
     textAlign: "center",
+    color: "#333", // Darkened text color
   },
   subtitle: {
     fontSize: 16,
     marginBottom: 10,
     textAlign: "center",
+    color: "#666", // Slightly lighter text color
   },
   inputContainer: {
     width: "100%",
@@ -71,6 +77,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "bold",
     marginBottom: 5,
+    color: "#333", // Darkened text color
   },
   input: {
     borderWidth: 1,
@@ -80,6 +87,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     fontSize: 16,
     width: "100%",
+    color: "#333", // Darkened text color
   },
   registerButton: {
     backgroundColor: "#007BFF",
@@ -87,6 +95,7 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     paddingHorizontal: 30,
     marginTop: 20,
+    alignItems: "center", // Center align button content
   },
   registerButtonText: {
     color: "#fff",

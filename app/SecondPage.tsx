@@ -1,17 +1,37 @@
 import { Link } from "expo-router";
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity, TextInput } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  TextInput,
+  Animated,
+  Easing,
+} from "react-native";
 import { CountryPicker } from "react-native-country-codes-picker";
 
 const SecondPage = () => {
   const [show, setShow] = useState(false);
   const [countryCode, setCountryCode] = useState("+91");
   const [phoneNumber, setPhoneNumber] = useState("");
+  const [buttonScale] = useState(new Animated.Value(1));
 
-  // const handleContinue = () => {
-  //   // Implement your logic for continuing with the phone number
-  //   console.log("Continue with phone number:", countryCode, phoneNumber);
-  // };
+  const handleContinue = () => {
+    Animated.sequence([
+      Animated.timing(buttonScale, {
+        toValue: 0.95,
+        duration: 100,
+        easing: Easing.linear,
+        useNativeDriver: true,
+      }),
+      Animated.timing(buttonScale, {
+        toValue: 1,
+        duration: 100,
+        easing: Easing.linear,
+        useNativeDriver: true,
+      }),
+    ]).start();
+  };
 
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
@@ -77,12 +97,14 @@ const SecondPage = () => {
 
       {/* Continue with number button */}
       <TouchableOpacity
-        // onPress={handleContinue}
+        onPress={handleContinue}
+        activeOpacity={0.8}
         style={{
           backgroundColor: "blue",
           paddingVertical: 10,
           paddingHorizontal: 20,
           borderRadius: 5,
+          transform: [{ scale: buttonScale }],
         }}
       >
         <Link href={"/ThirdPage"} style={{ color: "white", fontSize: 16 }}>
