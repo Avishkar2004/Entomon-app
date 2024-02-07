@@ -1,9 +1,9 @@
 import React from "react";
 import { View, Text, TextInput, StyleSheet } from "react-native";
 import { Feather } from "@expo/vector-icons";
-
 import { AntDesign } from "@expo/vector-icons";
 import { Link } from "expo-router";
+import products from "./Data";
 
 const HomePage = () => {
   return (
@@ -18,7 +18,13 @@ const HomePage = () => {
         <TextInput style={styles.searchInput} placeholder="Search..." />
       </View>
       <View style={styles.content}>
-        <Text>Content goes here</Text>
+        {products.map((product) => (
+          <View key={product.id} style={styles.product}>
+            <Text>{product.image}</Text>
+            <Text>{product.name}</Text>
+            <Text>{product.price}</Text>
+          </View>
+        ))}
       </View>
       <View style={styles.footer}>
         <Link href={"Components/Profile"} style={styles.footerIcon}>
@@ -65,6 +71,15 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+  },
+  product: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: "#ccc",
+    width: "100%",
   },
   footer: {
     flexDirection: "row",
