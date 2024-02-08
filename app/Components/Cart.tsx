@@ -6,7 +6,7 @@ const Cart = () => {
   const products = [
     { id: 1, name: "Product 1", price: 10.99 },
     { id: 2, name: "Product 2", price: 5.99 },
-    { id: 3, name: "Product 3", price: 15.99 }
+    { id: 3, name: "Product 3", price: 15.99 },
   ];
 
   const handleBuyNow = (productId) => {
@@ -30,7 +30,7 @@ const Cart = () => {
           <View key={product.id} style={styles.item}>
             <View>
               <Text style={styles.itemName}>{product.name}</Text>
-              <Text style={styles.itemPrice}>${product.price.toFixed(2)}</Text>
+              <Text style={styles.itemPrice}>$ {product.price.toFixed(2)}</Text>
             </View>
             <View style={styles.buttonsContainer}>
               <TouchableOpacity
@@ -43,7 +43,9 @@ const Cart = () => {
                 style={[styles.button, styles.removeButton]}
                 onPress={() => handleRemove(product.id)}
               >
-                <Text style={[styles.buttonText, styles.removeButtonText]}>Remove</Text>
+                <Text style={[styles.buttonText, styles.removeButtonText]}>
+                  Remove
+                </Text>
               </TouchableOpacity>
             </View>
           </View>
