@@ -12,7 +12,7 @@ import {
 import { Feather } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { Link } from "expo-router";
-const { width } = Dimensions.get("window");
+const { width } = Dimensions.get("screen");
 
 const HomePage = () => {
   const [products, setProducts] = useState([]);
@@ -137,6 +137,8 @@ const styles = StyleSheet.create({
   },
   scrollContainer: {
     paddingBottom: 20,
+    alignItems: "center",
+    marginTop: 12,
   },
   product: {
     flexDirection: "row",
