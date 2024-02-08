@@ -31,7 +31,7 @@ const Profile = () => {
           style={styles.option}
           onPress={() => console.log("View Cart")}
         >
-          <Link href={"/Cart"} style={styles.optionLink}>
+          <Link href={"/Cart/Cart"} style={styles.optionLink}>
             View Cart
           </Link>
           <AntDesign name="shoppingcart" size={24} color="black" />
