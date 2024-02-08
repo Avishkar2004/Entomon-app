@@ -12,7 +12,7 @@ import {
 import { Feather } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { Link } from "expo-router";
-const { width } = Dimensions.get("screen");
+const { width } = Dimensions.get("window");
 
 const HomePage = () => {
   const [products, setProducts] = useState([]);
