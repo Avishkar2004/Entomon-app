@@ -1,22 +1,38 @@
-import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import React, { useState, useEffect } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+  ScrollView,
+} from "react-native";
 import { AntDesign } from "@expo/vector-icons";
+import { Link } from "expo-router";
+import { useNavigation } from "@react-navigation/native";
 
 const Cart = () => {
-  const products = [
-    { id: 1, name: "Product 1", price: 10.99 },
-    { id: 2, name: "Product 2", price: 5.99 },
-    { id: 3, name: "Product 3", price: 15.99 },
-  ];
+  const [products, setProducts] = useState([]);
+  const navigation = useNavigation();
 
-  const handleBuyNow = (productId) => {
-    // Handle Buy Now action for the product
-    console.log("Buy Now:", productId);
+  useEffect(() => {
+    fetch("https://fakestoreapi.com/products")
+      .then((response) => response.json())
+      .then((data) => setProducts(data))
+      .catch((error) => console.error("Error fetching data:", error));
+  }, []);
+
+  const handleBuyNow = (product) => {
+    // Navigate to the "Buy" screen and pass product details as parameter
+    navigation.navigate("Buy", { product: product });
   };
-
+  
   const handleRemove = (productId) => {
-    // Handle Remove action for the product
-    console.log("Remove:", productId);
+    // Remove the product from the cart
+    const updatedProducts = products.filter(
+      (product) => product.id !== productId
+    );
+    setProducts(updatedProducts);
   };
 
   return (
@@ -25,32 +41,33 @@ const Cart = () => {
         <AntDesign name="shoppingcart" size={40} color="black" />
         <Text style={styles.cartHeaderText}>Your Cart</Text>
       </View>
-      <View style={styles.itemContainer}>
+      <ScrollView>
         {products.map((product) => (
-          <View key={product.id} style={styles.item}>
-            <View>
-              <Text style={styles.itemName}>{product.name}</Text>
+          <View key={product.id} style={styles.itemContainer}>
+            <Image source={{ uri: product.image }} style={styles.itemImage} />
+            <View style={styles.itemDetails}>
+              <Text style={styles.itemName}>{product.title}</Text>
               <Text style={styles.itemPrice}>$ {product.price.toFixed(2)}</Text>
             </View>
             <View style={styles.buttonsContainer}>
               <TouchableOpacity
-                style={styles.button}
-                onPress={() => handleBuyNow(product.id)}
-              >
-                <Text style={styles.buttonText}>Buy Now</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={[styles.button, styles.removeButton]}
+                style={[styles.button, styles.addToCartButton]}
                 onPress={() => handleRemove(product.id)}
               >
-                <Text style={[styles.buttonText, styles.removeButtonText]}>
-                  Remove
-                </Text>
+                <Text style={styles.buttonText}>Remove</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[styles.button, styles.buyNowButton]}
+                onPress={() => handleBuyNow(product)}
+              >
+                <Link href={"Components/Buy"} style={styles.buttonText}>
+                  Buy Now
+                </Link>
               </TouchableOpacity>
             </View>
           </View>
         ))}
-      </View>
+      </ScrollView>
     </View>
   );
 };
@@ -72,13 +89,18 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   itemContainer: {
+    flexDirection: "row",
     marginBottom: 20,
   },
-  item: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginBottom: 10,
+  itemImage: {
+    width: 80,
+    height: 80,
+    marginRight: 10,
+    borderRadius: 5,
+  },
+  itemDetails: {
+    flex: 1,
+    justifyContent: "center",
   },
   itemName: {
     fontSize: 16,
@@ -92,21 +114,22 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   button: {
-    paddingHorizontal: 10,
     paddingVertical: 5,
-    backgroundColor: "green",
+    paddingHorizontal: 10,
     borderRadius: 5,
-    marginLeft: 10,
+    marginHorizontal: 5,
+    alignItems: "center",
+    justifyContent: "center",
   },
-  removeButton: {
-    backgroundColor: "red",
+  addToCartButton: {
+    backgroundColor: "green",
+  },
+  buyNowButton: {
+    backgroundColor: "blue",
   },
   buttonText: {
     color: "white",
     fontWeight: "bold",
-  },
-  removeButtonText: {
-    color: "white",
   },
 });
 

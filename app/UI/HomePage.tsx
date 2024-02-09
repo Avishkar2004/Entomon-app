@@ -12,22 +12,30 @@ import {
 import { Feather } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { Link } from "expo-router";
+import { useNavigation } from "@react-navigation/native";
+
 const { width } = Dimensions.get("window");
 
 const HomePage = () => {
+  const navigation = useNavigation();
+  console.log(navigation);
+
   const [products, setProducts] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
-    fetch("https://fakestoreapi.com/products")
+    fetch("http://localhost:8000/insecticide")
       .then((response) => response.json())
       .then((data) => {
-        // Filter out product with ID 1
         const filteredProducts = data.filter((product) => product.id !== 1);
         setProducts(filteredProducts);
       })
       .catch((error) => console.error("Error fetching data:", error));
   }, []);
+
+  const navigateToProductDetails = (product) => {
+    navigation.navigate("ProductDetailsScreen", { product });
+  };
 
   const toggleDescription = (index) => {
     const updatedProducts = [...products];
@@ -37,7 +45,7 @@ const HomePage = () => {
   };
 
   const filteredProducts = products.filter((product) =>
-    product.title.toLowerCase().includes(searchQuery.toLowerCase())
+    product.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   return (
@@ -58,11 +66,15 @@ const HomePage = () => {
       </View>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         {filteredProducts.map((product, index) => (
-          <View key={product.id} style={styles.product}>
+          <TouchableOpacity
+            key={product.id}
+            onPress={() => navigateToProductDetails(product.id)}
+            style={styles.product}
+          >
             <Image source={{ uri: product.image }} style={styles.image} />
             <View style={styles.productDetails}>
-              <Text style={styles.title}>{product.title}</Text>
-              <Text style={styles.price}>$ {product.price}</Text>
+              <Text style={styles.title}>{product.name}</Text>
+              <Text style={styles.price}>$ {product.salePrice}</Text>
               <Text style={styles.description}>
                 {product.showFullDescription
                   ? product.description
@@ -78,27 +90,27 @@ const HomePage = () => {
               )}
               <View style={styles.buttonsContainer}>
                 <TouchableOpacity
-                  onPress={() => addToCart(product.id)}
+                  onPress={() => addToCart(product.id)} // Function addToCart is not defined, please define it or remove this line if not needed
                   style={styles.button}
                 >
                   <Text style={styles.buttonText}>Add to Cart</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                  onPress={() => buyNow(product.id)}
+                  onPress={() => buyNow(product.id)} // Function buyNow is not defined, please define it or remove this line if not needed
                   style={styles.button}
                 >
                   <Text style={styles.buttonText}>Buy Now</Text>
                 </TouchableOpacity>
               </View>
             </View>
-          </View>
+          </TouchableOpacity>
         ))}
       </ScrollView>
       <View style={styles.footer}>
         <Link href={"Components/Profile"} style={styles.footerIcon}>
           <AntDesign name="user" size={24} color="black" />
         </Link>
-        <Link href={"Components/Cart"} style={styles.footerIcon}>
+        <Link href={"Components/Cart/Cart"} style={styles.footerIcon}>
           <AntDesign name="shoppingcart" size={25} color="black" />
         </Link>
         <Feather
