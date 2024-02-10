@@ -8,9 +8,11 @@ import {
   TextInput,
 } from "react-native";
 import { useRoute } from "@react-navigation/native";
+import { useNavigation } from "expo-router";
 
 const ProductDetails = () => {
   const route = useRoute();
+  const navigation = useNavigation();
   const { product } = route.params;
   const [quantity, setQuantity] = useState(1);
 
@@ -36,6 +38,9 @@ const ProductDetails = () => {
 
   return (
     <View style={styles.container}>
+      <TouchableOpacity onPress={() => navigation.goBack()}>
+        <Text>Back</Text>
+      </TouchableOpacity>
       <Image source={{ uri: product.image }} style={styles.image} />
       <Text style={styles.title}>{product.name}</Text>
       <Text style={styles.price}>₹{product.price}</Text>
