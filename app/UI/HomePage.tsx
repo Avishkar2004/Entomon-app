@@ -18,7 +18,6 @@ const { width } = Dimensions.get("window");
 
 const HomePage = () => {
   const navigation = useNavigation();
-  console.log(navigation);
 
   const [products, setProducts] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
@@ -33,10 +32,6 @@ const HomePage = () => {
       .catch((error) => console.error("Error fetching data:", error));
   }, []);
 
-  const navigateToProductDetails = (product) => {
-    navigation.navigate("ProductDetailsScreen", { product });
-  };
-
   const toggleDescription = (index) => {
     const updatedProducts = [...products];
     updatedProducts[index].showFullDescription =
@@ -47,6 +42,18 @@ const HomePage = () => {
   const filteredProducts = products.filter((product) =>
     product.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
+
+  const buyNow = (product) => {
+    if (product) {
+      const productWithoutDescription = { ...product };
+      delete productWithoutDescription.description;
+      navigation.navigate("Components/Buy", {
+        product: productWithoutDescription,
+      });
+    } else {
+      console.error("Product information is missing.");
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -66,20 +73,17 @@ const HomePage = () => {
       </View>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         {filteredProducts.map((product, index) => (
-          <TouchableOpacity
-            key={product.id}
-            onPress={() => navigateToProductDetails(product.id)}
-            style={styles.product}
-          >
+          <TouchableOpacity key={product.id} style={styles.product}>
             <Image source={{ uri: product.image }} style={styles.image} />
             <View style={styles.productDetails}>
               <Text style={styles.title}>{product.name}</Text>
-              <Text style={styles.price}>$ {product.salePrice}</Text>
+              <Text style={styles.price}>₹{product.price}</Text>
               <Text style={styles.description}>
                 {product.showFullDescription
                   ? product.description
-                  : `${product.description.substring(0, 100)}...`}
+                  : `${product.description?.substring(0, 100)}...`}
               </Text>
+
               {!product.showFullDescription && (
                 <TouchableOpacity
                   onPress={() => toggleDescription(index)}
@@ -90,13 +94,13 @@ const HomePage = () => {
               )}
               <View style={styles.buttonsContainer}>
                 <TouchableOpacity
-                  onPress={() => addToCart(product.id)} // Function addToCart is not defined, please define it or remove this line if not needed
+                  onPress={() => addToCart(product.id)}
                   style={styles.button}
                 >
                   <Text style={styles.buttonText}>Add to Cart</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                  onPress={() => buyNow(product.id)} // Function buyNow is not defined, please define it or remove this line if not needed
+                  onPress={() => buyNow(product)}
                   style={styles.button}
                 >
                   <Text style={styles.buttonText}>Buy Now</Text>
@@ -205,6 +209,7 @@ const styles = StyleSheet.create({
   buttonText: {
     color: "#fff",
     fontWeight: "bold",
+    marginLeft: -7,
   },
   footer: {
     flexDirection: "row",
