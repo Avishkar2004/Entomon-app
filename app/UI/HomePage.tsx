@@ -55,6 +55,14 @@ const HomePage = () => {
     }
   };
 
+  const productDetails = (product) => {
+    if (product) {
+      navigation.navigate("Components/ProductDetails", { product: product });
+    } else {
+      console.error("Product information is missing.");
+    }
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -73,7 +81,7 @@ const HomePage = () => {
       </View>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         {filteredProducts.map((product, index) => (
-          <TouchableOpacity key={product.id} style={styles.product}>
+          <TouchableOpacity key={product.id} style={styles.product} onPress={() => productDetails(product)}>
             <Image source={{ uri: product.image }} style={styles.image} />
             <View style={styles.productDetails}>
               <Text style={styles.title}>{product.name}</Text>
