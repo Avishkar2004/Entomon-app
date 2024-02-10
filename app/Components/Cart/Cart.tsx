@@ -8,27 +8,40 @@ import {
   ScrollView,
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
-import { Link } from "expo-router";
 import { useNavigation } from "@react-navigation/native";
+import { Link } from "expo-router";
 
 const Cart = () => {
   const [products, setProducts] = useState([]);
   const navigation = useNavigation();
 
   useEffect(() => {
-    fetch("https://fakestoreapi.com/products")
-      .then((response) => response.json())
-      .then((data) => setProducts(data))
+    fetch("http://localhost:8000/cart")
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        if (Array.isArray(data)) {
+          setProducts(data);
+        } else {
+          throw new Error("Data received is not an array");
+        }
+      })
       .catch((error) => console.error("Error fetching data:", error));
   }, []);
 
   const handleBuyNow = (product) => {
-    // Navigate to the "Buy" screen and pass product details as parameter
-    navigation.navigate("Buy", { product: product });
+    if (product) {
+      navigation.navigate("Components/Buy", { product: product });
+    } else {
+      console.error("Product information is missing.");
+    }
   };
-  
+
   const handleRemove = (productId) => {
-    // Remove the product from the cart
     const updatedProducts = products.filter(
       (product) => product.id !== productId
     );
@@ -46,8 +59,8 @@ const Cart = () => {
           <View key={product.id} style={styles.itemContainer}>
             <Image source={{ uri: product.image }} style={styles.itemImage} />
             <View style={styles.itemDetails}>
-              <Text style={styles.itemName}>{product.title}</Text>
-              <Text style={styles.itemPrice}>$ {product.price.toFixed(2)}</Text>
+              <Text style={styles.itemName}>{product.name}</Text>
+              <Text style={styles.itemPrice}>$ {product.price}</Text>
             </View>
             <View style={styles.buttonsContainer}>
               <TouchableOpacity
