@@ -13,7 +13,6 @@ import { Feather } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { Link } from "expo-router";
 import { useNavigation } from "@react-navigation/native";
-
 const { width } = Dimensions.get("window");
 
 const HomePage = () => {
@@ -32,37 +31,37 @@ const HomePage = () => {
       .catch((error) => console.error("Error fetching data:", error));
   }, []);
 
-  const addToCart = async (
-    productId,
-    productName,
-    productPrice,
-    productImage
-  ) => {
-    try {
-      const response = await fetch(`http://localhost:8000/cart/${productId}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          id: productId,
-          name: productName,
-          price: productPrice,
-          image: productImage,
-        }),
-      });
+  // const addToCart = async (
+  //   productId,
+  //   productName,
+  //   productPrice,
+  //   productImage
+  // ) => {
+  //   try {
+  //     const response = await fetch(`http://localhost:8000/cart/${productId}`, {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify({
+  //         id: productId,
+  //         name: productName,
+  //         price: productPrice,
+  //         image: productImage,
+  //       }),
+  //     });
 
-      if (!response.ok) {
-        throw new Error("Failed to add item to cart");
-      }
+  //     if (!response.ok) {
+  //       throw new Error("Failed to add item to cart");
+  //     }
 
-      // Handle success, e.g., show a success message
-      console.log("Item added to cart successfully");
-    } catch (error) {
-      console.error("Error adding item to cart:", error);
-      // Handle error, e.g., show an error message to the user
-    }
-  };
+  //     // Handle success, e.g., show a success message
+  //     console.log("Item added to cart successfully");
+  //   } catch (error) {
+  //     console.error("Error adding item to cart:", error);
+  //     // Handle error, e.g., show an error message to the user
+  //   }
+  // };
 
   const toggleDescription = (index) => {
     const updatedProducts = [...products];
@@ -112,55 +111,59 @@ const HomePage = () => {
         />
       </View>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
-        {filteredProducts.map((product, index) => (
-          <TouchableOpacity
-            key={product.id}
-            style={styles.product}
-            onPress={() => productDetails(product)}
-          >
-            <Image source={{ uri: product.image }} style={styles.image} />
-            <View style={styles.productDetails}>
-              <Text style={styles.title}>{product.name}</Text>
-              <Text style={styles.price}>₹{product.price}</Text>
-              <Text style={styles.description}>
-                {product.showFullDescription
-                  ? product.description
-                  : `${product.description?.substring(0, 100)}...`}
-              </Text>
+        <View style={styles.productsContainer}>
+          {filteredProducts.map((product, index) => (
+            <TouchableOpacity
+              key={product.id}
+              style={styles.product}
+              onPress={() => productDetails(product)}
+            >
+              <Image source={{ uri: product.image }} style={styles.image} />
+              <View style={styles.productDetails}>
+                <Text style={styles.title}>{product.name}</Text>
+                <Text style={styles.price}>₹ {product.price} </Text>
+                <Text>{product.reviews}</Text>
+                <Text style={styles.stockStatus}>{product.stockStatus}</Text>
+                <Text style={styles.description}>
+                  {product.showFullDescription
+                    ? product.description
+                    : `${product.description?.substring(0, 100)}...`}
+                </Text>
 
-              {!product.showFullDescription && (
-                <TouchableOpacity
-                  onPress={() => toggleDescription(index)}
-                  style={styles.showMoreButton}
-                >
-                  <Text style={styles.showMoreText}>Show More</Text>
-                </TouchableOpacity>
-              )}
-              <View style={styles.buttonsContainer}>
-                <TouchableOpacity
-                  onPress={() =>
-                    addToCart(
-                      product.id,
-                      product.name,
-                      product.price,
-                      product.image
-                    )
-                  }
-                  style={styles.button}
-                >
-                  <Text style={styles.buttonText}>Add to Cart</Text>
-                </TouchableOpacity>
+                {!product.showFullDescription && (
+                  <TouchableOpacity
+                    onPress={() => toggleDescription(index)}
+                    style={styles.showMoreButton}
+                  >
+                    <Text style={styles.showMoreText}>Show More</Text>
+                  </TouchableOpacity>
+                )}
+                {/* <View style={styles.buttonsContainer}>
+                  <TouchableOpacity
+                    onPress={() =>
+                      addToCart(
+                        product.id,
+                        product.name,
+                        product.price,
+                        product.image
+                      )
+                    }
+                    style={styles.button}
+                  >
+                    <Text style={styles.buttonText}>Add to Cart</Text>
+                  </TouchableOpacity>
 
-                <TouchableOpacity
-                  onPress={() => buyNow(product)}
-                  style={styles.button}
-                >
-                  <Text style={styles.buttonText}>Buy Now</Text>
-                </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() => buyNow(product)}
+                    style={styles.button}
+                  >
+                    <Text style={styles.buttonText}>Buy Now</Text>
+                  </TouchableOpacity>
+                </View> */}
               </View>
-            </View>
-          </TouchableOpacity>
-        ))}
+            </TouchableOpacity>
+          ))}
+        </View>
       </ScrollView>
       <View style={styles.footer}>
         <Link href={"Components/Profile"} style={styles.footerIcon}>
@@ -208,32 +211,41 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: 12,
   },
-  product: {
+  productsContainer: {
     flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-between",
+    paddingHorizontal: 10,
+  },
+  product: {
     marginBottom: 20,
     borderWidth: 1,
     borderColor: "#ccc",
     borderRadius: 10,
-    padding: 10,
-    width: width * 0.9,
+    width: "48%", // Adjust width as needed
+    paddingHorizontal: 10,
   },
   image: {
-    width: width * 0.3,
+    width: "100%",
     height: 150,
-    marginRight: 10,
     borderRadius: 10,
+    marginBottom: 10,
   },
   productDetails: {
     flex: 1,
   },
   title: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: "bold",
     marginBottom: 5,
   },
   price: {
-    fontSize: 18,
+    fontSize: 16,
+    color: "#4CAF50",
     marginBottom: 5,
+  },
+  stockStatus: {
+    color: "red",
   },
   description: {
     marginBottom: 5,
@@ -250,18 +262,20 @@ const styles = StyleSheet.create({
   buttonsContainer: {
     flexDirection: "row",
     marginTop: 10,
+    justifyContent: "space-between",
   },
   button: {
     backgroundColor: "#007bff",
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 5,
+    flex: 1,
     marginHorizontal: 5,
   },
   buttonText: {
     color: "#fff",
     fontWeight: "bold",
-    marginLeft: -7,
+    textAlign: "center",
   },
   footer: {
     flexDirection: "row",

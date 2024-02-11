@@ -31,9 +31,41 @@ const ProductDetails = () => {
     );
   }
 
-  const handleBuyToCart = () => {
-    // Implement logic to Buy product to cart
-    console.log(`Buyed ${quantity} ${product.name} to cart.`);
+  const addToCart = async (
+    productId,
+    productName,
+    productPrice,
+    productImage
+  ) => {
+    try {
+      const response = await fetch(`http://localhost:8000/cart/${productId}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id: productId,
+          name: productName,
+          price: productPrice,
+          image: productImage,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to add item to cart");
+      }
+
+      // Handle success, e.g., show a success message
+      console.log("Item added to cart successfully");
+    } catch (error) {
+      console.error("Error adding item to cart:", error);
+      // Handle error, e.g., show an error message to the user
+    }
+  };
+
+  const handleBuyNow = () => {
+    // Implement logic to handle Buy Now action
+    console.log(`Buy Now ${quantity} ${product.name}.`);
   };
 
   return (
@@ -49,7 +81,7 @@ const ProductDetails = () => {
       <Text style={styles.price}>₹{product.price}</Text>
       <View style={styles.quantityInfoContainer}>
         <Text style={styles.quantityInfo}>Minimum Order Quantity: 3</Text>
-        <Text style={styles.quantityInfo}>@ ₹78/100ml</Text>
+        <Text style={styles.quantityInfo}> @ ₹78/100ml</Text>
       </View>
       <View style={styles.offerContainer}>
         <Text style={styles.offerText}>
@@ -66,15 +98,27 @@ const ProductDetails = () => {
         keyboardType="numeric"
         placeholder="Quantity"
       />
-      <TouchableOpacity style={styles.buyButton} onPress={handleBuyToCart}>
-        <Text style={styles.buyButtonText}>Buy Now</Text>
-      </TouchableOpacity>
       <Text style={styles.description}>{product.description}</Text>
+      <Text>{product.reviews}</Text>
+      <Text>{product.stockStatus}</Text>
       <View style={styles.specifications}>
         <Text style={styles.specsTitle}>Specifications:</Text>
         <Text style={styles.specsDetail}>
           Quantity: 100 ml Fragrance: Deodorant Spray For Men
         </Text>
+      </View>
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() =>
+            addToCart(product.id, product.name, product.price, product.image)
+          }
+        >
+          <Text style={styles.buttonText}>Add to Cart</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={handleBuyNow}>
+          <Text style={styles.buttonText}>Buy Now</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -134,14 +178,20 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     fontSize: 16,
   },
-  buyButton: {
+  buttonContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: "100%",
+    marginBottom: 20,
+  },
+  button: {
     backgroundColor: "#2196F3",
     paddingVertical: 12,
     paddingHorizontal: 20,
     borderRadius: 5,
-    marginBottom: 20,
+    width: "48%",
   },
-  buyButtonText: {
+  buttonText: {
     color: "#fff",
     fontSize: 16,
     fontWeight: "bold",
