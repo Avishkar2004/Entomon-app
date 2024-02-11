@@ -38,7 +38,10 @@ const ProductDetails = () => {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={() => navigation.goBack()}>
+      <TouchableOpacity
+        onPress={() => navigation.goBack()}
+        style={styles.backButton}
+      >
         <Text>Back</Text>
       </TouchableOpacity>
       <Image source={{ uri: product.image }} style={styles.image} />
@@ -167,6 +170,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "red",
     textAlign: "center",
+  },
+  backButton: {
+    position: "absolute",
+    top: 20,
+    left: 20,
   },
 });
 

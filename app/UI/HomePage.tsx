@@ -32,6 +32,38 @@ const HomePage = () => {
       .catch((error) => console.error("Error fetching data:", error));
   }, []);
 
+  const addToCart = async (
+    productId,
+    productName,
+    productPrice,
+    productImage
+  ) => {
+    try {
+      const response = await fetch(`http://localhost:8000/cart/${productId}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id: productId,
+          name: productName,
+          price: productPrice,
+          image: productImage,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to add item to cart");
+      }
+
+      // Handle success, e.g., show a success message
+      console.log("Item added to cart successfully");
+    } catch (error) {
+      console.error("Error adding item to cart:", error);
+      // Handle error, e.g., show an error message to the user
+    }
+  };
+
   const toggleDescription = (index) => {
     const updatedProducts = [...products];
     updatedProducts[index].showFullDescription =
@@ -81,7 +113,11 @@ const HomePage = () => {
       </View>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         {filteredProducts.map((product, index) => (
-          <TouchableOpacity key={product.id} style={styles.product} onPress={() => productDetails(product)}>
+          <TouchableOpacity
+            key={product.id}
+            style={styles.product}
+            onPress={() => productDetails(product)}
+          >
             <Image source={{ uri: product.image }} style={styles.image} />
             <View style={styles.productDetails}>
               <Text style={styles.title}>{product.name}</Text>
@@ -102,11 +138,19 @@ const HomePage = () => {
               )}
               <View style={styles.buttonsContainer}>
                 <TouchableOpacity
-                  onPress={() => addToCart(product.id)}
+                  onPress={() =>
+                    addToCart(
+                      product.id,
+                      product.name,
+                      product.price,
+                      product.image
+                    )
+                  }
                   style={styles.button}
                 >
                   <Text style={styles.buttonText}>Add to Cart</Text>
                 </TouchableOpacity>
+
                 <TouchableOpacity
                   onPress={() => buyNow(product)}
                   style={styles.button}
