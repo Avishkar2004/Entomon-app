@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { useRoute } from "@react-navigation/native";
 import { useNavigation } from "expo-router";
+import { useCart } from "./CartContext9";
 
 const ProductDetails = () => {
   const route = useRoute();
@@ -93,14 +94,14 @@ const ProductDetails = () => {
       </View>
       <TextInput
         style={styles.quantityInput}
-        value={quantity.toString()}
-        onChangeText={(text) => setQuantity(parseInt(text) || 1)}
+        value={quantity}
+        onChangeText={setQuantity}
         keyboardType="numeric"
-        placeholder="Quantity"
+        placeholder="Enter Quantity"
       />
       <Text style={styles.description}>{product.description}</Text>
       <Text>{product.reviews}</Text>
-      <Text>{product.stockStatus}</Text>
+      <Text style={styles.stockStatus}>{product.stockStatus}</Text>
       <View style={styles.specifications}>
         <Text style={styles.specsTitle}>Specifications:</Text>
         <Text style={styles.specsDetail}>
@@ -202,6 +203,9 @@ const styles = StyleSheet.create({
     textAlign: "left",
     marginBottom: 20,
     color: "#555",
+  },
+  stockStatus: {
+    color: "red",
   },
   specifications: {
     alignItems: "flex-start",
