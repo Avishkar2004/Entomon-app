@@ -9,7 +9,6 @@ import {
 } from "react-native";
 import { useRoute } from "@react-navigation/native";
 import { useNavigation } from "expo-router";
-import { useCart } from "./CartContext9";
 
 const ProductDetails = () => {
   const route = useRoute();
@@ -21,9 +20,17 @@ const ProductDetails = () => {
   if (
     !route.params ||
     !product ||
-    !product.image ||
+    !product.product_id ||
+    !product.photo ||
     !product.name ||
-    !product.price
+    !product.rupees ||
+    !product.review ||
+    !product.percent_off ||
+    !product.delivery_charges ||
+    !product.delivery_time ||
+    !product.emi_per_month ||
+    !product.emi_month ||
+    !product.address
   ) {
     return (
       <View style={styles.container}>
@@ -32,23 +39,19 @@ const ProductDetails = () => {
     );
   }
 
-  const addToCart = async (
-    productId,
-    productName,
-    productPrice,
-    productImage
-  ) => {
+  const addToCart = async (product_id, name, rupees, photo, quantity) => {
     try {
-      const response = await fetch(`http://localhost:8000/cart/${productId}`, {
+      const response = await fetch(`http://localhost:8000/cart/${product_id}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          id: productId,
-          name: productName,
-          price: productPrice,
-          image: productImage,
+          id: product_id,
+          name: name,
+          photo: photo,
+          rupees: rupees,
+          quantity: quantity,
         }),
       });
 
@@ -75,11 +78,11 @@ const ProductDetails = () => {
         onPress={() => navigation.goBack()}
         style={styles.backButton}
       >
-        <Text>Back</Text>
+        <Text style={styles.BackButton}>Back</Text>
       </TouchableOpacity>
-      <Image source={{ uri: product.image }} style={styles.image} />
+      <Image source={{ uri: product.photo }} style={styles.image} />
       <Text style={styles.title}>{product.name}</Text>
-      <Text style={styles.price}>₹{product.price}</Text>
+      <Text style={styles.price}>₹{product.rupees}</Text>
       <View style={styles.quantityInfoContainer}>
         <Text style={styles.quantityInfo}>Minimum Order Quantity: 3</Text>
         <Text style={styles.quantityInfo}> @ ₹78/100ml</Text>
@@ -99,8 +102,12 @@ const ProductDetails = () => {
         keyboardType="numeric"
         placeholder="Enter Quantity"
       />
-      <Text style={styles.description}>{product.description}</Text>
-      <Text>{product.reviews}</Text>
+      <Text style={styles.description}>{product.delivery_charges}</Text>
+      <Text style={styles.description}>{product.delivery_time}</Text>
+      <Text style={styles.description}>{product.emi_per_month}</Text>
+      <Text style={styles.description}>{product.emi_month}</Text>
+      <Text style={styles.description}>{product.address}</Text>
+      <Text>{product.review}</Text>
       <Text style={styles.stockStatus}>{product.stockStatus}</Text>
       <View style={styles.specifications}>
         <Text style={styles.specsTitle}>Specifications:</Text>
@@ -112,7 +119,13 @@ const ProductDetails = () => {
         <TouchableOpacity
           style={styles.button}
           onPress={() =>
-            addToCart(product.id, product.name, product.price, product.image)
+            addToCart(
+              product.product_id,
+              product.name,
+              product.rupees,
+              product.photo,
+              quantity
+            )
           }
         >
           <Text style={styles.buttonText}>Add to Cart</Text>
@@ -132,6 +145,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     paddingHorizontal: 20,
     backgroundColor: "#fff",
+  },
+  BackButton: {
+    fontWeight: "bold",
   },
   image: {
     width: 200,

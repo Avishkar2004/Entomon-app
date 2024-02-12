@@ -13,7 +13,6 @@ import { Feather } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { Link } from "expo-router";
 import { useNavigation } from "@react-navigation/native";
-const { width } = Dimensions.get("window");
 
 const HomePage = () => {
   const navigation = useNavigation();
@@ -22,10 +21,12 @@ const HomePage = () => {
   const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
-    fetch("http://localhost:8000/insecticide")
+    fetch("http://localhost:8000/api/productData")
       .then((response) => response.json())
       .then((data) => {
-        const filteredProducts = data.filter((product) => product.id !== 1);
+        const filteredProducts = data.filter(
+          (product) => product.product_id !== 100
+        );
         setProducts(filteredProducts);
       })
       .catch((error) => console.error("Error fetching data:", error));
@@ -114,52 +115,28 @@ const HomePage = () => {
         <View style={styles.productsContainer}>
           {filteredProducts.map((product, index) => (
             <TouchableOpacity
-              key={product.id}
+              key={product.product_id}
               style={styles.product}
               onPress={() => productDetails(product)}
             >
-              <Image source={{ uri: product.image }} style={styles.image} />
+              <Image source={{ uri: product.photo }} style={styles.image} />
               <View style={styles.productDetails}>
                 <Text style={styles.title}>{product.name}</Text>
-                <Text style={styles.price}>₹ {product.price} </Text>
-                <Text>{product.reviews}</Text>
-                <Text style={styles.stockStatus}>{product.stockStatus}</Text>
-                <Text style={styles.description}>
-                  {product.showFullDescription
-                    ? product.description
-                    : `${product.description?.substring(0, 100)}...`}
+                <Text style={styles.price}>₹ {product.rupees}</Text>
+                {/* <Text style={styles.color}>Color: {product.color}</Text> */}
+                <Text style={styles.review}>
+                  Review: {product.review} (102)
                 </Text>
-
-                {!product.showFullDescription && (
-                  <TouchableOpacity
-                    onPress={() => toggleDescription(index)}
-                    style={styles.showMoreButton}
-                  >
-                    <Text style={styles.showMoreText}>Show More</Text>
-                  </TouchableOpacity>
-                )}
-                {/* <View style={styles.buttonsContainer}>
-                  <TouchableOpacity
-                    onPress={() =>
-                      addToCart(
-                        product.id,
-                        product.name,
-                        product.price,
-                        product.image
-                      )
-                    }
-                    style={styles.button}
-                  >
-                    <Text style={styles.buttonText}>Add to Cart</Text>
-                  </TouchableOpacity>
-
-                  <TouchableOpacity
-                    onPress={() => buyNow(product)}
-                    style={styles.button}
-                  >
-                    <Text style={styles.buttonText}>Buy Now</Text>
-                  </TouchableOpacity>
-                </View> */}
+                <Text>
+                  <Text style={styles.percentOff}>% </Text>
+                  {product.percent_off} off
+                </Text>
+                <Text style={styles.deliveryCharges}>
+                  Delivery Charges: {product.delivery_charges}
+                </Text>
+                <Text style={styles.time}>
+                  Free delivery by: {product.delivery_time}
+                </Text>
               </View>
             </TouchableOpacity>
           ))}
@@ -233,6 +210,7 @@ const styles = StyleSheet.create({
   },
   productDetails: {
     flex: 1,
+    marginLeft: 10, // Add margin to separate image and text
   },
   title: {
     fontSize: 18,
@@ -287,6 +265,49 @@ const styles = StyleSheet.create({
   },
   footerIcon: {
     marginLeft: 10,
+  },
+  title: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginBottom: 5,
+    color: "#333",
+    fontFamily: "Arial",
+  },
+  price: {
+    fontSize: 16,
+    color: "#4CAF50",
+    marginBottom: 5,
+    fontFamily: "Arial",
+  },
+  color: {
+    fontSize: 14,
+    marginBottom: 5,
+    color: "black",
+    fontFamily: "Arial",
+  },
+  review: {
+    fontSize: 14,
+    marginBottom: 5,
+    color: "black",
+    fontFamily: "Arial",
+  },
+  percentOff: {
+    fontSize: 14,
+    marginBottom: 5,
+    color: "#4CAF50",
+    fontFamily: "Arial",
+  },
+  deliveryCharges: {
+    fontSize: 14,
+    marginBottom: 5,
+    color: "black",
+    fontFamily: "Arial",
+  },
+  time: {
+    fontSize: 14,
+    marginBottom: 5,
+    color: "black",
+    fontFamily: "Arial",
   },
 });
 
