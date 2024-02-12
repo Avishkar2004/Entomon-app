@@ -32,60 +32,9 @@ const HomePage = () => {
       .catch((error) => console.error("Error fetching data:", error));
   }, []);
 
-  // const addToCart = async (
-  //   productId,
-  //   productName,
-  //   productPrice,
-  //   productImage
-  // ) => {
-  //   try {
-  //     const response = await fetch(`http://localhost:8000/cart/${productId}`, {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify({
-  //         id: productId,
-  //         name: productName,
-  //         price: productPrice,
-  //         image: productImage,
-  //       }),
-  //     });
-
-  //     if (!response.ok) {
-  //       throw new Error("Failed to add item to cart");
-  //     }
-
-  //     // Handle success, e.g., show a success message
-  //     console.log("Item added to cart successfully");
-  //   } catch (error) {
-  //     console.error("Error adding item to cart:", error);
-  //     // Handle error, e.g., show an error message to the user
-  //   }
-  // };
-
-  const toggleDescription = (index) => {
-    const updatedProducts = [...products];
-    updatedProducts[index].showFullDescription =
-      !updatedProducts[index].showFullDescription;
-    setProducts(updatedProducts);
-  };
-
   const filteredProducts = products.filter((product) =>
     product.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
-
-  const buyNow = (product) => {
-    if (product) {
-      const productWithoutDescription = { ...product };
-      delete productWithoutDescription.description;
-      navigation.navigate("Components/Buy", {
-        product: productWithoutDescription,
-      });
-    } else {
-      console.error("Product information is missing.");
-    }
-  };
 
   const productDetails = (product) => {
     if (product) {
@@ -171,6 +120,7 @@ const styles = StyleSheet.create({
     padding: 10,
     borderBottomWidth: 1,
     borderBottomColor: "#ccc",
+    zIndex: 2, // Ensure the search bar stays above the ScrollView
   },
   searchIcon: {
     marginRight: 10,
@@ -184,7 +134,7 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   scrollContainer: {
-    paddingBottom: 20,
+    flexGrow: 1,
     alignItems: "center",
     marginTop: 12,
   },
@@ -222,39 +172,6 @@ const styles = StyleSheet.create({
     color: "#4CAF50",
     marginBottom: 5,
   },
-  stockStatus: {
-    color: "red",
-  },
-  description: {
-    marginBottom: 5,
-  },
-  showMoreButton: {
-    backgroundColor: "#ddd",
-    padding: 5,
-    borderRadius: 5,
-    marginTop: 5,
-  },
-  showMoreText: {
-    fontWeight: "bold",
-  },
-  buttonsContainer: {
-    flexDirection: "row",
-    marginTop: 10,
-    justifyContent: "space-between",
-  },
-  button: {
-    backgroundColor: "#007bff",
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 5,
-    flex: 1,
-    marginHorizontal: 5,
-  },
-  buttonText: {
-    color: "#fff",
-    fontWeight: "bold",
-    textAlign: "center",
-  },
   footer: {
     flexDirection: "row",
     justifyContent: "space-around",
@@ -262,52 +179,15 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     borderTopColor: "#ccc",
     paddingVertical: 10,
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    right: 0,
+    zIndex: 2, // Ensure the footer stays above the ScrollView
+    backgroundColor: "#fff",
   },
   footerIcon: {
     marginLeft: 10,
-  },
-  title: {
-    fontSize: 18,
-    fontWeight: "bold",
-    marginBottom: 5,
-    color: "#333",
-    fontFamily: "Arial",
-  },
-  price: {
-    fontSize: 16,
-    color: "#4CAF50",
-    marginBottom: 5,
-    fontFamily: "Arial",
-  },
-  color: {
-    fontSize: 14,
-    marginBottom: 5,
-    color: "black",
-    fontFamily: "Arial",
-  },
-  review: {
-    fontSize: 14,
-    marginBottom: 5,
-    color: "black",
-    fontFamily: "Arial",
-  },
-  percentOff: {
-    fontSize: 14,
-    marginBottom: 5,
-    color: "#4CAF50",
-    fontFamily: "Arial",
-  },
-  deliveryCharges: {
-    fontSize: 14,
-    marginBottom: 5,
-    color: "black",
-    fontFamily: "Arial",
-  },
-  time: {
-    fontSize: 14,
-    marginBottom: 5,
-    color: "black",
-    fontFamily: "Arial",
   },
 });
 

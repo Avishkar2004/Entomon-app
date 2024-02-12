@@ -16,7 +16,7 @@ const Cart = () => {
   const navigation = useNavigation();
 
   useEffect(() => {
-    fetch("http://localhost:8000/cart")
+    fetch("http://localhost:8000/api/cart")
       .then((response) => {
         if (!response.ok) {
           throw new Error("Network response was not ok");
@@ -43,7 +43,7 @@ const Cart = () => {
 
   const handleRemove = (productId) => {
     const updatedProducts = products.filter(
-      (product) => product.id !== productId
+      (product) => product.product_id !== productId
     );
     setProducts(updatedProducts);
   };
@@ -56,16 +56,19 @@ const Cart = () => {
       </View>
       <ScrollView>
         {products.map((product) => (
-          <View key={product.id} style={styles.itemContainer}>
-            <Image source={{ uri: product.image }} style={styles.itemImage} />
+          <View key={product.product_id} style={styles.itemContainer}>
+            <Image source={{ uri: product.photo }} style={styles.itemImage} />
             <View style={styles.itemDetails}>
               <Text style={styles.itemName}>{product.name}</Text>
-              <Text style={styles.itemPrice}>$ {product.price}</Text>
+              <Text style={styles.itemPrice}>$ {product.rupees}</Text>
+              <Text style={styles.itemPrice}>
+                Quantity :- {product.quantity}
+              </Text>
             </View>
             <View style={styles.buttonsContainer}>
               <TouchableOpacity
                 style={[styles.button, styles.addToCartButton]}
-                onPress={() => handleRemove(product.id)}
+                onPress={() => handleRemove(product.product_id)}
               >
                 <Text style={styles.buttonText}>Remove</Text>
               </TouchableOpacity>

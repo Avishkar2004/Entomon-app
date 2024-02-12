@@ -8,9 +8,11 @@ import {
   TextInput,
 } from "react-native";
 import { useRoute } from "@react-navigation/native";
+import { useNavigation } from "expo-router";
 
 const Buy = () => {
   const route = useRoute();
+  const navigation = useNavigation();
   const { product } = route.params;
   const [quantity, setQuantity] = useState(1);
 
@@ -18,9 +20,9 @@ const Buy = () => {
   if (
     !route.params ||
     !product ||
-    !product.image ||
+    !product.photo ||
     !product.name ||
-    !product.price
+    !product.rupees
   ) {
     return (
       <View style={styles.container}>
@@ -36,9 +38,15 @@ const Buy = () => {
 
   return (
     <View style={styles.container}>
-      <Image source={{ uri: product.image }} style={styles.image} />
+      <TouchableOpacity
+        onPress={() => navigation.goBack()}
+        style={styles.backButton}
+      >
+        <Text style={styles.BackButton}>Back</Text>
+      </TouchableOpacity>
+      <Image source={{ uri: product.photo }} style={styles.image} />
       <Text style={styles.title}>{product.name}</Text>
-      <Text style={styles.price}>₹{product.price}</Text>
+      <Text style={styles.price}>₹ {product.rupees}</Text>
       <View style={styles.quantityInfoContainer}>
         <Text style={styles.quantityInfo}>Minimum Order Quantity: 3</Text>
         <Text style={styles.quantityInfo}>@ ₹78/100ml</Text>
@@ -73,6 +81,15 @@ const Buy = () => {
 };
 
 const styles = StyleSheet.create({
+  backButton: {
+    position: "absolute",
+    top: 20,
+    left: 20,
+  },
+  BackButton: {
+    fontWeight: "bold",
+  },
+
   container: {
     flex: 1,
     alignItems: "center",
