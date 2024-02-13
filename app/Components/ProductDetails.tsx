@@ -82,7 +82,6 @@ const ProductDetails = () => {
       </TouchableOpacity>
       <Image source={{ uri: product.photo }} style={styles.image} />
       <Text style={styles.title}>{product.name}</Text>
-      <Text style={styles.price}>₹{product.rupees}</Text>
       <View style={styles.quantityInfoContainer}>
         <Text style={styles.quantityInfo}>Minimum Order Quantity: 3</Text>
         <Text style={styles.quantityInfo}> @ ₹78/100ml</Text>
@@ -102,12 +101,20 @@ const ProductDetails = () => {
         keyboardType="numeric"
         placeholder="Enter Quantity"
       />
-      <Text style={styles.description}>{product.delivery_charges}</Text>
-      <Text style={styles.description}>{product.delivery_time}</Text>
-      <Text style={styles.description}>{product.emi_per_month}</Text>
-      <Text style={styles.description}>{product.emi_month}</Text>
+      <Text style={styles.description}>
+        Delivery Charges :- {product.delivery_charges}
+      </Text>
+      <Text style={styles.description}>{product.review}20,000 ratings</Text>
+      <Text style={styles.description}>₹ {product.emi_per_month}/ Month</Text>
+      {/* <Text style={styles.description}>{product.emi_month}</Text> */}
+      <Text style={styles.price}>
+        ₹{product.rupees}{" "}
+        <Text style={{ textDecorationLine: "line-through" }}>20</Text>
+      </Text>
       <Text style={styles.description}>{product.address}</Text>
-      <Text>{product.review}</Text>
+      <Text style={styles.description}>
+        Free delivery by: {product.delivery_time}
+      </Text>
       <Text style={styles.stockStatus}>{product.stockStatus}</Text>
       <View style={styles.specifications}>
         <Text style={styles.specsTitle}>Specifications:</Text>
