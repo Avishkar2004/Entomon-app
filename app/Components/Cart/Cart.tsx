@@ -48,6 +48,14 @@ const Cart = () => {
     setProducts(updatedProducts);
   };
 
+  const productDetails = (product) => {
+    if (product) {
+      navigation.navigate("/ProductDetails", { product: product });
+    } else {
+      console.error("Product information is missing.");
+    }
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.cartHeader}>
@@ -56,7 +64,11 @@ const Cart = () => {
       </View>
       <ScrollView>
         {products.map((product) => (
-          <View key={product.product_id} style={styles.itemContainer}>
+          <TouchableOpacity
+            key={product.product_id}
+            style={styles.itemContainer}
+            onPress={() => productDetails(product)}
+          >
             <Image source={{ uri: product.photo }} style={styles.itemImage} />
             <View style={styles.itemDetails}>
               <Text style={styles.itemName}>{product.name}</Text>
@@ -81,7 +93,7 @@ const Cart = () => {
                 </Link>
               </TouchableOpacity>
             </View>
-          </View>
+          </TouchableOpacity>
         ))}
       </ScrollView>
     </View>

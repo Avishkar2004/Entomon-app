@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -15,12 +15,6 @@ const ProductDetails = () => {
   const navigation = useNavigation();
   const { product } = route.params;
   const [quantity, setQuantity] = useState(1);
-  const [inCart, setInCart] = useState(false); // State to track if the product is in the cart
-
-  useEffect(() => {
-    const isProductInCart = checkIfProductInCart(product.product_id);
-    setInCart(isProductInCart);
-  }, []);
 
   // Check if route params and product exist and have the necessary properties
   if (
@@ -44,21 +38,6 @@ const ProductDetails = () => {
       </View>
     );
   }
-  // Dummy implementation to check if the product is in the cart
-  const checkIfProductInCart = async (product_id) => {
-    try {
-      const response = await fetch(`http://localhost:8000/cart/${product_id}`);
-      const data = await response.json();
-      // Check if the product exists in the cart based on the response
-      if (response.ok && data && data.product_id === product_id) {
-        return true; // Product is in the cart
-      }
-      return false; // Product is not in the cart
-    } catch (error) {
-      console.error("Error checking if product is in cart:", error);
-      return false; // Error occurred, assume product is not in cart
-    }
-  };
 
   const addToCart = async (product_id, name, rupees, photo, quantity) => {
     try {
@@ -144,29 +123,20 @@ const ProductDetails = () => {
         </Text>
       </View>
       <View style={styles.buttonContainer}>
-        {inCart ? (
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => navigation.navigate("Cart")}
-          >
-            <Text>Go to cart</Text>
-          </TouchableOpacity>
-        ) : (
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() =>
-              addToCart(
-                product.product_id,
-                product.name,
-                product.rupees,
-                product.photo,
-                quantity
-              )
-            }
-          >
-            <Text style={styles.buttonText}>Add To Cart</Text>
-          </TouchableOpacity>
-        )}
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() =>
+            addToCart(
+              product.product_id,
+              product.name,
+              product.rupees,
+              product.photo,
+              quantity
+            )
+          }
+        >
+          <Text style={styles.buttonText}>Add to Cart</Text>
+        </TouchableOpacity>
         <TouchableOpacity style={styles.button} onPress={handleBuyNow}>
           <Text style={styles.buttonText}>Buy Now</Text>
         </TouchableOpacity>
