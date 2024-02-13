@@ -9,14 +9,13 @@ import {
 } from "react-native";
 import { useRoute } from "@react-navigation/native";
 import { useNavigation } from "expo-router";
-
+import { AntDesign } from "@expo/vector-icons";
 const Buy = () => {
   const route = useRoute();
   const navigation = useNavigation();
   const { product } = route.params;
   const [quantity, setQuantity] = useState(1);
 
-  // Check if route params and product exist and have the necessary properties
   if (
     !route.params ||
     !product ||
@@ -42,7 +41,15 @@ const Buy = () => {
         onPress={() => navigation.goBack()}
         style={styles.backButton}
       >
-        <Text style={styles.BackButton}>Back</Text>
+        <Text style={styles.BackButton}>
+          <AntDesign
+            name="arrowleft"
+            size={20}
+            color="black"
+            style={{ gap: 30 }}
+          />
+          Order Summary
+        </Text>
       </TouchableOpacity>
       <Image source={{ uri: product.photo }} style={styles.image} />
       <Text style={styles.title}>{product.name}</Text>
