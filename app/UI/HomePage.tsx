@@ -42,6 +42,7 @@ const HomePage = () => {
     } else {
       console.error("Product information is missing.");
     }
+    
   };
 
   return (

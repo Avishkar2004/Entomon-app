@@ -50,7 +50,9 @@ const Cart = () => {
 
   const productDetails = (product) => {
     if (product) {
-      navigation.navigate("/ProductDetails", { product: product });
+      navigation.navigate("Components/CartProductDetails", {
+        product: product,
+      });
     } else {
       console.error("Product information is missing.");
     }
