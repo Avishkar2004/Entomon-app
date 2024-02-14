@@ -17,24 +17,10 @@ const ProductDetails = () => {
   const [quantity, setQuantity] = useState(1);
 
   // Check if route params and product exist and have the necessary properties
-  if (
-    !route.params ||
-    !product ||
-    !product.product_id ||
-    !product.name ||
-    !product.photo ||
-    !product.rupees ||
-    !product.review ||
-    !product.percent_off ||
-    !product.delivery_charges ||
-    !product.delivery_time ||
-    !product.emi_per_month ||
-    !product.emi_month ||
-    !product.address
-  ) {
+  if (!route.params || !product) {
     return (
       <View style={styles.container}>
-        <Text style={styles.errorText}>Product information is incomplete.</Text>
+        <Text style={styles.errorText}>Product information is incomplete</Text>
       </View>
     );
   }
@@ -125,8 +111,12 @@ const ProductDetails = () => {
         Delivery Charges :- {product.delivery_charges}
       </Text>
       <Text style={styles.description}>{product.review}20,000 ratings</Text>
-      <Text style={styles.description}>₹ {product.emi_per_month}/ Month</Text>
-      {/* <Text style={styles.description}>{product.emi_month}</Text> */}
+      <Text style={styles.description}>
+        Emi :- ₹ {product.emi_per_month}/Month
+      </Text>
+      <Text style={styles.EMI}>
+        6 Month Cost EMI Plan with HDFC credit-cart.
+      </Text>
       <Text style={styles.price}>
         ₹{product.rupees}
         <Text style={{ textDecorationLine: "line-through" }}>20</Text>
@@ -204,6 +194,12 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     marginBottom: 10,
+  },
+  EMI: {
+    fontSize: 12,
+    marginBottom: 12,
+    marginTop: -18,
+    color: "#555",
   },
   quantityInfo: {
     fontSize: 16,

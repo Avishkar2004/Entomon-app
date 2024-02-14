@@ -111,8 +111,12 @@ const CartProductDetails = () => {
         Delivery Charges :- {product.delivery_charges}
       </Text>
       <Text style={styles.description}>{product.review}20,000 ratings</Text>
-      <Text style={styles.description}>₹ {product.emi_per_month}/ Month</Text>
-      {/* <Text style={styles.description}>{product.emi_month} Emi Month</Text> */}
+      <Text style={styles.description}>
+        Emi :- ₹ {product.emi_per_month}/Month
+      </Text>
+      <Text style={styles.EMI}>
+        6 Month Cost EMI Plan with HDFC credit-cart.
+      </Text>
       <Text style={styles.price}>
         ₹{product.rupees}
         <Text style={{ textDecorationLine: "line-through" }}>20</Text>
@@ -185,6 +189,12 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginBottom: 10,
     color: "#4CAF50",
+  },
+  EMI: {
+    fontSize: 12,
+    marginBottom: 12,
+    marginTop: -18,
+    color: "#555",
   },
   quantityInfoContainer: {
     flexDirection: "row",
