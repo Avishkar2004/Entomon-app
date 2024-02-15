@@ -13,18 +13,19 @@ import { Feather } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { Link } from "expo-router";
 import { useNavigation } from "@react-navigation/native";
-import { Camera } from 'expo-camera';
+import { Camera, CameraType } from "expo-camera"; // Import Camera and CameraType
+import { Button } from "react-native";
 
 const HomePage = () => {
   const navigation = useNavigation();
   const [hasPermission, setHasPermission] = useState(null);
-  const [type, setType] = useState(Camera.Constants.Type.back);
+  const [type, setType] = useState(CameraType.back);
   const [showCamera, setShowCamera] = useState(false); // State to control camera visibility
 
   useEffect(() => {
     (async () => {
       const { status } = await Camera.requestPermissionsAsync();
-      setHasPermission(status === 'granted');
+      setHasPermission(status === "granted");
     })();
   }, []);
 
@@ -70,28 +71,36 @@ const HomePage = () => {
           value={searchQuery}
           onChangeText={(text) => setSearchQuery(text)}
         />
-        <TouchableOpacity onPress={() => setShowCamera(true)}> {/* Show camera on press */}
-          <Feather name="camera" size={24} color="black" style={styles.cameraIcon} />
+        <TouchableOpacity onPress={() => setShowCamera(true)}>
+          {" "}
+          {/* Show camera on press */}
+          <Feather
+            name="camera"
+            size={24}
+            color="black"
+            style={styles.cameraIcon}
+          />
         </TouchableOpacity>
       </View>
-      {showCamera && hasPermission && ( // Conditionally render camera if showCamera is true and user has granted permission
-        <Camera style={styles.camera} type={type}>
-          <View style={styles.cameraButtons}>
-            <TouchableOpacity
-              style={styles.cameraButton}
-              onPress={() => setShowCamera(false)} // Hide camera on press
-            >
-              <Text style={styles.cameraButtonText}>Close</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.cameraButton}
-              onPress={() => alert('Take a picture functionality')} // Implement take picture functionality
-            >
-              <Text style={styles.cameraButtonText}>Take Picture</Text>
-            </TouchableOpacity>
-          </View>
-        </Camera>
-      )}
+      {showCamera &&
+        hasPermission && ( // Conditionally render camera if showCamera is true and user has granted permission
+          <Camera style={styles.camera} type={type}>
+            <View style={styles.cameraButtons}>
+              <TouchableOpacity
+                style={styles.cameraButton}
+                onPress={() => setShowCamera(false)} // Hide camera on press
+              >
+                <Text style={styles.cameraButtonText}>Close</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.cameraButton}
+                onPress={() => alert("Take a picture functionality")} // Implement take picture functionality
+              >
+                <Text style={styles.cameraButtonText}>Take Picture</Text>
+              </TouchableOpacity>
+            </View>
+          </Camera>
+        )}
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.productsContainer}>
           {filteredProducts.map((product, index) => (
@@ -173,16 +182,16 @@ const styles = StyleSheet.create({
     aspectRatio: 1,
   },
   cameraButtons: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    position: 'absolute',
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    position: "absolute",
     bottom: 20,
     left: 0,
     right: 0,
   },
   cameraButton: {
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     padding: 10,
     borderRadius: 5,
     marginHorizontal: 10,
