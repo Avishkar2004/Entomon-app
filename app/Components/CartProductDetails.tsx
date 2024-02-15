@@ -73,11 +73,14 @@ const CartProductDetails = () => {
     }
   };
 
-  const handleBuyNow = () => {
-    // Implement logic to handle Buy Now action
-    console.log(`Buy Now ${quantity} ${product.name}.`);
+  const handleBuyNow = (product) => {
+    if (product) {
+      navigation.navigate("./Buy", { product: product });
+    } else {
+      console.error("Product information is missing.");
+    }
   };
-
+  
   return (
     <View style={styles.container}>
       <TouchableOpacity
@@ -110,7 +113,7 @@ const CartProductDetails = () => {
       <Text style={styles.description}>
         Delivery Charges :- {product.delivery_charges}
       </Text>
-      <Text style={styles.description}>{product.review}20,000 ratings</Text>
+      <Text style={styles.description}>{product.review} 20,000 ratings</Text>
       <Text style={styles.description}>
         Emi :- ₹ {product.emi_per_month}/Month
       </Text>
@@ -118,8 +121,8 @@ const CartProductDetails = () => {
         6 Month Cost EMI Plan with HDFC credit-cart.
       </Text>
       <Text style={styles.price}>
-        ₹{product.rupees}
-        <Text style={{ textDecorationLine: "line-through" }}>20</Text>
+        ₹{product.rupees}{" "}
+        <Text style={{ textDecorationLine: "line-through" }}>170</Text>
       </Text>
       <Text style={styles.description}>{product.address}</Text>
       <Text style={styles.description}>

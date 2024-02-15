@@ -10,23 +10,21 @@ import {
 import { useRoute } from "@react-navigation/native";
 import { useNavigation } from "expo-router";
 import { AntDesign } from "@expo/vector-icons";
+import HorizontalLinearStepper from "./HorizontalLinearStepper";
+
 const Buy = () => {
   const route = useRoute();
   const navigation = useNavigation();
   const { product } = route.params;
   const [quantity, setQuantity] = useState(1);
 
-  if (
-    !route.params ||
-    !product ||
-    !product.photo ||
-    !product.name ||
-    !product.rupees
-  ) {
+  if (!route.params || !product) {
     return (
-      <View style={styles.container}>
-        <Text style={styles.errorText}>Product information is incomplete.</Text>
-      </View>
+      <view style={styles.container}>
+        <Text style={styles.errorText}>
+          Product info missing in Buy Now page
+        </Text>
+      </view>
     );
   }
 
@@ -51,6 +49,9 @@ const Buy = () => {
           Order Summary
         </Text>
       </TouchableOpacity>
+      <View style={styles.stepper}>
+        <HorizontalLinearStepper />
+      </View>
       <Image source={{ uri: product.photo }} style={styles.image} />
       <Text style={styles.title}>{product.name}</Text>
       <Text style={styles.price}>₹ {product.rupees}</Text>
@@ -96,7 +97,9 @@ const styles = StyleSheet.create({
   BackButton: {
     fontWeight: "bold",
   },
-
+  stepper: {
+    marginTop: 30,
+  },
   container: {
     flex: 1,
     alignItems: "center",

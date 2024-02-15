@@ -19,5 +19,8 @@ back bottom is working on CartProductDetails , ProductDetails and also if we ref
 stepper
 
 
+camera option below the search
+
+
 
 termite and woodborer 

@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { useRoute } from "@react-navigation/native";
 import { useNavigation } from "expo-router";
+import { Link } from "expo-router";
 
 const ProductDetails = () => {
   const route = useRoute();
@@ -28,8 +29,8 @@ const ProductDetails = () => {
   const addToCart = async (
     product_id,
     name,
-    rupees,
     photo,
+    rupees,
     quantity,
     review,
     percent_off,
@@ -73,9 +74,12 @@ const ProductDetails = () => {
     }
   };
 
-  const handleBuyNow = () => {
-    // Implement logic to handle Buy Now action
-    console.log(`Buy Now ${quantity} ${product.name}.`);
+  const handleBuyNow = (product) => {
+    if (product) {
+      navigation.navigate("Components/Buy", { product: product });
+    } else {
+      console.error("Product information is missing.");
+    }
   };
 
   return (
@@ -118,7 +122,7 @@ const ProductDetails = () => {
         6 Month Cost EMI Plan with HDFC credit-cart.
       </Text>
       <Text style={styles.price}>
-        ₹{product.rupees}
+        ₹{product.rupees}{" "}
         <Text style={{ textDecorationLine: "line-through" }}>20</Text>
       </Text>
       <Text style={styles.description}>{product.address}</Text>
@@ -154,8 +158,13 @@ const ProductDetails = () => {
         >
           <Text style={styles.buttonText}>Add to Cart</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button} onPress={handleBuyNow}>
-          <Text style={styles.buttonText}>Buy Now</Text>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => handleBuyNow(product)}
+        >
+          <t href={"./Buy"} style={styles.buttonText}>
+            Buy Now
+          </t>
         </TouchableOpacity>
       </View>
     </View>
