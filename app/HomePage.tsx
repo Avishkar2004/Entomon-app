@@ -13,9 +13,20 @@ import { Feather } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { Link } from "expo-router";
 import { useNavigation } from "@react-navigation/native";
+import { Camera } from 'expo-camera';
 
 const HomePage = () => {
   const navigation = useNavigation();
+  const [hasPermission, setHasPermission] = useState(null);
+  const [type, setType] = useState(Camera.Constants.Type.back);
+  const [showCamera, setShowCamera] = useState(false); // State to control camera visibility
+
+  useEffect(() => {
+    (async () => {
+      const { status } = await Camera.requestPermissionsAsync();
+      setHasPermission(status === 'granted');
+    })();
+  }, []);
 
   const [products, setProducts] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
@@ -42,7 +53,6 @@ const HomePage = () => {
     } else {
       console.error("Product information is missing.");
     }
-    
   };
 
   return (
@@ -60,7 +70,28 @@ const HomePage = () => {
           value={searchQuery}
           onChangeText={(text) => setSearchQuery(text)}
         />
+        <TouchableOpacity onPress={() => setShowCamera(true)}> {/* Show camera on press */}
+          <Feather name="camera" size={24} color="black" style={styles.cameraIcon} />
+        </TouchableOpacity>
       </View>
+      {showCamera && hasPermission && ( // Conditionally render camera if showCamera is true and user has granted permission
+        <Camera style={styles.camera} type={type}>
+          <View style={styles.cameraButtons}>
+            <TouchableOpacity
+              style={styles.cameraButton}
+              onPress={() => setShowCamera(false)} // Hide camera on press
+            >
+              <Text style={styles.cameraButtonText}>Close</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.cameraButton}
+              onPress={() => alert('Take a picture functionality')} // Implement take picture functionality
+            >
+              <Text style={styles.cameraButtonText}>Take Picture</Text>
+            </TouchableOpacity>
+          </View>
+        </Camera>
+      )}
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.productsContainer}>
           {filteredProducts.map((product, index) => (
@@ -133,6 +164,31 @@ const styles = StyleSheet.create({
     borderColor: "#ccc",
     borderRadius: 5,
     padding: 10,
+  },
+  cameraIcon: {
+    marginLeft: 10,
+  },
+  camera: {
+    flex: 1,
+    aspectRatio: 1,
+  },
+  cameraButtons: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute',
+    bottom: 20,
+    left: 0,
+    right: 0,
+  },
+  cameraButton: {
+    backgroundColor: '#fff',
+    padding: 10,
+    borderRadius: 5,
+    marginHorizontal: 10,
+  },
+  cameraButtonText: {
+    fontSize: 16,
   },
   scrollContainer: {
     flexGrow: 1,
