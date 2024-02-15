@@ -20,11 +20,11 @@ const Buy = () => {
 
   if (!route.params || !product) {
     return (
-      <view style={styles.container}>
+      <View style={styles.container}>
         <Text style={styles.errorText}>
           Product info missing in Buy Now page
         </Text>
-      </view>
+      </View>
     );
   }
 
@@ -52,37 +52,39 @@ const Buy = () => {
       <View style={styles.stepper}>
         <HorizontalLinearStepper />
       </View>
-      <Image source={{ uri: product.photo }} style={styles.image} />
-      <Text style={styles.title}>{product.name}</Text>
-      <Text style={styles.price}>₹ {product.rupees}</Text>
-      <View style={styles.quantityInfoContainer}>
-        <Text style={styles.quantityInfo}>Minimum Order Quantity: 3</Text>
-        <Text style={styles.quantityInfo}>@ ₹78/100ml</Text>
+      <Text style={styles.deliverTo}>Deliver To:</Text>
+      <Text>Avishkar kakde</Text>
+      <Text>
+        Pune, LB bhopatkar path, front of kheliya, road, Bhatancha Bol, Pune,
+        Maharashtra 411030., PUNE, Maharashtra - 411002
+      </Text>
+      <Text>93228103</Text>
+      <View style={styles.productDetails}>
+        <Image source={{ uri: product.photo }} style={styles.image} />
+        <Text style={styles.title}>{product.name}</Text>
+        <Text style={styles.price}>₹ {product.rupees}</Text>
       </View>
-      <View style={styles.offerContainer}>
-        <Text style={styles.offerText}>
-          Combo Offer: Buy 3 items save 3%; Buy 4 or more save 5%
-        </Text>
-        <Text style={styles.offerText}>
-          Bank Offer: 10% off on HSBC Bank Credit Card and EMI Transactions
-        </Text>
+      <View style={styles.gstContainer}>
+        <Text style={styles.gstText}>Use GST Invoice</Text>
+        {/* Checkbox for GST Invoice */}
       </View>
-      <TextInput
-        style={styles.quantityInput}
-        value={quantity.toString()}
-        onChangeText={(text) => setQuantity(parseInt(text) || 1)}
-        keyboardType="numeric"
-        placeholder="Quantity"
-      />
-      <TouchableOpacity style={styles.buyButton} onPress={handleBuyToCart}>
-        <Text style={styles.buyButtonText}>Buy Now</Text>
-      </TouchableOpacity>
-      <Text style={styles.description}>{product.description}</Text>
-      <View style={styles.specifications}>
-        <Text style={styles.specsTitle}>Specifications:</Text>
-        <Text style={styles.specsDetail}>
-          Quantity: 100 ml Fragrance: Deodorant Spray For Men
+      <View style={styles.priceDetails}>
+        <Text style={styles.priceText}>Item Discount: 0%</Text>
+        <Text style={styles.priceText}>
+          Delivery charges :- {product.delivery_charges}
         </Text>
+        <Text style={styles.totalText}>Total Amount: ₹{product.rupees}</Text>
+      </View>
+      <View style={styles.buttonsContainer}>
+        <TouchableOpacity style={styles.buyButton} onPress={handleBuyToCart}>
+          <Text style={styles.buyButtonText}>{product.rupees}</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.continueButton}
+          onPress={handleBuyToCart}
+        >
+          <Text style={styles.continueButtonText}>Continue</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -107,6 +109,27 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     backgroundColor: "#fff",
   },
+  deliverTo: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginTop: 20,
+    marginBottom: 10,
+    alignSelf: "flex-start",
+  },
+  input: {
+    height: 40,
+    width: "100%",
+    borderColor: "#ccc",
+    borderWidth: 1,
+    marginBottom: 20,
+    paddingHorizontal: 10,
+    borderRadius: 5,
+    fontSize: 16,
+  },
+  productDetails: {
+    alignItems: "center",
+    marginBottom: 20,
+  },
   image: {
     width: 200,
     height: 200,
@@ -124,66 +147,61 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     color: "#4CAF50",
   },
-  quantityInfoContainer: {
+  gstContainer: {
     flexDirection: "row",
-    justifyContent: "space-between",
-    marginBottom: 10,
-  },
-  quantityInfo: {
-    fontSize: 16,
-    color: "#555",
-  },
-  offerContainer: {
-    marginBottom: 10,
     alignItems: "center",
+    marginBottom: 20,
   },
-  offerText: {
+  gstText: {
+    fontSize: 16,
+    marginRight: 10,
+  },
+  priceDetails: {
+    marginBottom: 20,
+    alignSelf: "flex-start",
+  },
+  priceText: {
     fontSize: 16,
     marginBottom: 5,
-    textAlign: "center",
     color: "#555",
   },
-  quantityInput: {
-    height: 40,
-    width: "100%",
-    borderColor: "#ccc",
-    borderWidth: 1,
-    marginBottom: 20,
-    paddingHorizontal: 10,
-    borderRadius: 5,
+  totalText: {
     fontSize: 16,
+    fontWeight: "200",
+    marginBottom: 10,
+  },
+  buttonsContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: "100%",
+    position: "relative",
+    bottom: 20,
+    paddingHorizontal: 20,
   },
   buyButton: {
-    backgroundColor: "#2196F3",
+    backgroundColor: "white",
     paddingVertical: 12,
     paddingHorizontal: 20,
     borderRadius: 5,
-    marginBottom: 20,
+    marginRight: 10,
   },
   buyButtonText: {
+    fontSize: 16,
+    fontWeight: "bold",
+    textAlign: "center",
+    gap: 30,
+  },
+  continueButton: {
+    backgroundColor: "#ff9f00",
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    borderRadius: 5,
+  },
+  continueButtonText: {
     color: "#fff",
     fontSize: 16,
     fontWeight: "bold",
     textAlign: "center",
-  },
-  description: {
-    fontSize: 16,
-    textAlign: "left",
-    marginBottom: 20,
-    color: "#555",
-  },
-  specifications: {
-    alignItems: "flex-start",
-  },
-  specsTitle: {
-    fontSize: 18,
-    fontWeight: "bold",
-    marginBottom: 5,
-    color: "#333",
-  },
-  specsDetail: {
-    fontSize: 16,
-    color: "#555",
   },
   errorText: {
     fontSize: 16,
