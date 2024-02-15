@@ -9,7 +9,6 @@ import {
 } from "react-native";
 import { useRoute } from "@react-navigation/native";
 import { useNavigation } from "expo-router";
-import { Link } from "expo-router";
 
 const ProductDetails = () => {
   const route = useRoute();
@@ -17,7 +16,6 @@ const ProductDetails = () => {
   const { product } = route.params;
   const [quantity, setQuantity] = useState(1);
 
-  // Check if route params and product exist and have the necessary properties
   if (!route.params || !product) {
     return (
       <View style={styles.container}>
@@ -65,12 +63,9 @@ const ProductDetails = () => {
       if (!response.ok) {
         throw new Error("Failed to add item to cart");
       }
-
-      // Handle success, e.g., show a success message
       console.log("Item added to cart successfully");
     } catch (error) {
       console.error("Error adding item to cart:", error);
-      // Handle error, e.g., show an error message to the user
     }
   };
 
@@ -162,9 +157,7 @@ const ProductDetails = () => {
           style={styles.button}
           onPress={() => handleBuyNow(product)}
         >
-          <t href={"./Buy"} style={styles.buttonText}>
-            Buy Now
-          </t>
+          <Text style={styles.buttonText}>Buy Now</Text>
         </TouchableOpacity>
       </View>
     </View>

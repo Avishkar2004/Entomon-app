@@ -75,12 +75,12 @@ const CartProductDetails = () => {
 
   const handleBuyNow = (product) => {
     if (product) {
-      navigation.navigate("./Buy", { product: product });
+      navigation.navigate("Components/Buy", { product: product });
     } else {
       console.error("Product information is missing.");
     }
   };
-  
+
   return (
     <View style={styles.container}>
       <TouchableOpacity
@@ -157,7 +157,10 @@ const CartProductDetails = () => {
         >
           <Text style={styles.buttonText}>Add to Cart</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button} onPress={handleBuyNow}>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => handleBuyNow(product)}
+        >
           <Text style={styles.buttonText}>Buy Now</Text>
         </TouchableOpacity>
       </View>
