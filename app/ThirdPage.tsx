@@ -20,12 +20,10 @@ const ThirdPage = () => {
         <Text style={styles.subtitle}>
           An email address lets us share tips received.
         </Text>
-
         <View style={styles.inputContainer}>
           <Text style={styles.label}>Full Name*</Text>
           <TextInput style={styles.input} placeholder="Type your name " />
         </View>
-
         <View style={styles.inputContainer}>
           <Text style={styles.label}>Email</Text>
           <TextInput
@@ -33,9 +31,8 @@ const ThirdPage = () => {
             placeholder="Type your email (optional)"
           />
         </View>
-
         <TouchableOpacity style={styles.registerButton}>
-          <Link href={"/UI/HomePage"} style={styles.registerButtonText}>
+          <Link href={"/HomePage"} style={styles.registerButtonText}>
             Register
           </Link>
         </TouchableOpacity>
