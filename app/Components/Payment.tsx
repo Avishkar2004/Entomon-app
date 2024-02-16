@@ -1,20 +1,22 @@
-import { useRoute } from "@react-navigation/native";
 import React, { useState } from "react";
+import { useRoute } from "@react-navigation/native";
 import {
   View,
   Text,
-  Picker,
   TextInput,
   TouchableOpacity,
   StyleSheet,
 } from "react-native";
+import { AntDesign } from "@expo/vector-icons";
 
 const Payment = () => {
   const route = useRoute();
   const { product } = route.params;
   const [mobileNumber, setMobileNumber] = useState("");
-  const [selectedOffer, setSelectedOffer] = useState("");
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("");
+  const [cardNumber, setCardNumber] = useState("");
+  const [validThru, setValidThru] = useState("");
+  const [cvv, setCvv] = useState("");
 
   const handleMobileNumberChange = (text) => {
     setMobileNumber(text);
@@ -26,49 +28,118 @@ const Payment = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.headerText}>Payments</Text>
-      <Text style={styles.totalAmount}>Total Amount: ₹ 1,68,999</Text>
-      <View style={styles.row}>
-        <View style={styles.halfWidth}>
-          <Text style={styles.label}>Select Offer</Text>
-          <Picker
-            selectedValue={selectedOffer}
-            // onValueChange={(itemValue) => setSelectedOffer(itemValue)}
-            style={styles.picker}
-          >
-            <Picker.Item label="Select Offer" value="" />
-            <Picker.Item label="Offer 1" value="offer1" />
-            <Picker.Item label="Offer 2" value="offer2" />
-          </Picker>
-        </View>
-        <Text style={styles.savingsText}>Save up to ₹ 3,000</Text>
+      <View style={styles.headerContainer}>
+        <Text style={styles.headerText}>
+          <AntDesign name="arrowleft" size={20} color="black" />
+          Payment
+        </Text>
+        <TouchableOpacity onPress={() => {}}>
+          <Text style={styles.arrow}></Text>
+        </TouchableOpacity>
       </View>
-      <View style={styles.row}>
-        <View style={styles.halfWidth}>
-          <Text style={styles.label}>Payment Method</Text>
-          <Picker
-            selectedValue={selectedPaymentMethod}
-            // onValueChange={(itemValue) => setSelectedPaymentMethod(itemValue)}
-            style={styles.picker}
-          >
-            <Picker.Item label="Select Payment Method" value="" />
-            <Picker.Item label="Credit/Debit Card" value="creditDebitCard" />
-            <Picker.Item label="Net Banking" value="netBanking" />
-            <Picker.Item label="EMI" value="emi" />
-            <Picker.Item label="Wallets" value="wallet" />
-          </Picker>
-        </View>
-        <View style={styles.halfWidth}>
-          <Text style={styles.label}>Paytm Linked Mobile Number</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="Enter Mobile Number"
-            value={mobileNumber}
-            onChangeText={handleMobileNumberChange}
-            keyboardType="numeric"
-          />
-        </View>
+      <Text style={styles.totalAmount}>Total Amount: ₹ {product.rupees}</Text>
+      <Text style={styles.discount}>20% Off</Text>
+      <View style={styles.paymentMethodContainer}>
+        <Text style={styles.paymentMethodHeader}>Payment Method</Text>
+        <TouchableOpacity
+          style={styles.paymentMethodOption}
+          onPress={() => setSelectedPaymentMethod("creditDebitCard")}
+        >
+          <Text>Credit/Debit Card</Text>
+          {selectedPaymentMethod === "creditDebitCard" && (
+            <View style={styles.cardDetailsContainer}>
+              <TextInput
+                style={styles.input}
+                placeholder="Card Number"
+                value={cardNumber}
+                onChangeText={(text) => setCardNumber(text)}
+                keyboardType="numeric"
+              />
+              <TextInput
+                style={styles.input}
+                placeholder="Valid Thru"
+                value={validThru}
+                onChangeText={(text) => setValidThru(text)}
+              />
+              <TextInput
+                style={styles.input}
+                placeholder="CVV"
+                value={cvv}
+                onChangeText={(text) => setCvv(text)}
+                keyboardType="numeric"
+              />
+            </View>
+          )}
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.paymentMethodOption}
+          onPress={() => setSelectedPaymentMethod("netBanking")}
+        >
+          <Text>Net Banking</Text>
+        </TouchableOpacity>
+        {selectedPaymentMethod === "netBanking" && (
+          <View style={styles.walletsContainer}>
+            <Text style={styles.walletsHeader}>Wallets</Text>
+            <View style={styles.walletsOptions}>
+              <TouchableOpacity onPress={() => {}} style={styles.walletOption}>
+                <Text>PhonePe</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => {}} style={styles.walletOption}>
+                <Text>Paytm Payments Bank</Text>
+              </TouchableOpacity>
+            </View>
+            <Text style={styles.mobileNumberLabel}>
+              Paytm Linked Mobile Number
+            </Text>
+            <View style={styles.mobileNumberContainer}>
+              <TextInput
+                style={styles.input}
+                placeholder="Enter Mobile Number"
+                value={mobileNumber}
+                onChangeText={handleMobileNumberChange}
+                keyboardType="numeric"
+              />
+              <TouchableOpacity onPress={() => {}} style={styles.linkButton}>
+                <Text style={styles.linkButtonText}>Link</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        )}
+        <TouchableOpacity
+          style={styles.paymentMethodOption}
+          onPress={() => setSelectedPaymentMethod("wallet")}
+        >
+          <Text>Wallets</Text>
+        </TouchableOpacity>
       </View>
+      {selectedPaymentMethod === "wallet" && (
+        <View style={styles.walletsContainer}>
+          <Text style={styles.walletsHeader}>Wallets</Text>
+          <View style={styles.walletsOptions}>
+            <TouchableOpacity onPress={() => {}} style={styles.walletOption}>
+              <Text>PhonePe</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => {}} style={styles.walletOption}>
+              <Text>Paytm Payments Bank</Text>
+            </TouchableOpacity>
+          </View>
+          <Text style={styles.mobileNumberLabel}>
+            Paytm Linked Mobile Number
+          </Text>
+          <View style={styles.mobileNumberContainer}>
+            <TextInput
+              style={styles.input}
+              placeholder="Enter Mobile Number"
+              value={mobileNumber}
+              onChangeText={handleMobileNumberChange}
+              keyboardType="numeric"
+            />
+            <TouchableOpacity onPress={() => {}} style={styles.linkButton}>
+              <Text style={styles.linkButtonText}>Link</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      )}
       <TouchableOpacity style={styles.payButton} onPress={handlePayment}>
         <Text style={styles.payButtonText}>Pay ₹ {product.rupees}</Text>
       </TouchableOpacity>
@@ -82,54 +153,97 @@ const styles = StyleSheet.create({
     padding: 20,
     backgroundColor: "#ffffff",
   },
-  headerText: {
-    fontSize: 24,
-    fontWeight: "bold",
-    color: "#333333",
-    marginBottom: 10,
-  },
-  totalAmount: {
-    fontSize: 16,
-    color: "#666666",
-    marginBottom: 20,
-  },
-  row: {
+  headerContainer: {
     flexDirection: "row",
+    justifyContent: "space-between",
     alignItems: "center",
     marginBottom: 20,
   },
-  halfWidth: {
-    flex: 1,
-    marginRight: 10,
-  },
-  label: {
-    fontSize: 16,
+  headerText: {
+    fontSize: 28,
+    fontWeight: "bold",
     color: "#333333",
-    marginBottom: 5,
   },
-  picker: {
-    backgroundColor: "#f0f0f0",
-    borderRadius: 5,
+  arrow: {
+    fontSize: 28,
+    color: "#007bff",
+  },
+  totalAmount: {
+    fontSize: 20,
+    color: "#666666",
     marginBottom: 10,
   },
-  savingsText: {
+  discount: {
+    fontSize: 18,
+    color: "green",
+    marginBottom: 10,
+  },
+  paymentMethodContainer: {
+    marginBottom: 20,
+  },
+  paymentMethodHeader: {
+    fontSize: 18,
+    color: "#333333",
+    marginBottom: 10,
+  },
+  paymentMethodOption: {
+    backgroundColor: "#f0f0f0",
+    padding: 10,
+    borderRadius: 10,
+    marginBottom: 10,
+  },
+  walletsContainer: {
+    marginBottom: 20,
+  },
+  walletsHeader: {
+    fontSize: 18,
+    color: "#333333",
+    marginBottom: 10,
+  },
+  walletsOptions: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginBottom: 10,
+  },
+  walletOption: {
+    backgroundColor: "#f0f0f0",
+    padding: 10,
+    borderRadius: 10,
+  },
+  mobileNumberLabel: {
     fontSize: 16,
-    color: "#666666",
-    marginLeft: 10,
+    color: "#333333",
+    marginBottom: 10,
+  },
+  mobileNumberContainer: {
+    flexDirection: "row",
+    alignItems: "center",
   },
   input: {
+    flex: 1,
     backgroundColor: "#f0f0f0",
-    borderRadius: 5,
-    padding: 10,
+    borderRadius: 10,
+    padding: 15,
+    marginBottom: 10,
+  },
+  linkButton: {
+    backgroundColor: "#007bff",
+    borderRadius: 10,
+    padding: 15,
+    marginLeft: 10,
+  },
+  linkButtonText: {
+    fontSize: 16,
+    color: "#ffffff",
   },
   payButton: {
     backgroundColor: "#007bff",
-    borderRadius: 5,
-    padding: 15,
+    borderRadius: 10,
+    padding: 20,
     alignItems: "center",
   },
   payButtonText: {
-    fontSize: 18,
+    fontSize: 22,
     fontWeight: "bold",
     color: "#ffffff",
   },
