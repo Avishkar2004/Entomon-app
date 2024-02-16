@@ -42,6 +42,14 @@ const Buy = () => {
     setShowModal(false);
   };
 
+  const passDataToPayment = (product) => {
+    if (product) {
+      navigation.navigate("Components/Payment", { product: product });
+    } else {
+      console.error("Product info is missing");
+    }
+  };
+
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContent}>
@@ -117,12 +125,10 @@ const Buy = () => {
             <Text>{product.name}</Text>
             {/* <Text>Product Price:- {product.rupees}</Text> */}
             <TouchableOpacity
-              onPress={closeModal}
+              onPress={(closeModal, () => passDataToPayment(product))}
               style={styles.modalbtnContainer}
             >
-              <Link href={"Components/Payment"} style={styles.buyButtonText}>
-                Skip & Continue
-              </Link>
+              <Text style={styles.buyButtonText}>Skip & Continue</Text>
             </TouchableOpacity>
           </View>
         </View>
