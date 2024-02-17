@@ -19,10 +19,9 @@ const Buy = () => {
   const { product } = route.params;
   const [quantity, setQuantity] = useState(1);
   const [showModal, setShowModal] = useState(false); // State to control the visibility of the modal
-  const [userLocation, setUserLocation] = useState(null); // State to store user's location
+  const [userAddress, setUserAddress] = useState(null);
 
   useEffect(() => {
-    // Request permission to access the user's location
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== "granted") {
@@ -30,11 +29,56 @@ const Buy = () => {
         return;
       }
 
-      // Get the user's current location
       let location = await Location.getCurrentPositionAsync({});
-      setUserLocation(location.coords);
+      const { latitude, longitude } = location.coords;
+
+      // Call a function to get the address details using Google Maps Geocoding API
+      const addressDetails = await getAddressFromCoordinates(
+        latitude,
+        longitude
+      );
+      setUserAddress(addressDetails);
     })();
-  }, []); // Empty dependency array ensures the effect runs only once
+  }, []);
+
+  const getAddressFromCoordinates = async (latitude, longitude) => {
+    try {
+      const apiKey = "AIzaSyCk8NcA7hQSPZeyEfD6qlHAxe_xui3i5nc";
+      const response = await fetch(
+        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${apiKey}`
+      );
+      const data = await response.json();
+      console.log("Geocoding API Response:", data); // Debugging statement
+
+      if (data.status === "OK" && data.results && data.results.length > 0) {
+        const addressComponents = data.results[0].address_components;
+        let addressDetails = {
+          name: "",
+          pincode: "",
+          city: "",
+          country: "",
+        };
+
+        addressComponents.forEach((component) => {
+          if (component.types.includes("postal_code")) {
+            addressDetails.pincode = component.long_name;
+          } else if (component.types.includes("locality")) {
+            addressDetails.city = component.long_name;
+          } else if (component.types.includes("country")) {
+            addressDetails.country = component.long_name;
+          }
+        });
+
+        return addressDetails;
+      } else {
+        console.error("No address found for the provided coordinates");
+        return null;
+      }
+    } catch (error) {
+      console.error("Error fetching address:", error);
+      return null;
+    }
+  };
 
   if (!route.params || !product) {
     return (
@@ -88,11 +132,13 @@ const Buy = () => {
         </View>
         <Text style={styles.deliverTo}>Deliver To:</Text>
         <Text>Avishkar kakde</Text>
-        {userLocation && (
+        <Text>User Address:</Text>
+        {userAddress && (
           <View>
-            <Text>Your live location</Text>
-            <Text>Latitude: {userLocation.latitude}</Text>
-            <Text>Latitude: {userLocation.latitude}</Text>
+            <Text>Name: {userAddress.name}</Text>
+            <Text>Pincode: {userAddress.pincode}</Text>
+            <Text>City: {userAddress.city}</Text>
+            <Text>Country: {userAddress.country}</Text>
           </View>
         )}
         <Text>93228103</Text>
