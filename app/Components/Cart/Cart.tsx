@@ -9,7 +9,6 @@ import {
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-import { Link } from "expo-router";
 
 const Cart = () => {
   const [products, setProducts] = useState([]);
@@ -42,10 +41,21 @@ const Cart = () => {
   };
 
   const handleRemove = (productId) => {
-    const updatedProducts = products.filter(
-      (product) => product.product_id !== productId
-    );
-    setProducts(updatedProducts);
+    // Send a DELETE request to your backend API to remove the product from the cart
+    fetch(`http://localhost:8000/api/cart/${productId}`, {
+      method: "DELETE",
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        // Update the products state to remove the deleted product
+        const updatedProducts = products.filter(
+          (product) => product.product_id !== productId
+        );
+        setProducts(updatedProducts);
+      })
+      .catch((error) => console.error("Error removing product:", error));
   };
 
   const productDetails = (product) => {
@@ -75,13 +85,11 @@ const Cart = () => {
             <View style={styles.itemDetails}>
               <Text style={styles.itemName}>{product.name}</Text>
               <Text style={styles.itemPrice}>$ {product.rupees}</Text>
-              <Text style={styles.itemPrice}>
-                Quantity :- {product.quantity}
-              </Text>
+              <Text style={styles.itemPrice}>Quantity: {product.quantity}</Text>
             </View>
             <View style={styles.buttonsContainer}>
               <TouchableOpacity
-                style={[styles.button, styles.addToCartButton]}
+                style={[styles.button, styles.removeButton]}
                 onPress={() => handleRemove(product.product_id)}
               >
                 <Text style={styles.buttonText}>Remove</Text>
@@ -90,9 +98,7 @@ const Cart = () => {
                 style={[styles.button, styles.buyNowButton]}
                 onPress={() => handleBuyNow(product)}
               >
-                <Link href={"Components/Buy"} style={styles.buttonText}>
-                  Buy Now
-                </Link>
+                <Text style={styles.buttonText}>Buy Now</Text>
               </TouchableOpacity>
             </View>
           </TouchableOpacity>
@@ -121,6 +127,16 @@ const styles = StyleSheet.create({
   itemContainer: {
     flexDirection: "row",
     marginBottom: 20,
+    backgroundColor: "#fff",
+    borderRadius: 10,
+    elevation: 3,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
   },
   itemImage: {
     width: 80,
@@ -134,14 +150,17 @@ const styles = StyleSheet.create({
   },
   itemName: {
     fontSize: 16,
+    marginBottom: 5,
   },
   itemPrice: {
     fontSize: 16,
     fontWeight: "bold",
+    marginBottom: 5,
   },
   buttonsContainer: {
     flexDirection: "row",
     alignItems: "center",
+    marginRight: 10,
   },
   button: {
     paddingVertical: 5,
@@ -151,14 +170,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  addToCartButton: {
-    backgroundColor: "green",
+  removeButton: {
+    backgroundColor: "red",
   },
   buyNowButton: {
-    backgroundColor: "blue",
+    backgroundColor: "green",
   },
   buttonText: {
-    color: "white",
+    color: "#fff",
     fontWeight: "bold",
   },
 });

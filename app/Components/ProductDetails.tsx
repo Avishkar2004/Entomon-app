@@ -27,8 +27,8 @@ const ProductDetails = () => {
   const addToCart = async (
     product_id,
     name,
-    photo,
     rupees,
+    photo,
     quantity,
     review,
     percent_off,
@@ -63,6 +63,7 @@ const ProductDetails = () => {
       if (!response.ok) {
         throw new Error("Failed to add item to cart");
       }
+
       console.log("Item added to cart successfully");
     } catch (error) {
       console.error("Error adding item to cart:", error);

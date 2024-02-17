@@ -8,9 +8,11 @@ import {
   StyleSheet,
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
+import { useNavigation } from "expo-router";
 
 const Payment = () => {
   const route = useRoute();
+  const navigation = useNavigation();
   const { product } = route.params;
   const [mobileNumber, setMobileNumber] = useState("");
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("");
@@ -22,17 +24,17 @@ const Payment = () => {
     setMobileNumber(text);
   };
 
-  const handlePayment = () => {
-    // Implement your payment logic here
-  };
+  const handlePayment = () => {};
 
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
-        <Text style={styles.headerText}>
-          <AntDesign name="arrowleft" size={20} color="black" />
-          Payment
-        </Text>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <Text style={styles.headerText}>
+            <AntDesign name="arrowleft" size={20} color="black" />
+            Payment
+          </Text>
+        </TouchableOpacity>
         <TouchableOpacity onPress={() => {}}>
           <Text style={styles.arrow}></Text>
         </TouchableOpacity>

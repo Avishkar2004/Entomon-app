@@ -13,14 +13,14 @@ import { Feather } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { Link } from "expo-router";
 import { useNavigation } from "@react-navigation/native";
-import { Camera, CameraType } from "expo-camera"; // Import Camera and CameraType
+import { Camera, CameraType } from "expo-camera";
 import { Button } from "react-native";
 
 const HomePage = () => {
   const navigation = useNavigation();
   const [hasPermission, setHasPermission] = useState(null);
   const [type, setType] = useState(CameraType.back);
-  const [showCamera, setShowCamera] = useState(false); // State to control camera visibility
+  const [showCamera, setShowCamera] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -161,7 +161,7 @@ const styles = StyleSheet.create({
     padding: 10,
     borderBottomWidth: 1,
     borderBottomColor: "#ccc",
-    zIndex: 2, // Ensure the search bar stays above the ScrollView
+    zIndex: 2,
   },
   searchIcon: {
     marginRight: 10,
@@ -215,7 +215,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#ccc",
     borderRadius: 10,
-    width: "48%", // Adjust width as needed
+    width: "48%",
     paddingHorizontal: 10,
   },
   image: {
@@ -226,7 +226,7 @@ const styles = StyleSheet.create({
   },
   productDetails: {
     flex: 1,
-    marginLeft: 10, // Add margin to separate image and text
+    marginLeft: 10,
   },
   title: {
     fontSize: 18,
@@ -249,7 +249,7 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
-    zIndex: 2, // Ensure the footer stays above the ScrollView
+    zIndex: 2,
     backgroundColor: "#fff",
   },
   footerIcon: {

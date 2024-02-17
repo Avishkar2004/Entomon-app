@@ -65,11 +65,9 @@ const CartProductDetails = () => {
         throw new Error("Failed to add item to cart");
       }
 
-      // Handle success, e.g., show a success message
       console.log("Item added to cart successfully");
     } catch (error) {
       console.error("Error adding item to cart:", error);
-      // Handle error, e.g., show an error message to the user
     }
   };
 

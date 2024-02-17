@@ -8,11 +8,10 @@ const Profile = () => {
     name: "John Doe",
     number: "+1234567890",
     address: "123 Main Street, City, Country",
-    cart: [], // Array to store user's cart items
+    cart: [],
   };
 
   const handleLogout = () => {
-    // Handle logout action
     console.log("Logout");
   };
 

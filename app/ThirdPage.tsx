@@ -58,13 +58,13 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 20,
     textAlign: "center",
-    color: "#333", // Darkened text color
+    color: "#333",
   },
   subtitle: {
     fontSize: 16,
     marginBottom: 10,
     textAlign: "center",
-    color: "#666", // Slightly lighter text color
+    color: "#666",
   },
   inputContainer: {
     width: "100%",
@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "bold",
     marginBottom: 5,
-    color: "#333", // Darkened text color
+    color: "#333",
   },
   input: {
     borderWidth: 1,
@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     fontSize: 16,
     width: "100%",
-    color: "#333", // Darkened text color
+    color: "#333",
   },
   registerButton: {
     backgroundColor: "#007BFF",
@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     paddingHorizontal: 30,
     marginTop: 20,
-    alignItems: "center", // Center align button content
+    alignItems: "center",
   },
   registerButtonText: {
     color: "#fff",

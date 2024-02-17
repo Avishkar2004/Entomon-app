@@ -95,7 +95,7 @@ const Buy = () => {
             <Text>Latitude: {userLocation.latitude}</Text>
           </View>
         )}
-        <Text>93228103</Text>
+        <Text>932203</Text>
         <View style={styles.productDetails}>
           <Image source={{ uri: product.photo }} style={styles.image} />
           <Text style={styles.title}>{product.name}</Text>
@@ -139,7 +139,7 @@ const Buy = () => {
           <View style={styles.modalContent}>
             <Image
               source={{ uri: product.photo }}
-              style={styles.productImage} // Added style for the image
+              style={styles.productImage}
             />
             <Text>{product.name}</Text>
             {/* <Text>Product Price:- {product.rupees}</Text> */}
@@ -163,7 +163,7 @@ const styles = StyleSheet.create({
   },
   scrollContent: {
     paddingHorizontal: 20,
-    paddingBottom: 100, // Adjust paddingBottom for space for fixed buttons
+    paddingBottom: 100,
   },
   backButton: {
     marginTop: 20,
@@ -233,26 +233,33 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   buyButton: {
+    flex: 1,
     backgroundColor: "white",
     paddingVertical: 12,
     paddingHorizontal: 20,
     borderRadius: 5,
     marginRight: 10,
   },
+
   buyButtonText: {
     fontSize: 16,
     fontWeight: "bold",
+    textAlign: "center",
   },
+
   continueButton: {
+    flex: 1,
     backgroundColor: "#fb641b",
     paddingVertical: 12,
     paddingHorizontal: 20,
     borderRadius: 5,
   },
+
   continueButtonText: {
     color: "#fff",
     fontSize: 16,
     fontWeight: "bold",
+    textAlign: "center",
   },
   errorText: {
     fontSize: 16,
@@ -272,11 +279,11 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     elevation: 5,
     alignItems: "center",
-    width: 300, // Set a fixed width for the modal content
+    width: 300,
   },
   productImage: {
-    width: 200, // Adjust the width as needed
-    height: 200, // Adjust the height as needed
+    width: 200,
+    height: 200,
     marginBottom: 20,
     borderRadius: 10,
   },
