@@ -42,7 +42,7 @@ const Cart = () => {
 
   const handleRemove = (productId) => {
     // Send a DELETE request to your backend API to remove the product from the cart
-    fetch(`http://localhost:8000/api/cart/${productId}`, {
+    fetch(`http://localhost:8000/cart/${productId}`, {
       method: "DELETE",
     })
       .then((response) => {

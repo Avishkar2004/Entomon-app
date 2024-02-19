@@ -41,14 +41,17 @@ const Page = () => {
           Explore the new ways of Agriculture Shopping
         </Text>
         <TouchableOpacity style={styles.continueButton}>
-        <Link style={styles.continueText} href={"/SecondPage"}>
+          <Link style={styles.continueText} href={"/SecondPage"}>
             Continue With Number
-          </Link>{" "}        </TouchableOpacity>
+          </Link>{" "}
+        </TouchableOpacity>
 
         {/* New button for Continue with Google */}
         <TouchableOpacity style={styles.continueWithGoogleButton}>
           <AntDesign name="google" size={24} color="white" />
-          <Link href={'/SecondPage'} style={styles.continueWithGoogleText}>Continue With Google</Link>
+          <Link href={"/SecondPage"} style={styles.continueWithGoogleText}>
+            Continue With Google
+          </Link>
         </TouchableOpacity>
       </LinearGradient>
       <View style={styles.footerContainer}>
