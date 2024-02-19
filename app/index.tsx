@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import { Link } from "expo-router";
+import { AntDesign } from "@expo/vector-icons";
 
 const Page = () => {
   return (
@@ -40,9 +40,13 @@ const Page = () => {
           Explore the new ways of Agriculture Shopping
         </Text>
         <TouchableOpacity style={styles.continueButton}>
-          <Link style={styles.continueText} href={"/SecondPage"}>
-            Continue With Phone Number
-          </Link>{" "}
+          <Text style={styles.continueText}>Continue With Number</Text>
+        </TouchableOpacity>
+
+        {/* New button for Continue with Google */}
+        <TouchableOpacity style={styles.continueWithGoogleButton}>
+          <AntDesign name="google" size={24} color="white" />
+          <Text style={styles.continueWithGoogleText}>Continue With Google</Text>
         </TouchableOpacity>
       </LinearGradient>
       <View style={styles.footerContainer}>
@@ -66,25 +70,26 @@ const styles = StyleSheet.create({
   },
   logoContainer: {
     position: "absolute",
-    top: 20,
+    top: 40,
     left: 20,
+    zIndex: 1,
   },
   logo: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
+    width: 80,
+    height: 80,
+    borderRadius: 40,
   },
   middleContainer: {
-    marginTop: 20,
+    marginTop: 140,
     flexDirection: "row",
     justifyContent: "space-around",
     alignItems: "center",
     width: "100%",
   },
   photoContainer: {
-    width: 80,
-    height: 80,
-    borderRadius: 40,
+    width: 60,
+    height: 60,
+    borderRadius: 30,
     overflow: "hidden",
   },
   photo: {
@@ -95,20 +100,35 @@ const styles = StyleSheet.create({
   shopping: {
     fontSize: 18,
     color: "black",
-    padding: 10,
+    padding: 20,
     textAlign: "center",
   },
   continueButton: {
-    backgroundColor: "black",
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 20,
-    marginTop: 20,
+    backgroundColor: "#000",
+    paddingVertical: 15,
+    paddingHorizontal: 40,
+    borderRadius: 30,
+    marginTop: 30,
   },
   continueText: {
-    fontSize: 15,
+    fontSize: 16,
     color: "#fff",
     textAlign: "center",
+  },
+  // Styles for Continue with Google button
+  continueWithGoogleButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#4285F4",
+    paddingVertical: 15,
+    paddingHorizontal: 30,
+    borderRadius: 30,
+    marginTop: 20,
+  },
+  continueWithGoogleText: {
+    fontSize: 16,
+    color: "#fff",
+    marginLeft: 10,
   },
   footerContainer: {
     justifyContent: "flex-end",
@@ -116,9 +136,9 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   footerText: {
-    fontSize: 14,
-    marginTop: 5,
-    color: "#000",
+    fontSize: 12,
+    marginTop: 10,
+    color: "#888",
   },
 });
 
