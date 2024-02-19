@@ -2,6 +2,7 @@ import React from "react";
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { AntDesign } from "@expo/vector-icons";
+import { Link } from "expo-router";
 
 const Page = () => {
   return (
@@ -40,13 +41,14 @@ const Page = () => {
           Explore the new ways of Agriculture Shopping
         </Text>
         <TouchableOpacity style={styles.continueButton}>
-          <Text style={styles.continueText}>Continue With Number</Text>
-        </TouchableOpacity>
+        <Link style={styles.continueText} href={"/SecondPage"}>
+            Continue With Number
+          </Link>{" "}        </TouchableOpacity>
 
         {/* New button for Continue with Google */}
         <TouchableOpacity style={styles.continueWithGoogleButton}>
           <AntDesign name="google" size={24} color="white" />
-          <Text style={styles.continueWithGoogleText}>Continue With Google</Text>
+          <Link href={'/SecondPage'} style={styles.continueWithGoogleText}>Continue With Google</Link>
         </TouchableOpacity>
       </LinearGradient>
       <View style={styles.footerContainer}>
