@@ -12,8 +12,8 @@ import { useNavigation } from "expo-router";
 
 const ProductDetails = () => {
   const route = useRoute();
-  const navigation = useNavigation();
   const { product } = route.params;
+  const navigation = useNavigation();
   const [quantity, setQuantity] = useState(1);
 
   if (!route.params || !product) {

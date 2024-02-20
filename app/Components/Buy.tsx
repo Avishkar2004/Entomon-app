@@ -6,61 +6,40 @@ import {
   StyleSheet,
   TouchableOpacity,
   ScrollView,
-  Modal, // Import Modal component
+  Modal,
 } from "react-native";
 import { useRoute } from "@react-navigation/native";
-import { Link, useNavigation } from "expo-router";
+import { useNavigation } from "expo-router";
 import { AntDesign } from "@expo/vector-icons";
 import HorizontalLinearStepper from "./HorizontalLinearStepper";
-import * as Location from "expo-location";
-const Buy = () => {
+
+const Buy = ({ productId }) => {
   const route = useRoute();
   const navigation = useNavigation();
   const { product } = route.params;
   const [quantity, setQuantity] = useState(1);
-  const [showModal, setShowModal] = useState(false); // State to control the visibility of the modal
-  const [userLocation, setUserLocation] = useState(null); // State to store user's location
-
-  useEffect(() => {
-    // Request permission to access the user's location
-    (async () => {
-      let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== "granted") {
-        console.error("Permission to access location was denied");
-        return;
-      }
-
-      // Get the user's current location
-      let location = await Location.getCurrentPositionAsync({});
-      setUserLocation(location.coords);
-    })();
-  }, []); // Empty dependency array ensures the effect runs only once
-
-  if (!route.params || !product) {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.errorText}>
-          Product info missing in Buy Now page
-        </Text>
-      </View>
-    );
-  }
+  const [showModal, setShowModal] = useState(false);
 
   const handleBuyToCart = () => {
-    // Implement logic to Buy product to cart
     console.log(`Bought ${quantity} ${product.name} to cart.`);
-    // Show the modal
     setShowModal(true);
   };
 
   const closeModal = () => {
-    // Close the modal
     setShowModal(false);
   };
 
   const passDataToPayment = (product) => {
     if (product) {
       navigation.navigate("Components/Payment", { product: product });
+    } else {
+      console.error("Product info is missing");
+    }
+  };
+
+  const handleAddress = () => {
+    if (product) {
+      navigation.navigate("Components/ChangeAddress", { productId: productId });
     } else {
       console.error("Product info is missing");
     }
@@ -88,13 +67,10 @@ const Buy = () => {
         </View>
         <Text style={styles.deliverTo}>Deliver To:</Text>
         <Text>Avishkar kakde</Text>
-        {userLocation && (
-          <View>
-            <Text>Your live location</Text>
-            <Text>Latitude: {userLocation.latitude}</Text>
-            <Text>Latitude: {userLocation.latitude}</Text>
-          </View>
-        )}
+        <TouchableOpacity onPress={handleAddress}>
+          <Text style={styles.changeAddress}>Change Address</Text>
+        </TouchableOpacity>
+        <Text>Deliver Here: {product.address}</Text>
         <Text>932203</Text>
         <View style={styles.productDetails}>
           <Image source={{ uri: product.photo }} style={styles.image} />
@@ -127,8 +103,6 @@ const Buy = () => {
         </TouchableOpacity>
       </View>
 
-      {/* Modal */}
-      {/* we can add more text and whatever in this for now this is for testing purposes */}
       <Modal
         animationType="slide"
         transparent={true}
@@ -142,7 +116,6 @@ const Buy = () => {
               style={styles.productImage}
             />
             <Text>{product.name}</Text>
-            {/* <Text>Product Price:- {product.rupees}</Text> */}
             <TouchableOpacity
               onPress={(closeModal, () => passDataToPayment(product))}
               style={styles.modalbtnContainer}
@@ -179,6 +152,11 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
     marginTop: 20,
+    marginBottom: 10,
+  },
+  changeAddress: {
+    color: "#007bff", // Change address text color to blue for better visibility
+    textDecorationLine: "underline", // Add underline to indicate it's clickable
     marginBottom: 10,
   },
   productDetails: {
@@ -240,13 +218,11 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     marginRight: 10,
   },
-
   buyButtonText: {
     fontSize: 16,
     fontWeight: "bold",
     textAlign: "center",
   },
-
   continueButton: {
     flex: 1,
     backgroundColor: "#fb641b",
@@ -254,7 +230,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     borderRadius: 5,
   },
-
   continueButtonText: {
     color: "#fff",
     fontSize: 16,
@@ -266,7 +241,6 @@ const styles = StyleSheet.create({
     color: "red",
     textAlign: "center",
   },
-  // Modal styles
   modalContainer: {
     flex: 1,
     justifyContent: "center",
