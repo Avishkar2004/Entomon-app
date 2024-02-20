@@ -4,9 +4,9 @@ import * as Location from "expo-location";
 import { RadioButton } from "react-native-paper"; // Import RadioButton component
 import { useRoute } from "@react-navigation/native";
 
-const ChangeAddress = ({ productId }) => {
+const ChangeAddress = () => {
   const route = useRoute();
-  const { product } = route.params;
+  const { productId } = route.params;
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
   const [pincode, setPincode] = useState("");

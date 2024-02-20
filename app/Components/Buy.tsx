@@ -38,7 +38,7 @@ const Buy = ({ productId }) => {
   };
 
   const handleAddress = () => {
-    if (product) {
+    if (productId) {
       navigation.navigate("Components/ChangeAddress", { productId: productId });
     } else {
       console.error("Product info is missing");
