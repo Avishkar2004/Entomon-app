@@ -25,52 +25,6 @@ const CartProductDetails = () => {
     );
   }
 
-  const addToCart = async (
-    product_id,
-    name,
-    rupees,
-    photo,
-    quantity,
-    review,
-    percent_off,
-    delivery_charges,
-    delivery_time,
-    emi_per_month,
-    emi_month,
-    address
-  ) => {
-    try {
-      const response = await fetch(`http://localhost:8000/cart/${product_id}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          id: product_id,
-          name: name,
-          photo: photo,
-          rupees: rupees,
-          quantity: quantity,
-          review: review,
-          percent_off: percent_off,
-          delivery_charges: delivery_charges,
-          delivery_time: delivery_time,
-          emi_per_month: emi_per_month,
-          emi_month: emi_month,
-          address: address,
-        }),
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to add item to cart");
-      }
-
-      console.log("Item added to cart successfully");
-    } catch (error) {
-      console.error("Error adding item to cart:", error);
-    }
-  };
-
   const handleBuyNow = (product) => {
     if (product) {
       navigation.navigate("Components/Buy", { product: product });
@@ -136,24 +90,9 @@ const CartProductDetails = () => {
       <View style={styles.buttonContainer}>
         <TouchableOpacity
           style={styles.button}
-          onPress={() =>
-            addToCart(
-              product.product_id,
-              product.name,
-              product.rupees,
-              product.photo,
-              quantity,
-              product.review,
-              product.percent_off,
-              product.delivery_charges,
-              product.delivery_time,
-              product.emi_per_month,
-              product.emi_month,
-              product.address
-            )
-          }
+          onPress={() => navigation.goBack()}
         >
-          <Text style={styles.buttonText}>Add to Cart</Text>
+          <Text style={styles.buttonText}>GO to Cart</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.button}

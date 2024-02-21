@@ -107,16 +107,21 @@ const ProductDetails = () => {
         keyboardType="numeric"
         placeholder="Enter Quantity"
       />
-      <Text style={styles.description}>
-        Delivery Charges :- {product.delivery_charges}
-      </Text>
-      <Text style={styles.description}>{product.review}20,000 ratings</Text>
-      <Text style={styles.description}>
-        Emi :- ₹ {product.emi_per_month}/Month
-      </Text>
-      <Text style={styles.EMI}>
-        6 Month Cost EMI Plan with HDFC credit-cart.
-      </Text>
+      <View style={styles.specificInfoContainer}>
+        <Text style={styles.specificInfoText}>
+          Delivery Charges: {product.delivery_charges}
+        </Text>
+        <Text style={styles.specificInfoText}>
+          {product.review} 20,000 ratings
+        </Text>
+        <Text style={styles.specificInfoText}>
+          EMI: ₹ {product.emi_per_month}/Month
+        </Text>
+        <Text style={styles.specificInfoText}>
+          6 Month Cost EMI Plan with HDFC credit-cart.
+        </Text>
+      </View>
+
       <Text style={styles.price}>
         ₹{product.rupees}{" "}
         <Text style={{ textDecorationLine: "line-through" }}>20</Text>
@@ -257,6 +262,17 @@ const styles = StyleSheet.create({
   },
   stockStatus: {
     color: "red",
+  },
+  specificInfoContainer: {
+    borderWidth: 1,
+    borderColor: "#ccc",
+    padding: 10,
+    marginBottom: 20,
+    borderRadius: 5,
+  },
+  specificInfoText: {
+    fontSize: 16,
+    color: "#555",
   },
   specifications: {
     alignItems: "flex-start",

@@ -38,8 +38,11 @@ const Buy = ({ productId }) => {
   };
 
   const handleAddress = () => {
-    if (productId) {
-      navigation.navigate("Components/ChangeAddress", { productId: productId });
+    if (product) {
+      navigation.navigate("Components/ChangeAddress", {
+        product: product,
+        productId: productId,
+      });
     } else {
       console.error("Product info is missing");
     }
@@ -65,13 +68,17 @@ const Buy = ({ productId }) => {
         <View style={styles.stepper}>
           <HorizontalLinearStepper />
         </View>
-        <Text style={styles.deliverTo}>Deliver To:</Text>
-        <Text>Avishkar kakde</Text>
-        <TouchableOpacity onPress={handleAddress}>
-          <Text style={styles.changeAddress}>Change Address</Text>
-        </TouchableOpacity>
-        <Text>Deliver Here: {product.address}</Text>
-        <Text>932203</Text>
+        <View style={styles.addressContainer}>
+          <Text style={styles.deliverTo}>Deliver To:</Text>
+          <View style={styles.addressInfo}>
+            <Text style={styles.name}>Avishkar kakde</Text>
+            <TouchableOpacity onPress={handleAddress}>
+              <Text style={styles.changeAddress}>Change Address</Text>
+            </TouchableOpacity>
+            <Text style={styles.address}>Deliver Here: {product.address}</Text>
+            <Text style={styles.pincode}>932203</Text>
+          </View>
+        </View>
         <View style={styles.productDetails}>
           <Image source={{ uri: product.photo }} style={styles.image} />
           <Text style={styles.title}>{product.name}</Text>
@@ -148,16 +155,34 @@ const styles = StyleSheet.create({
   stepper: {
     marginTop: 30,
   },
+  addressContainer: {
+    borderWidth: 1,
+    borderColor: "#ccc",
+    borderRadius: 10,
+    padding: 10,
+    marginBottom: 20,
+  },
   deliverTo: {
     fontSize: 18,
     fontWeight: "bold",
-    marginTop: 20,
     marginBottom: 10,
   },
+  addressInfo: {
+    marginLeft: 10,
+  },
+  name: {
+    marginBottom: 5,
+  },
   changeAddress: {
-    color: "#007bff", // Change address text color to blue for better visibility
-    textDecorationLine: "underline", // Add underline to indicate it's clickable
-    marginBottom: 10,
+    color: "#007bff",
+    textDecorationLine: "underline",
+    marginBottom: 5,
+  },
+  address: {
+    marginBottom: 5,
+  },
+  pincode: {
+    marginBottom: 5,
   },
   productDetails: {
     alignItems: "center",
@@ -236,11 +261,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center",
   },
-  errorText: {
-    fontSize: 16,
-    color: "red",
-    textAlign: "center",
-  },
   modalContainer: {
     flex: 1,
     justifyContent: "center",
@@ -260,11 +280,6 @@ const styles = StyleSheet.create({
     height: 200,
     marginBottom: 20,
     borderRadius: 10,
-  },
-  productName: {
-    fontSize: 18,
-    fontWeight: "bold",
-    marginBottom: 10,
   },
   modalbtnContainer: {
     marginTop: 20,
