@@ -8,7 +8,7 @@ import { AntDesign } from "@expo/vector-icons";
 const ChangeAddress = () => {
   const navigation = useNavigation();
   const route = useRoute();
-  const { productId } = route.params;
+  const productId = route.params?.productId;
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
   const [pincode, setPincode] = useState("");

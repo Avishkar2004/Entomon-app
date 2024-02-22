@@ -1,15 +1,27 @@
 import { Link } from "expo-router";
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
   TextInput,
   StyleSheet,
   TouchableOpacity,
+  Alert,
 } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 const ThirdPage = () => {
+  const [name, setName] = useState("");
+
+  const handleRegister = () => {
+    if (name.trim() === "") {
+      // If name is empty, show an alert
+      Alert.alert("Error", "Please enter your full name.");
+    } else {
+      // Proceed with registration logic here
+    }
+  };
+
   return (
     <GestureHandlerRootView style={styles.container}>
       <View style={styles.content}>
@@ -22,7 +34,12 @@ const ThirdPage = () => {
         </Text>
         <View style={styles.inputContainer}>
           <Text style={styles.label}>Full Name*</Text>
-          <TextInput style={styles.input} placeholder="Type your name " />
+          <TextInput
+            style={styles.input}
+            placeholder="Type your name"
+            value={name}
+            onChangeText={(text) => setName(text)} // Update name state
+          />
         </View>
         <View style={styles.inputContainer}>
           <Text style={styles.label}>Email</Text>
@@ -31,7 +48,10 @@ const ThirdPage = () => {
             placeholder="Type your email (optional)"
           />
         </View>
-        <TouchableOpacity style={styles.registerButton}>
+        <TouchableOpacity
+          style={styles.registerButton}
+          onPress={handleRegister}
+        >
           <Link href={"/HomePage"} style={styles.registerButtonText}>
             Register
           </Link>

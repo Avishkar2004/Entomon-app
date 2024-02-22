@@ -1,4 +1,3 @@
-import { Link } from "expo-router";
 import React, { useState } from "react";
 import {
   View,
@@ -8,29 +7,28 @@ import {
   Animated,
   Easing,
 } from "react-native";
+import { useNavigation } from "@react-navigation/native"; // Import useNavigation hook
 import { CountryPicker } from "react-native-country-codes-picker";
 
 const SecondPage = () => {
+  const navigation = useNavigation(); // Initialize navigation
   const [show, setShow] = useState(false);
   const [countryCode, setCountryCode] = useState("+91");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [buttonScale] = useState(new Animated.Value(1));
 
   const handleContinue = () => {
-    Animated.sequence([
-      Animated.timing(buttonScale, {
-        toValue: 0.95,
-        duration: 100,
-        easing: Easing.linear,
-        useNativeDriver: true,
-      }),
-      Animated.timing(buttonScale, {
-        toValue: 1,
-        duration: 100,
-        easing: Easing.linear,
-        useNativeDriver: true,
-      }),
-    ]).start();
+    if (phoneNumber.trim() === "") {
+      alert("Please enter your phone number.");
+      return;
+    }
+    if (phoneNumber.length !== 10) {
+      alert("Please enter a 10-digit phone number.");
+      return;
+    }
+
+    // Navigate to next page only if phone number is entered
+    navigation.navigate("ThirdPage");
   };
 
   return (
@@ -88,7 +86,14 @@ const SecondPage = () => {
             marginLeft: 10,
             borderRadius: 5,
           }}
-          onChangeText={setPhoneNumber}
+          onChangeText={(text) => {
+            // Remove non-numeric characters
+            const formattedText = text.replace(/[^0-9]/g, "");
+            // Limit to 10 digits
+            if (formattedText.length <= 10) {
+              setPhoneNumber(formattedText);
+            }
+          }}
           value={phoneNumber}
           placeholder="Enter Phone Number"
           keyboardType="phone-pad"
@@ -107,9 +112,9 @@ const SecondPage = () => {
           transform: [{ scale: buttonScale }],
         }}
       >
-        <Link href={"/ThirdPage"} style={{ color: "white", fontSize: 16 }}>
+        <Text style={{ color: "white", fontSize: 16 }}>
           Continue with Number
-        </Link>
+        </Text>
       </TouchableOpacity>
     </View>
   );
