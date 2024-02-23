@@ -56,6 +56,16 @@ const HomePage = () => {
     }
   };
 
+  const noResultMessage = () => {
+    if (filteredProducts.length === 0 && searchQuery.length > 0) {
+      return (
+        <View style={styles.noResultsContainer}>
+          <Text style={styles.noResultsText}>No products found</Text>
+        </View>
+      );
+    }
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -102,6 +112,7 @@ const HomePage = () => {
           </Camera>
         )}
       <ScrollView contentContainerStyle={styles.scrollContainer}>
+        {noResultMessage()}
         <View style={styles.productsContainer}>
           {filteredProducts.map((product, index) => (
             <TouchableOpacity
@@ -154,6 +165,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
+  },
+  noResultsContainer: {
+    alignItems: "center",
+    marginTop: 20,
+  },
+  noResultsText: {
+    fontSize: 30,
+    color: "red",
   },
   header: {
     flexDirection: "row",

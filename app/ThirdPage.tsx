@@ -9,16 +9,23 @@ import {
   Alert,
 } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { useNavigation } from "@react-navigation/native"; // Import useNavigation hook
 
 const ThirdPage = () => {
   const [name, setName] = useState("");
+  const navigation = useNavigation(); // Initialize navigation
 
   const handleRegister = () => {
-    if (name.trim() === "") {
+    const trimmedName = name.trim();
+    if (trimmedName === "") {
       // If name is empty, show an alert
-      Alert.alert("Error", "Please enter your full name.");
+      alert("Please enter your full name.");
+    } else if (trimmedName.split(" ").length < 2) {
+      // If name has less than two words, show an alert
+      alert("Please enter a valid full name with at least two words.");
     } else {
-      // Proceed with registration logic here
+      // Navigate to next page without showing an alert
+      navigation.navigate("HomePage");
     }
   };
 
