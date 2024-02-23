@@ -1,3 +1,4 @@
+// HomePage.tsx
 import React, { useState, useEffect } from "react";
 import {
   View,
@@ -21,7 +22,11 @@ const HomePage = () => {
   const [hasPermission, setHasPermission] = useState(null);
   const [type, setType] = useState(CameraType.back);
   const [showCamera, setShowCamera] = useState(false);
+  const [isNavbarVisible, setIsNavbarVisible] = useState(false);
 
+  const toggleNavbarVisibility = () => {
+    setIsNavbarVisible(!isNavbarVisible);
+  };
   useEffect(() => {
     (async () => {
       const { status } = await Camera.requestPermissionsAsync();
@@ -56,16 +61,6 @@ const HomePage = () => {
     }
   };
 
-  const noResultMessage = () => {
-    if (filteredProducts.length === 0 && searchQuery.length > 0) {
-      return (
-        <View style={styles.noResultsContainer}>
-          <Text style={styles.noResultsText}>No products found</Text>
-        </View>
-      );
-    }
-  };
-
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -78,41 +73,51 @@ const HomePage = () => {
         <TextInput
           style={styles.searchInput}
           placeholder="Search..."
-          value={searchQuery}
           onChangeText={(text) => setSearchQuery(text)}
         />
-        <TouchableOpacity onPress={() => setShowCamera(true)}>
-          {" "}
-          {/* Show camera on press */}
-          <Feather
-            name="camera"
-            size={24}
-            color="black"
-            style={styles.cameraIcon}
-          />
-        </TouchableOpacity>
-      </View>
-      {showCamera &&
-        hasPermission && ( // Conditionally render camera if showCamera is true and user has granted permission
-          <Camera style={styles.camera} type={type}>
-            <View style={styles.cameraButtons}>
-              <TouchableOpacity
-                style={styles.cameraButton}
-                onPress={() => setShowCamera(false)} // Hide camera on press
-              >
-                <Text style={styles.cameraButtonText}>Close</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.cameraButton}
-                onPress={() => alert("Take a picture functionality")} // Implement take picture functionality
-              >
-                <Text style={styles.cameraButtonText}>Take Picture</Text>
-              </TouchableOpacity>
-            </View>
-          </Camera>
+        {isNavbarVisible ? (
+          <TouchableOpacity onPress={toggleNavbarVisibility}>
+            <AntDesign name="menu-fold" size={24} color="black" />
+          </TouchableOpacity>
+        ) : (
+          <TouchableOpacity onPress={toggleNavbarVisibility}>
+            <AntDesign name="menu-unfold" size={24} color="black" />
+          </TouchableOpacity>
         )}
+      </View>
+      {/* {showCamera && hasPermission && (
+        <Camera style={styles.camera} type={type}>
+          <View style={styles.cameraButtons}>
+            <TouchableOpacity
+              style={styles.cameraButton}
+              onPress={() => setShowCamera(false)}
+            >
+              <Text style={styles.cameraButtonText}>Close</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.cameraButton}
+              onPress={() => alert("Take a picture functionality")}
+            >
+              <Text style={styles.cameraButtonText}>Take Picture</Text>
+            </TouchableOpacity>
+          </View>
+        </Camera>
+      )} */}
+      {isNavbarVisible && (
+        <View style={styles.navbar}>
+          <TouchableOpacity style={styles.navbarItem}>
+            <Text style={styles.navbarText}>Phone Number</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.navbarItem}>
+            <Text style={styles.navbarText}>Address</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.navbarItem}>
+            <Text style={styles.navbarText}>Wishlist</Text>
+          </TouchableOpacity>
+        </View>
+      )}
+
       <ScrollView contentContainerStyle={styles.scrollContainer}>
-        {noResultMessage()}
         <View style={styles.productsContainer}>
           {filteredProducts.map((product, index) => (
             <TouchableOpacity
@@ -124,7 +129,6 @@ const HomePage = () => {
               <View style={styles.productDetails}>
                 <Text style={styles.title}>{product.name}</Text>
                 <Text style={styles.price}>₹ {product.rupees}</Text>
-                {/* <Text style={styles.color}>Color: {product.color}</Text> */}
                 <Text style={styles.review}>
                   Review: {product.review} (102)
                 </Text>
@@ -143,6 +147,22 @@ const HomePage = () => {
           ))}
         </View>
       </ScrollView>
+
+      <View style={styles.headerForPrompt}>
+        <Feather
+          name="search"
+          size={24}
+          color="black"
+          style={styles.searchIconForPrompt}
+        />
+        <TextInput
+          style={styles.searchInputForPrompt}
+          placeholder="Message Agro Easy..."
+          value={searchQuery}
+          onChangeText={(text) => setSearchQuery(text)}
+        />
+      </View>
+
       <View style={styles.footer}>
         <Link href={"Components/Profile"} style={styles.footerIcon}>
           <AntDesign name="user" size={24} color="black" />
@@ -150,12 +170,14 @@ const HomePage = () => {
         <Link href={"Components/Cart/Cart"} style={styles.footerIcon}>
           <AntDesign name="shoppingcart" size={25} color="black" />
         </Link>
-        <Feather
-          name="more-horizontal"
-          size={24}
-          color="black"
-          style={styles.footerIcon}
-        />
+        <View>
+          <Feather
+            name="more-horizontal"
+            size={24}
+            color="black"
+            style={styles.footerIcon}
+          />
+        </View>
       </View>
     </View>
   );
@@ -166,16 +188,15 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
   },
-  noResultsContainer: {
-    alignItems: "center",
-    marginTop: 20,
-  },
-  noResultsText: {
-    fontSize: 30,
-    color: "red",
-  },
   header: {
     flexDirection: "row",
+    alignItems: "center",
+    padding: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: "#ccc",
+    zIndex: 2,
+  },
+  headerForPrompt: {
     alignItems: "center",
     padding: 10,
     borderBottomWidth: 1,
@@ -193,12 +214,40 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     padding: 10,
   },
+  searchIconForPrompt: {
+    position: "absolute", // Position the icon absolutely
+    left: 15, // Adjust the left position for alignment
+    zIndex: 1, // Ensure the icon appears above the input field
+    top: 18, // Adjust the top position for alignment
+  },
+  searchInputForPrompt: {
+    height: 40,
+    borderWidth: 1,
+    borderColor: "#ccc",
+    borderRadius: 5,
+    padding: 10,
+    paddingLeft: 40, // Adjust the left padding for the icon
+    marginBottom: 50, // Adjust margin bottom for spacing
+    width: Dimensions.get("window").width - 20, // Adjust width to fill container
+  },
+
   cameraIcon: {
     marginLeft: 10,
+  },
+
+  messageInput: {
+    flex: 1,
+    height: 40,
+    borderWidth: 1,
+    borderColor: "#ccc",
+    borderRadius: 5,
+    padding: 10,
+    marginBottom: 60,
   },
   camera: {
     flex: 1,
     aspectRatio: 1,
+    marginTop: 10, // Adjust the marginTop to create space between camera and search bar
   },
   cameraButtons: {
     flexDirection: "row",
@@ -251,6 +300,25 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
     marginBottom: 5,
+  },
+  menuIcon: {
+    marginLeft: 10,
+  },
+  navbar: {
+    flexDirection: "column",
+    justifyContent: "space-around",
+    borderBottomWidth: 1,
+    borderBottomColor: "#ccc",
+    paddingVertical: 10,
+  },
+  navbarItem: {
+    flex: 1,
+    alignItems: "center",
+    padding: 10,
+  },
+  navbarText: {
+    fontSize: 20,
+    fontWeight: "bold",
   },
   price: {
     fontSize: 16,
