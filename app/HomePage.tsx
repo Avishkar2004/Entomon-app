@@ -53,6 +53,16 @@ const HomePage = () => {
     product.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
+  const noResultsMessage = () => {
+    if (filteredProducts.length === 0 && searchQuery.length > 0) {
+      return (
+        <View style={styles.noResultsContainer}>
+          <Text style={styles.noResultsText}>Product Not Found</Text>
+        </View>
+      );
+    }
+    return null;
+  };
   const productDetails = (product) => {
     if (product) {
       navigation.navigate("Components/ProductDetails", { product: product });
@@ -119,6 +129,7 @@ const HomePage = () => {
 
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.productsContainer}>
+          {noResultsMessage()}
           {filteredProducts.map((product, index) => (
             <TouchableOpacity
               key={product.product_id}
@@ -184,6 +195,14 @@ const HomePage = () => {
 };
 
 const styles = StyleSheet.create({
+  noResultsContainer: {
+    alignItems: "center",
+    marginTop: 20,
+  },
+  noResultsText: {
+    fontSize: 30,
+    color: "red",
+  },
   container: {
     flex: 1,
     backgroundColor: "#fff",
