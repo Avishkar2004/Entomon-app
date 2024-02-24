@@ -12,27 +12,19 @@ import {
 } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
+import { Entypo } from "@expo/vector-icons";
+
 import { Link } from "expo-router";
 import { useNavigation } from "@react-navigation/native";
-import { Camera, CameraType } from "expo-camera";
 import { Button } from "react-native";
 
 const HomePage = () => {
   const navigation = useNavigation();
-  const [hasPermission, setHasPermission] = useState(null);
-  const [type, setType] = useState(CameraType.back);
-  const [showCamera, setShowCamera] = useState(false);
   const [isNavbarVisible, setIsNavbarVisible] = useState(false);
 
   const toggleNavbarVisibility = () => {
     setIsNavbarVisible(!isNavbarVisible);
   };
-  useEffect(() => {
-    (async () => {
-      const { status } = await Camera.requestPermissionsAsync();
-      setHasPermission(status === "granted");
-    })();
-  }, []);
 
   const [products, setProducts] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
@@ -95,24 +87,20 @@ const HomePage = () => {
           </TouchableOpacity>
         )}
       </View>
-      {/* {showCamera && hasPermission && (
-        <Camera style={styles.camera} type={type}>
-          <View style={styles.cameraButtons}>
-            <TouchableOpacity
-              style={styles.cameraButton}
-              onPress={() => setShowCamera(false)}
-            >
-              <Text style={styles.cameraButtonText}>Close</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.cameraButton}
-              onPress={() => alert("Take a picture functionality")}
-            >
-              <Text style={styles.cameraButtonText}>Take Picture</Text>
-            </TouchableOpacity>
-          </View>
-        </Camera>
-      )} */}
+
+      {/* Horizontally scrollable names */}
+      <ScrollView horizontal contentContainerStyle={styles.scrollableNames}>
+        {[1, 2, 3, 4, 5, 6].map((name, index) => (
+          <TouchableOpacity key={index} style={styles.scrollableName}>
+            <Image
+              source={"../assets/images/kaka-front_600x.webp"}
+              style={styles.imageforname}
+            />
+
+            <Text style={styles.scrollableNameText}>Name {name}</Text>
+          </TouchableOpacity>
+        ))}
+      </ScrollView>
       {isNavbarVisible && (
         <View style={styles.navbar}>
           <TouchableOpacity style={styles.navbarItem}>
@@ -181,6 +169,9 @@ const HomePage = () => {
         <Link href={"Components/Cart/Cart"} style={styles.footerIcon}>
           <AntDesign name="shoppingcart" size={25} color="black" />
         </Link>
+        <Link href={"Components/Camera"} style={styles.footerIcon}>
+          <Entypo name="camera" size={24} color="black" />{" "}
+        </Link>
         <View>
           <Feather
             name="more-horizontal"
@@ -206,6 +197,29 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
+  },
+  scrollableNames: {
+    paddingVertical: 10,
+    paddingHorizontal: 5,
+    marginBottom: 8,
+  },
+  scrollableName: {
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    borderRadius: 20,
+    marginRight: 10,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  scrollableNameText: {
+    fontSize: 25,
+    margin: 15,
+  },
+  imageforname: {
+    width: "50%",
+    height: 70,
+    marginBottom: 5,
+    margin: 20,
   },
   header: {
     flexDirection: "row",
@@ -250,10 +264,6 @@ const styles = StyleSheet.create({
     width: Dimensions.get("window").width - 20, // Adjust width to fill container
   },
 
-  cameraIcon: {
-    marginLeft: 10,
-  },
-
   messageInput: {
     flex: 1,
     height: 40,
@@ -263,29 +273,7 @@ const styles = StyleSheet.create({
     padding: 10,
     marginBottom: 60,
   },
-  camera: {
-    flex: 1,
-    aspectRatio: 1,
-    marginTop: 10, // Adjust the marginTop to create space between camera and search bar
-  },
-  cameraButtons: {
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-    position: "absolute",
-    bottom: 20,
-    left: 0,
-    right: 0,
-  },
-  cameraButton: {
-    backgroundColor: "#fff",
-    padding: 10,
-    borderRadius: 5,
-    marginHorizontal: 10,
-  },
-  cameraButtonText: {
-    fontSize: 16,
-  },
+
   scrollContainer: {
     flexGrow: 1,
     alignItems: "center",

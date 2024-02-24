@@ -14,4 +14,4 @@ how to push our new code in github ?
 
 
 New Task :-
-camera just below the search instead of search show menu and prompt to for ai
+camera just below the search instead of search show menu and prompt for ai
