@@ -170,7 +170,7 @@ const HomePage = () => {
           <AntDesign name="shoppingcart" size={25} color="black" />
         </Link>
         <Link href={"Components/Camera"} style={styles.footerIcon}>
-          <Entypo name="camera" size={24} color="black" />{" "}
+          <Entypo name="camera" size={24} color="black" />
         </Link>
         <View>
           <Feather
