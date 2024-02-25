@@ -64,14 +64,33 @@ const Camera = () => {
   };
 
   const pickImageFromGallery = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: true,
-      quality: 1,
-    });
+    try {
+      const { status } =
+        await ImagePicker.requestMediaLibraryPermissionsAsync();
 
-    if (!result.cancelled) {
+      if (status !== "granted") {
+        throw new Error("Permission to access media library denied");
+      }
+
+      let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        allowsEditing: true,
+        quality: 1,
+      });
+
+      if (result.cancelled) {
+        console.log("Image picking cancelled");
+        return;
+      }
+
+      console.log("Selected Image URI:", result.uri);
+
+      // Send the image URI to your backend for further processing
       setCapturedImage(result.uri);
+
+      setCapturedImage(result.uri);
+    } catch (error) {
+      console.error("Error picking image:", error.message);
     }
   };
 
@@ -119,20 +138,22 @@ const Camera = () => {
               </View>
             </ExpoCamera>
           )}
-          <View style={styles.buttonContainer}>
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => setShowCamera(true)}
-            >
-              <Text style={styles.text}>Open Camera</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.button}
-              onPress={pickImageFromGallery}
-            >
-              <Text style={styles.text}>Pick from Gallery</Text>
-            </TouchableOpacity>
-          </View>
+          {!showCamera && !capturedImage && (
+            <View style={styles.buttonContainer}>
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() => setShowCamera(true)}
+              >
+                <Text style={styles.text}>Open Camera</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.button}
+                onPress={pickImageFromGallery}
+              >
+                <Text style={styles.text}>Pick from Gallery</Text>
+              </TouchableOpacity>
+            </View>
+          )}
           {capturedImage && (
             <View style={styles.imageContainer}>
               <Image
@@ -178,11 +199,12 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
   header: {
-    fontSize: 24,
+    fontSize: 28,
     fontWeight: "bold",
     textAlign: "center",
-    marginTop: 20,
-    marginBottom: 10,
+    marginTop: 40,
+    marginBottom: 20,
+    color: "#333", // Change color to a darker shade
   },
   camera: {
     flex: 1,
@@ -190,13 +212,14 @@ const styles = StyleSheet.create({
     height: "100%",
   },
   input: {
-    height: 40,
+    height: 50,
     borderColor: "#ccc",
-    borderWidth: 1,
-    borderRadius: 5,
-    paddingHorizontal: 10,
+    borderWidth: 2,
+    borderRadius: 8,
+    paddingHorizontal: 16,
     marginHorizontal: 20,
-    marginBottom: 10,
+    marginBottom: 20,
+    fontSize: 18, // Increase font size
   },
   buttonContainer: {
     flexDirection: "row",
@@ -204,41 +227,69 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   button: {
-    backgroundColor: "#007AFF",
-    borderRadius: 5,
-    paddingVertical: 10,
-    paddingHorizontal: 20,
+    backgroundColor: "#4CAF50", // Change button color
+    borderRadius: 8,
+    paddingVertical: 14,
+    paddingHorizontal: 24,
     marginHorizontal: 10,
+    elevation: 3, // Add shadow
   },
   text: {
-    fontSize: 16,
+    fontSize: 18,
     color: "white",
     textAlign: "center",
+    fontWeight: "bold",
   },
   imageContainer: {
     alignItems: "center",
     marginTop: 20,
   },
   capturedImage: {
-    width: 300,
-    height: 300,
-    borderRadius: 10,
-    marginBottom: 20,
+    width: 320,
+    height: 320,
+    borderRadius: 16,
+    marginBottom: 30,
+    shadowColor: "#000", // Add shadow
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
   uploadButton: {
-    backgroundColor: "#007AFF",
+    backgroundColor: "#4CAF50", // Change button color
     flexDirection: "row",
     alignItems: "center",
-    padding: 10,
-    borderRadius: 5,
+    padding: 12,
+    borderRadius: 8,
+    elevation: 3, // Add shadow
   },
   uploadText: {
-    fontSize: 16,
+    fontSize: 18,
     color: "white",
     marginRight: 10,
+    fontWeight: "bold",
   },
   arrowIcon: {
     marginLeft: 5,
+  },
+  permissionContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  permissionButton: {
+    backgroundColor: "#007AFF",
+    borderRadius: 8,
+    paddingVertical: 14,
+    paddingHorizontal: 24,
+  },
+  permissionButtonText: {
+    fontSize: 18,
+    color: "white",
+    fontWeight: "bold",
   },
 });
 
