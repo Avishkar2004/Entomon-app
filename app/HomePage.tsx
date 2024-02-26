@@ -67,6 +67,14 @@ const HomePage = () => {
 
   return (
     <View style={styles.container}>
+      <View style={styles.options}>
+        <TouchableOpacity style={styles.option}>
+          <Text style={styles.optionText}>Entomon</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.option}>
+          <Text style={styles.optionText}>Is A Products</Text>
+        </TouchableOpacity>
+      </View>
       <View style={styles.header}>
         <Feather
           name="search"
@@ -206,6 +214,23 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
   },
+  options: {
+    flexDirection: "row",
+    marginTop: 5,
+    marginBottom: 5,
+  },
+  option: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#2874f0",
+    marginRight: 10,
+  },
+  optionText: {
+    fontSize: 30,
+    color: "white",
+  },
+
   scrollableNames: {
     paddingVertical: 10,
     paddingHorizontal: 5,
