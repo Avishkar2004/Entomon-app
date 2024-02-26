@@ -11,6 +11,7 @@ import {
 } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
 import { Link } from "expo-router";
 import { useNavigation } from "@react-navigation/native";
@@ -61,12 +62,36 @@ const HomePage = () => {
     }
   };
 
-  const navigateToCameraPage = () => {
-    navigation.navigate("Components/Camera");
-  };
-
   return (
     <View style={styles.container}>
+      <View style={[styles.options, styles.iconsContainer]}>
+        {/* Alert Icon */}
+        <TouchableOpacity
+          style={styles.iconOption}
+          onPress={() => alert("Alert Icon pressed!")}
+        >
+          <Ionicons name="notifications-sharp" size={24} color="black" />
+        </TouchableOpacity>
+
+        {/* Call Icon */}
+        <TouchableOpacity
+          style={styles.iconOption}
+          onPress={() => {
+            /* Add call functionality */
+          }}
+        >
+          <Feather name="phone-call" size={24} color="black" />
+        </TouchableOpacity>
+
+        {/* Cart Icon */}
+        <TouchableOpacity
+          style={styles.iconOption}
+          onPress={() => navigation.navigate("Components/Cart/Cart")}
+        >
+          <AntDesign name="shoppingcart" size={24} color="black" />
+        </TouchableOpacity>
+      </View>
+
       <View style={styles.options}>
         <TouchableOpacity style={styles.option}>
           <Text style={styles.optionText}>Entomon</Text>
@@ -98,15 +123,16 @@ const HomePage = () => {
         )}
       </View>
       {/* Horizontally scrollable names */}
+      <TouchableOpacity
+        onPress={() => navigation.navigate("Components/Camera")}
+      >
+        <Image
+          source={require("../assets/images/image.jpg")}
+          style={styles.cameraImage}
+        />{" "}
+      </TouchableOpacity>
       <TouchableOpacity style={styles.scrollableName}>
         <View style={styles.headerForPrompt}>
-          <Entypo
-            name="camera"
-            size={30}
-            color="black"
-            style={styles.cameraIcon}
-            onPress={navigateToCameraPage}
-          />
           <Feather
             name="search"
             size={24}
@@ -206,6 +232,25 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: 20,
   },
+  iconsContainer: {
+    justifyContent: "flex-end",
+    alignItems: "center",
+  },
+  iconOption: {
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#e0e0e0", // Light gray background
+    borderRadius: 5,
+    marginLeft: 10,
+    padding: 8,
+  },
+  cameraImage: {
+    width: Dimensions.get("window").width - 20, // Adjust width to fit the screen
+    height: 200, // Set a fixed height
+    borderRadius: 10, // Add borderRadius for a rounded look
+    marginBottom: 10, // Add some margin at the bottom
+  },
+
   noResultsText: {
     fontSize: 30,
     color: "red",

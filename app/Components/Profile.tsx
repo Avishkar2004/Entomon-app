@@ -42,11 +42,8 @@ const Profile = () => {
         <TouchableOpacity style={styles.option}>
           <Link href={"Components/privacyPolicy"}>Privacy And Policy</Link>
         </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.option}
-          onPress={() => console.log("About Company")}
-        >
-          <Text style={styles.optionText}>About Company</Text>
+        <TouchableOpacity style={styles.option}>
+          <Link href={"Components/CompInfo"}>About Company</Link>
         </TouchableOpacity>
       </View>
     </View>
