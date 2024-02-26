@@ -212,8 +212,8 @@ const HomePage = () => {
           <AntDesign name="shoppingcart" size={25} color="black" />
         </Link>
         {/* <Link href={"Components/Camera"} style={styles.footerIcon}>
-          <Entypo name="camera" size={24} color="black" />
-        </Link> */}
+            <Entypo name="camera" size={24} color="black" />
+          </Link> */}
         <View>
           <Feather
             name="more-horizontal"
@@ -277,15 +277,12 @@ const styles = StyleSheet.create({
   },
 
   scrollableNames: {
+    flexDirection: "row",
     paddingVertical: 10,
     paddingHorizontal: 5,
-    marginBottom: 8,
-  },
-  imageforname: {
-    width: "50%",
-    height: 70,
-    marginBottom: 5,
-    margin: 20,
+    marginBottom: 100, // Increase or decrease this value as needed
+    alignItems: "center", // Center the items horizontally
+    marginTop: 40,
   },
   scrollableName: {
     paddingHorizontal: 10,
@@ -295,9 +292,17 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+
+  imageforname: {
+    width: 80,
+    height: 80,
+    borderRadius: 60,
+    marginBottom: 10,
+  },
   scrollableNameText: {
-    fontSize: 25,
-    margin: 15,
+    fontSize: 14, // Adjust the font size to your preference
+    marginVertical: 5,
+    textAlign: "center", // Center the text within the scrollable name
   },
   cameraIcon: {
     position: "absolute",
@@ -345,7 +350,6 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     padding: 10,
     paddingLeft: 40,
-    marginBottom: 50,
     width: Dimensions.get("window").width - 20,
     paddingRight: 40, // Adjust as needed
   },
