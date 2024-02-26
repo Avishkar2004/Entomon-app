@@ -1,4 +1,3 @@
-// HomePage.tsx
 import React, { useState, useEffect } from "react";
 import {
   View,
@@ -13,7 +12,6 @@ import {
 import { Feather } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
-
 import { Link } from "expo-router";
 import { useNavigation } from "@react-navigation/native";
 import { Button } from "react-native";
@@ -63,6 +61,10 @@ const HomePage = () => {
     }
   };
 
+  const navigateToCameraPage = () => {
+    navigation.navigate("Components/Camera");
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -87,13 +89,36 @@ const HomePage = () => {
           </TouchableOpacity>
         )}
       </View>
-
       {/* Horizontally scrollable names */}
+      <TouchableOpacity style={styles.scrollableName}>
+        <View style={styles.headerForPrompt}>
+          <Entypo
+            name="camera"
+            size={30}
+            color="black"
+            style={styles.cameraIcon}
+            onPress={navigateToCameraPage}
+          />
+          <Feather
+            name="search"
+            size={24}
+            color="black"
+            style={styles.searchIconForPrompt}
+          />
+          <TextInput
+            style={styles.searchInputForPrompt}
+            placeholder="Message Agro Easy..."
+            value={searchQuery}
+            onChangeText={(text) => setSearchQuery(text)}
+          />
+        </View>
+      </TouchableOpacity>
+
       <ScrollView horizontal contentContainerStyle={styles.scrollableNames}>
         {[1, 2, 3, 4, 5, 6].map((name, index) => (
           <TouchableOpacity key={index} style={styles.scrollableName}>
             <Image
-              source={"../assets/images/kaka-front_600x.webp"}
+              source={require("../assets/images/kaka-front_600x.webp")}
               style={styles.imageforname}
             />
 
@@ -114,7 +139,6 @@ const HomePage = () => {
           </TouchableOpacity>
         </View>
       )}
-
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.productsContainer}>
           {noResultsMessage()}
@@ -146,22 +170,6 @@ const HomePage = () => {
           ))}
         </View>
       </ScrollView>
-
-      <View style={styles.headerForPrompt}>
-        <Feather
-          name="search"
-          size={24}
-          color="black"
-          style={styles.searchIconForPrompt}
-        />
-        <TextInput
-          style={styles.searchInputForPrompt}
-          placeholder="Message Agro Easy..."
-          value={searchQuery}
-          onChangeText={(text) => setSearchQuery(text)}
-        />
-      </View>
-
       <View style={styles.footer}>
         <Link href={"Components/Profile"} style={styles.footerIcon}>
           <AntDesign name="user" size={24} color="black" />
@@ -169,9 +177,9 @@ const HomePage = () => {
         <Link href={"Components/Cart/Cart"} style={styles.footerIcon}>
           <AntDesign name="shoppingcart" size={25} color="black" />
         </Link>
-        <Link href={"Components/Camera"} style={styles.footerIcon}>
+        {/* <Link href={"Components/Camera"} style={styles.footerIcon}>
           <Entypo name="camera" size={24} color="black" />
-        </Link>
+        </Link> */}
         <View>
           <Feather
             name="more-horizontal"
@@ -203,6 +211,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 5,
     marginBottom: 8,
   },
+  imageforname: {
+    width: "50%",
+    height: 70,
+    marginBottom: 5,
+    margin: 20,
+  },
   scrollableName: {
     paddingHorizontal: 10,
     paddingVertical: 5,
@@ -215,11 +229,11 @@ const styles = StyleSheet.create({
     fontSize: 25,
     margin: 15,
   },
-  imageforname: {
-    width: "50%",
-    height: 70,
-    marginBottom: 5,
-    margin: 20,
+  cameraIcon: {
+    position: "absolute",
+    right: 20,
+    zIndex: 1,
+    top: 14,
   },
   header: {
     flexDirection: "row",
@@ -230,6 +244,7 @@ const styles = StyleSheet.create({
     zIndex: 2,
   },
   headerForPrompt: {
+    flexDirection: "row",
     alignItems: "center",
     padding: 10,
     borderBottomWidth: 1,
@@ -248,10 +263,10 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   searchIconForPrompt: {
-    position: "absolute", // Position the icon absolutely
-    left: 15, // Adjust the left position for alignment
-    zIndex: 1, // Ensure the icon appears above the input field
-    top: 18, // Adjust the top position for alignment
+    position: "absolute",
+    left: 15,
+    zIndex: 1,
+    top: 18,
   },
   searchInputForPrompt: {
     height: 40,
@@ -259,9 +274,10 @@ const styles = StyleSheet.create({
     borderColor: "#ccc",
     borderRadius: 5,
     padding: 10,
-    paddingLeft: 40, // Adjust the left padding for the icon
-    marginBottom: 50, // Adjust margin bottom for spacing
-    width: Dimensions.get("window").width - 20, // Adjust width to fill container
+    paddingLeft: 40,
+    marginBottom: 50,
+    width: Dimensions.get("window").width - 20,
+    paddingRight: 40, // Adjust as needed
   },
 
   messageInput: {

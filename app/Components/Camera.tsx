@@ -87,8 +87,7 @@ const Camera = () => {
 
       // Send the image URI to your backend for further processing
       setCapturedImage(result.uri);
-
-      setCapturedImage(result.uri);
+      setShowCamera(true); // Show the camera view after selecting an image
     } catch (error) {
       console.error("Error picking image:", error.message);
     }

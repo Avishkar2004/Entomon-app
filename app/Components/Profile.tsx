@@ -30,20 +30,17 @@ const Profile = () => {
           style={styles.option}
           onPress={() => console.log("View Cart")}
         >
-          <Link href={"/Cart/Cart"} style={styles.optionLink}>
-            View Cart
+          <Link href={"Components/Cart/Cart"} style={styles.optionLink}>
+            <Text style={styles.optionText}>View Cart</Text>
+            <AntDesign name="shoppingcart" size={24} color="#333" />
           </Link>
-          <AntDesign name="shoppingcart" size={24} color="black" />
         </TouchableOpacity>
         <TouchableOpacity style={styles.option} onPress={handleLogout}>
           <Text style={styles.optionText}>Log Out</Text>
-          <AntDesign name="logout" size={24} color="black" />
+          <AntDesign name="logout" size={24} color="#333" />
         </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.option}
-          onPress={() => console.log("Privacy Policy")}
-        >
-          <Text style={styles.optionText}>Privacy Policy</Text>
+        <TouchableOpacity style={styles.option}>
+          <Link href={"Components/privacyPolicy"}>Privacy And Policy</Link>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.option}
@@ -67,34 +64,37 @@ const styles = StyleSheet.create({
     padding: 20,
     borderRadius: 10,
     marginBottom: 20,
+    elevation: 2,
   },
   label: {
     fontWeight: "bold",
     marginBottom: 5,
+    color: "#333",
   },
   userInfoText: {
     marginBottom: 10,
+    color: "#666",
   },
   options: {
     backgroundColor: "#fff",
     borderRadius: 10,
-    borderTopWidth: 1,
-    borderTopColor: "#ccc",
+    elevation: 2,
   },
   option: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
     paddingVertical: 15,
+    paddingHorizontal: 20,
     borderBottomWidth: 1,
     borderBottomColor: "#ccc",
-    paddingHorizontal: 20,
   },
   optionLink: {
     textDecorationLine: "underline",
   },
   optionText: {
     fontSize: 16,
+    color: "#333",
   },
 });
 
