@@ -72,7 +72,7 @@ const Cart = () => {
     <View style={styles.container}>
       <View style={styles.cartHeader}>
         <AntDesign name="shoppingcart" size={40} color="black" />
-        <Text style={styles.cartHeaderText}>Your Cart</Text>
+        <Text style={styles.cartHeaderText}>Your Cart ({products.length})</Text>
       </View>
       <ScrollView>
         {products.map((product) => (

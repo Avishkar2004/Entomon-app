@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   Dimensions,
+  Linking,
 } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
@@ -62,24 +63,27 @@ const HomePage = () => {
     }
   };
 
+  const handleCallPress = () => {
+    Linking.openURL("tel:+8010281236");
+  };
+
   return (
     <View style={styles.container}>
       <View style={[styles.options, styles.iconsContainer]}>
-        {/* Alert Icon */}
         <TouchableOpacity
           style={styles.iconOption}
           onPress={() => alert("Alert Icon pressed!")}
         >
-          <Ionicons name="notifications-sharp" size={24} color="black" />
+          <View>
+            <Ionicons name="notifications-sharp" size={24} color="black" />
+            <View style={styles.notificationBadge}>
+              <Text style={styles.notificationText}>2</Text>
+            </View>
+          </View>
         </TouchableOpacity>
 
         {/* Call Icon */}
-        <TouchableOpacity
-          style={styles.iconOption}
-          onPress={() => {
-            /* Add call functionality */
-          }}
-        >
+        <TouchableOpacity style={styles.iconOption} onPress={handleCallPress}>
           <Feather name="phone-call" size={24} color="black" />
         </TouchableOpacity>
 
@@ -231,6 +235,21 @@ const styles = StyleSheet.create({
   noResultsContainer: {
     alignItems: "center",
     marginTop: 20,
+  },
+  notificationBadge: {
+    position: "absolute",
+    top: -5,
+    right: -5,
+    backgroundColor: "red",
+    borderRadius: 10,
+    width: 20,
+    height: 20,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  notificationText: {
+    color: "white",
+    fontSize: 12,
   },
   iconsContainer: {
     justifyContent: "flex-end",
