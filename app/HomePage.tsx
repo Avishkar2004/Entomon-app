@@ -10,10 +10,8 @@ import {
   Dimensions,
   Linking,
 } from "react-native";
-import { Feather } from "@expo/vector-icons";
-import { AntDesign } from "@expo/vector-icons";
-import { Ionicons } from "@expo/vector-icons";
-import { Entypo } from "@expo/vector-icons";
+import { Feather, Ionicons, AntDesign } from "@expo/vector-icons";
+
 import { Link } from "expo-router";
 import { useNavigation } from "@react-navigation/native";
 import { Button } from "react-native";
@@ -70,11 +68,12 @@ const HomePage = () => {
   return (
     <View style={styles.container}>
       <View style={[styles.options, styles.iconsContainer]}>
+        {/* Notification Icon */}
         <TouchableOpacity
           style={styles.iconOption}
           onPress={() => alert("Alert Icon pressed!")}
         >
-          <View>
+          <View style={styles.iconWrapper}>
             <Ionicons name="notifications-sharp" size={24} color="black" />
             <View style={styles.notificationBadge}>
               <Text style={styles.notificationText}>2</Text>
@@ -236,32 +235,45 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: 20,
   },
-  notificationBadge: {
-    position: "absolute",
-    top: -5,
-    right: -5,
-    backgroundColor: "red",
-    borderRadius: 10,
-    width: 20,
-    height: 20,
+  iconWrapper: {
+    alignItems: "center",
     justifyContent: "center",
-    alignItems: "center",
+    position: "relative",
   },
-  notificationText: {
-    color: "white",
-    fontSize: 12,
-  },
-  iconsContainer: {
-    justifyContent: "flex-end",
-    alignItems: "center",
-  },
+
   iconOption: {
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#e0e0e0", // Light gray background
+    backgroundColor: "#e0e0e0",
     borderRadius: 5,
-    marginLeft: 10,
+    marginHorizontal: 5,
     padding: 8,
+    width: 40,
+    height: 40,
+    elevation: 3,
+  },
+
+  notificationBadge: {
+    position: "absolute",
+    top: -8,
+    right: -8,
+    backgroundColor: "red",
+    borderRadius: 12,
+    width: 24,
+    height: 24,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
+  notificationText: {
+    color: "white",
+    fontSize: 12,
+    fontWeight: "bold",
+  },
+
+  iconsContainer: {
+    justifyContent: "flex-end",
+    alignItems: "center",
   },
   cameraImage: {
     width: Dimensions.get("window").width - 20, // Adjust width to fit the screen
