@@ -50,7 +50,10 @@ const Buy = ({ productId }) => {
 
   return (
     <View style={styles.container}>
-      <ScrollView contentContainerStyle={styles.scrollContent}>
+      <ScrollView
+        contentContainerStyle={styles.scrollContent}
+        stickyHeaderIndices={[0]}
+      >
         <TouchableOpacity
           onPress={() => navigation.goBack()}
           style={styles.backButton}
@@ -68,6 +71,11 @@ const Buy = ({ productId }) => {
         <View style={styles.stepper}>
           <HorizontalLinearStepper />
         </View>
+        <View style={styles.productDetails}>
+          <Image source={{ uri: product.photo }} style={styles.image} />
+          <Text style={styles.title}>{product.name}</Text>
+          <Text style={styles.price}>₹ {product.rupees}</Text>
+        </View>
         <View style={styles.addressContainer}>
           <Text style={styles.deliverTo}>Deliver To:</Text>
           <View style={styles.addressInfo}>
@@ -78,11 +86,6 @@ const Buy = ({ productId }) => {
             <Text style={styles.address}>Deliver Here: {product.address}</Text>
             <Text style={styles.pincode}>932203</Text>
           </View>
-        </View>
-        <View style={styles.productDetails}>
-          <Image source={{ uri: product.photo }} style={styles.image} />
-          <Text style={styles.title}>{product.name}</Text>
-          <Text style={styles.price}>₹ {product.rupees}</Text>
         </View>
         <View style={styles.gstContainer}>
           <Text style={styles.gstText}>Use GST Invoice</Text>
@@ -151,6 +154,7 @@ const styles = StyleSheet.create({
   },
   BackButton: {
     fontWeight: "bold",
+    color: "#007BFF",
   },
   stepper: {
     marginTop: 30,
