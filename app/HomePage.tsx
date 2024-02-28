@@ -129,8 +129,9 @@ const HomePage = () => {
       <TouchableOpacity
         onPress={() => navigation.navigate("Components/Camera")}
       >
+        <View style={styles.Problem}>Know Your Problem</View>
         <Image
-          source={require("../assets/images/image.jpg")}
+          source={require("../assets/images/image-removebg-preview.png")}
           style={styles.cameraImage}
         />{" "}
       </TouchableOpacity>
@@ -276,12 +277,16 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   cameraImage: {
-    width: Dimensions.get("window").width - 20, // Adjust width to fit the screen
-    height: 200, // Set a fixed height
-    borderRadius: 10, // Add borderRadius for a rounded look
-    marginBottom: 10, // Add some margin at the bottom
+    width: Dimensions.get("window").width - 50,
+    height: 200,
+    borderRadius: 10,
+    marginBottom: 20,
+    marginTop: -50,
   },
-
+  Problem: {
+    alignItems: "center",
+    fontSize: 30,
+  },
   noResultsText: {
     fontSize: 30,
     color: "red",
@@ -331,9 +336,9 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   scrollableNameText: {
-    fontSize: 14, // Adjust the font size to your preference
+    fontSize: 14,
     marginVertical: 5,
-    textAlign: "center", // Center the text within the scrollable name
+    textAlign: "center",
   },
   cameraIcon: {
     position: "absolute",

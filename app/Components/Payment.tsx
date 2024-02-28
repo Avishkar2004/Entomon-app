@@ -14,6 +14,8 @@ const Payment = () => {
   const route = useRoute();
   const navigation = useNavigation();
   const { product } = route.params;
+  const { totalPrice } = route.params;
+
   const [mobileNumber, setMobileNumber] = useState("");
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("");
   const [cardNumber, setCardNumber] = useState("");

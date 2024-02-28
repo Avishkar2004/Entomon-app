@@ -32,6 +32,10 @@ const Cart = () => {
       .catch((error) => console.error("Error fetching data:", error));
   }, []);
 
+  // Calculate total price of all products in cart
+  const totalPrice = products.reduce((total, product) => {
+    return total + product.rupees * product.quantity;
+  }, 0);
   const handleBuyNow = (product) => {
     if (product) {
       navigation.navigate("Components/Buy", { product: product });
@@ -68,6 +72,14 @@ const Cart = () => {
     }
   };
 
+  const handleBuyNowPayment = (product) => {
+    if (product) {
+      navigation.navigate("Components/Payment", { product: totalPrice });
+    } else {
+      console.error("Product information is missing.");
+    }
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.cartHeader}>
@@ -84,7 +96,7 @@ const Cart = () => {
             <Image source={{ uri: product.photo }} style={styles.itemImage} />
             <View style={styles.itemDetails}>
               <Text style={styles.itemName}>{product.name}</Text>
-              <Text style={styles.itemPrice}>$ {product.rupees}</Text>
+              <Text style={styles.itemPrice}>₹ {product.rupees}</Text>
               <Text style={styles.itemPrice}>Quantity: {product.quantity}</Text>
             </View>
             <View style={styles.buttonsContainer}>
@@ -104,6 +116,12 @@ const Cart = () => {
           </TouchableOpacity>
         ))}
       </ScrollView>
+      <View style={styles.footer}>
+        <Text style={styles.totalPriceText}>Total Price: ₹{totalPrice}</Text>
+        <TouchableOpacity style={styles.buynow} onPress={handleBuyNowPayment}>
+          <Text style={styles.BuybuttonText}>Buy</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -151,7 +169,12 @@ const styles = StyleSheet.create({
   itemName: {
     fontSize: 16,
     marginBottom: 5,
+    maxWidth: 300,
+    overflow: "hidden",
+    whiteSpace: "nowrap",
+    textOverflow: "ellipsis",
   },
+
   itemPrice: {
     fontSize: 16,
     fontWeight: "bold",
@@ -170,6 +193,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  footer: {
+    borderTopWidth: 1,
+    paddingVertical: 20,
+    paddingHorizontal: 10,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
   removeButton: {
     backgroundColor: "red",
   },
@@ -179,6 +210,29 @@ const styles = StyleSheet.create({
   buttonText: {
     color: "#fff",
     fontWeight: "bold",
+  },
+  buynow: {
+    backgroundColor: "green",
+    width: "50%", // Occupy half of the screen width
+    borderRadius: 10,
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: 15,
+  },
+  BuybuttonText: {
+    color: "#fff",
+    fontWeight: "bold",
+    fontSize: 20,
+  },
+  totalPriceText: {
+    fontSize: 20,
+    fontWeight: "bold",
+    alignSelf: "flex-start", // Align text to the start of the container
+    flex: 1, // Take up remaining space in the container
+    marginBottom: 10, // Add some bottom margin for separation
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 12,
   },
 });
 
