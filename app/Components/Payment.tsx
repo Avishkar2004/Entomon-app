@@ -14,8 +14,6 @@ const Payment = () => {
   const route = useRoute();
   const navigation = useNavigation();
   const { product } = route.params;
-  const { totalPrice } = route.params;
-
   const [mobileNumber, setMobileNumber] = useState("");
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("");
   const [cardNumber, setCardNumber] = useState("");
@@ -32,13 +30,11 @@ const Payment = () => {
     <View style={styles.container}>
       <View style={styles.headerContainer}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Text style={styles.headerText}>
-            <AntDesign name="arrowleft" size={20} color="black" />
-            Payment
-          </Text>
+          <AntDesign name="arrowleft" size={24} color="black" />
         </TouchableOpacity>
+        <Text style={styles.headerText}>Payment</Text>
         <TouchableOpacity onPress={() => {}}>
-          <Text style={styles.arrow}></Text>
+          <AntDesign name="questioncircleo" size={24} color="black" />
         </TouchableOpacity>
       </View>
       <Text style={styles.totalAmount}>Total Amount: ₹ {product.rupees}</Text>
@@ -49,7 +45,7 @@ const Payment = () => {
           style={styles.paymentMethodOption}
           onPress={() => setSelectedPaymentMethod("creditDebitCard")}
         >
-          <Text>Credit/Debit Card</Text>
+          <Text style={styles.paymentMethodText}>Credit/Debit Card</Text>
           {selectedPaymentMethod === "creditDebitCard" && (
             <View style={styles.cardDetailsContainer}>
               <TextInput
@@ -79,7 +75,7 @@ const Payment = () => {
           style={styles.paymentMethodOption}
           onPress={() => setSelectedPaymentMethod("netBanking")}
         >
-          <Text>Net Banking</Text>
+          <Text style={styles.paymentMethodText}>Net Banking</Text>
         </TouchableOpacity>
         {selectedPaymentMethod === "netBanking" && (
           <View style={styles.walletsContainer}>
@@ -113,7 +109,7 @@ const Payment = () => {
           style={styles.paymentMethodOption}
           onPress={() => setSelectedPaymentMethod("wallet")}
         >
-          <Text>Wallets</Text>
+          <Text style={styles.paymentMethodText}>Wallets</Text>
         </TouchableOpacity>
       </View>
       {selectedPaymentMethod === "wallet" && (
@@ -164,13 +160,9 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   headerText: {
-    fontSize: 28,
+    fontSize: 24,
     fontWeight: "bold",
     color: "#333333",
-  },
-  arrow: {
-    fontSize: 28,
-    color: "#007bff",
   },
   totalAmount: {
     fontSize: 20,
@@ -192,9 +184,13 @@ const styles = StyleSheet.create({
   },
   paymentMethodOption: {
     backgroundColor: "#f0f0f0",
-    padding: 10,
+    padding: 15,
     borderRadius: 10,
     marginBottom: 10,
+  },
+  paymentMethodText: {
+    fontSize: 16,
+    color: "#333333",
   },
   walletsContainer: {
     marginBottom: 20,
@@ -211,7 +207,7 @@ const styles = StyleSheet.create({
   },
   walletOption: {
     backgroundColor: "#f0f0f0",
-    padding: 10,
+    padding: 15,
     borderRadius: 10,
   },
   mobileNumberLabel: {
