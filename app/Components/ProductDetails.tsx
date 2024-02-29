@@ -29,6 +29,7 @@ const ProductDetails = () => {
     product_id,
     name,
     rupees,
+    stockStatus,
     photo,
     quantity,
     review,
@@ -50,6 +51,7 @@ const ProductDetails = () => {
           name: name,
           photo: photo,
           rupees: rupees,
+          stockStatus: stockStatus,
           quantity: quantity,
           review: review,
           percent_off: percent_off,
@@ -146,6 +148,7 @@ const ProductDetails = () => {
               product.product_id,
               product.name,
               product.rupees,
+              product.stockStatus,
               product.photo,
               quantity,
               product.review,
@@ -179,7 +182,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
-    backgroundColor: "#fff",
+    backgroundColor: "#FFFFFF",
   },
   backButton: {
     position: "absolute",
@@ -195,6 +198,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingBottom: 100,
     alignItems: "center",
+    backgroundColor: "#FFFFFF", // White background color
   },
   image: {
     width: 200,
@@ -208,6 +212,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 10,
     textAlign: "center",
+    color: "#333333", // Dark text color
   },
   quantityInfoContainer: {
     flexDirection: "row",
@@ -216,7 +221,7 @@ const styles = StyleSheet.create({
   },
   quantityInfo: {
     fontSize: 16,
-    color: "#555",
+    color: "#555555", // Medium text color
   },
   offerContainer: {
     marginBottom: 10,
@@ -226,17 +231,18 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginBottom: 5,
     textAlign: "center",
-    color: "#555",
+    color: "#555555", // Medium text color
   },
   quantityInput: {
     height: 40,
     width: "100%",
-    borderColor: "#ccc",
+    borderColor: "#BDBDBD", // Light gray border color
     borderWidth: 1,
     marginBottom: 20,
     paddingHorizontal: 10,
     borderRadius: 5,
     fontSize: 16,
+    backgroundColor: "#FFFFFF", // White background color
   },
   buttonContainer: {
     flexDirection: "row",
@@ -244,15 +250,16 @@ const styles = StyleSheet.create({
     width: "100%",
     position: "absolute",
     bottom: 20,
-    paddingHorizontal: 20,
+    paddingHorizontal: 16,
+    backgroundColor: "#FFFFFF", // White background color
   },
   button: {
-    backgroundColor: "#2196F3",
     paddingVertical: 12,
     paddingHorizontal: 20,
     borderRadius: 5,
-    width: "50%",
+    width: "48%",
   },
+
   buttonText: {
     fontSize: 16,
     fontWeight: "bold",
@@ -262,7 +269,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
   buyNowButton: {
-    backgroundColor: "#fb641b",
+    backgroundColor: "#FB641B", // Orange button color
   },
 
   addToCartButtonText: {
@@ -275,7 +282,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     textAlign: "left",
     marginBottom: 20,
-    color: "#555",
+    color: "#555555", // Medium text color
   },
   stockStatus: {
     color: "red",
@@ -298,16 +305,16 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
     marginBottom: 5,
-    color: "#333",
+    color: "#333333", // Dark text color
   },
   specsDetail: {
     fontSize: 16,
-    color: "#555",
+    color: "#555555", // Medium text color
   },
   price: {
     fontSize: 20,
     marginBottom: 10,
-    color: "#4CAF50",
+    color: "#4CAF50", // Green text color
   },
   oldPrice: {
     textDecorationLine: "line-through",

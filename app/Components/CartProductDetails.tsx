@@ -141,25 +141,10 @@ const CartProductDetails = () => {
       <View style={styles.buttonContainer}>
         <TouchableOpacity
           style={[styles.button, styles.addToCartButton]}
-          onPress={() =>
-            addToCart(
-              product.product_id,
-              product.name,
-              product.rupees,
-              product.photo,
-              quantity,
-              product.review,
-              product.percent_off,
-              product.delivery_charges,
-              product.delivery_time,
-              product.emi_per_month,
-              product.emi_month,
-              product.address
-            )
-          }
+          onPress={() => navigation.goBack()}
         >
           <Text style={[styles.buttonText, styles.addToCartButtonText]}>
-            Add to Cart
+            Go To Cart
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
@@ -273,12 +258,15 @@ const styles = StyleSheet.create({
   },
   description: {
     fontSize: 16,
-    textAlign: "left",
+    textAlign: "center",
     marginBottom: 20,
     color: "#555",
   },
   stockStatus: {
     color: "red",
+    textAlign: "center",
+    marginBottom: 20,
+    fontSize: 16,
   },
   specificInfoContainer: {
     borderWidth: 1,
@@ -306,8 +294,9 @@ const styles = StyleSheet.create({
   },
   price: {
     fontSize: 20,
-    marginBottom: 10,
+    marginBottom: 20,
     color: "#4CAF50",
+    textAlign: "center",
   },
   oldPrice: {
     textDecorationLine: "line-through",

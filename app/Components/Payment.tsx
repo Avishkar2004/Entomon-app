@@ -42,7 +42,12 @@ const Payment = () => {
       <View style={styles.paymentMethodContainer}>
         <Text style={styles.paymentMethodHeader}>Payment Method</Text>
         <TouchableOpacity
-          style={styles.paymentMethodOption}
+          style={[
+            styles.paymentMethodOption,
+            selectedPaymentMethod === "creditDebitCard"
+              ? styles.selectedOption
+              : null,
+          ]}
           onPress={() => setSelectedPaymentMethod("creditDebitCard")}
         >
           <Text style={styles.paymentMethodText}>Credit/Debit Card</Text>
@@ -151,7 +156,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: "#ffffff",
+    backgroundColor: "#f0f0f0",
   },
   headerContainer: {
     flexDirection: "row",
@@ -172,7 +177,7 @@ const styles = StyleSheet.create({
   discount: {
     fontSize: 18,
     color: "green",
-    marginBottom: 10,
+    marginBottom: 20,
   },
   paymentMethodContainer: {
     marginBottom: 20,
@@ -180,13 +185,16 @@ const styles = StyleSheet.create({
   paymentMethodHeader: {
     fontSize: 18,
     color: "#333333",
+    fontWeight: "bold",
     marginBottom: 10,
   },
   paymentMethodOption: {
-    backgroundColor: "#f0f0f0",
+    backgroundColor: "#fff",
     padding: 15,
     borderRadius: 10,
     marginBottom: 10,
+    borderWidth: 1,
+    borderColor: "#ccc",
   },
   paymentMethodText: {
     fontSize: 16,
@@ -243,7 +251,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   payButtonText: {
-    fontSize: 22,
+    fontSize: 20,
     fontWeight: "bold",
     color: "#ffffff",
   },

@@ -293,7 +293,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "#F8F8F8", // Light gray background color
   },
   options: {
     flexDirection: "row",
@@ -308,8 +308,9 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   optionText: {
-    fontSize: 30,
-    color: "white",
+    fontSize: 20,
+    color: "white", // White text color
+    fontWeight: "bold",
   },
 
   scrollableNames: {
@@ -321,24 +322,25 @@ const styles = StyleSheet.create({
     marginTop: 40,
   },
   scrollableName: {
-    paddingHorizontal: 10,
-    paddingVertical: 5,
+    paddingHorizontal: 15,
+    paddingVertical: 10,
     borderRadius: 20,
     marginRight: 10,
     justifyContent: "center",
     alignItems: "center",
-  },
-
-  imageforname: {
-    width: 80,
-    height: 80,
-    borderRadius: 60,
-    marginBottom: 10,
+    backgroundColor: "#FFFFFF", // White background color
+    elevation: 2, // Shadow effect
   },
   scrollableNameText: {
     fontSize: 14,
     marginVertical: 5,
     textAlign: "center",
+  },
+  imageforname: {
+    width: 80,
+    height: 80,
+    borderRadius: 60,
+    marginBottom: 10,
   },
   cameraIcon: {
     position: "absolute",
@@ -372,6 +374,7 @@ const styles = StyleSheet.create({
     borderColor: "#ccc",
     borderRadius: 5,
     padding: 10,
+    backgroundColor: "#FFFFFF", // White background color
   },
   searchIconForPrompt: {
     position: "absolute",
@@ -418,6 +421,8 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     width: "48%",
     paddingHorizontal: 10,
+    backgroundColor: "#FFFFFF", // White background color
+    elevation: 2, // Shadow effect
   },
   image: {
     width: "100%",
@@ -443,6 +448,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: "#ccc",
     paddingVertical: 10,
+    backgroundColor: "#FFFFFF", // White background color
   },
   navbarItem: {
     flex: 1,
@@ -470,7 +476,7 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     zIndex: 2,
-    backgroundColor: "#fff",
+    backgroundColor: "#FFFFFF", // White background color
   },
   footerIcon: {
     marginLeft: 10,
