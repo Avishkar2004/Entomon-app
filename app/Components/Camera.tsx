@@ -12,14 +12,19 @@ import { Camera as ExpoCamera } from "expo-camera";
 import * as ImagePicker from "expo-image-picker";
 import { Feather } from "@expo/vector-icons";
 
+// Camera Component
 const Camera = () => {
+  // Ref to access camera functionality
   const cameraRef = useRef(null);
+
+  // State variables
   const [hasPermission, setHasPermission] = useState(null);
   const [type, setType] = useState(ExpoCamera.Constants.Type.back);
   const [problem, setProblem] = useState("");
   const [capturedImage, setCapturedImage] = useState(null);
   const [showCamera, setShowCamera] = useState(false);
 
+  // Request camera permissions on component mount
   useEffect(() => {
     (async () => {
       const { status } = await ExpoCamera.requestPermissionsAsync();
@@ -27,6 +32,7 @@ const Camera = () => {
     })();
   }, []);
 
+  // Toggle camera type (front/back)
   const handleCameraType = () => {
     setType(
       type === ExpoCamera.Constants.Type.back
@@ -35,6 +41,7 @@ const Camera = () => {
     );
   };
 
+  // Alert to request camera permission
   const requestPermissionAlert = () => {
     Alert.alert(
       "Camera Permission",
@@ -50,11 +57,13 @@ const Camera = () => {
     );
   };
 
+  // Request camera permission
   const handlePermissionRequest = async () => {
     const { status } = await ExpoCamera.requestPermissionsAsync();
     setHasPermission(status === "granted");
   };
 
+  // Capture picture using the camera
   const takePicture = async () => {
     if (cameraRef.current) {
       let photo = await cameraRef.current.takePictureAsync();
@@ -63,6 +72,7 @@ const Camera = () => {
     }
   };
 
+  // Pick image from the device's gallery
   const pickImageFromGallery = async () => {
     try {
       const { status } =
@@ -93,8 +103,8 @@ const Camera = () => {
     }
   };
 
+  // Send the problem description and captured image to the backend
   const sendProblem = () => {
-    // Implement logic to send the problem description and captured image to the backend
     console.log("Problem:", problem);
     console.log("Captured Image URI:", capturedImage);
     // Reset the state after sending the problem
@@ -105,6 +115,7 @@ const Camera = () => {
   return (
     <View style={styles.container}>
       {hasPermission === null ? (
+        // Prompt user to grant permission if it's null
         <View style={styles.permissionContainer}>
           <TouchableOpacity
             style={styles.permissionButton}
@@ -114,6 +125,7 @@ const Camera = () => {
           </TouchableOpacity>
         </View>
       ) : hasPermission ? (
+        // If permission is granted, render main camera UI
         <>
           <Text style={styles.header}>Know Your Problem</Text>
           <TextInput
@@ -123,6 +135,7 @@ const Camera = () => {
             onChangeText={setProblem}
           />
           {showCamera && (
+            // Render camera view and controls if showCamera is true
             <ExpoCamera style={styles.camera} type={type} ref={cameraRef}>
               <View style={styles.buttonContainer}>
                 <TouchableOpacity style={styles.button} onPress={takePicture}>
@@ -138,6 +151,7 @@ const Camera = () => {
             </ExpoCamera>
           )}
           {!showCamera && !capturedImage && (
+            // Render options to open camera or pick from gallery
             <View style={styles.buttonContainer}>
               <TouchableOpacity
                 style={styles.button}
@@ -154,6 +168,7 @@ const Camera = () => {
             </View>
           )}
           {capturedImage && (
+            // Render captured image and upload button
             <View style={styles.imageContainer}>
               <Image
                 source={{ uri: capturedImage }}
@@ -175,6 +190,7 @@ const Camera = () => {
           )}
         </>
       ) : (
+        // If permission is denied, continue to prompt user to grant permission
         <View style={styles.permissionContainer}>
           <TouchableOpacity
             style={styles.permissionButton}
@@ -190,6 +206,7 @@ const Camera = () => {
   );
 };
 
+// Styles
 const styles = StyleSheet.create({
   container: {
     flex: 1,

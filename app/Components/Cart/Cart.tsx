@@ -10,10 +10,13 @@ import {
 import { AntDesign } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 
+// Cart Component
 const Cart = () => {
+  // State variables
   const [products, setProducts] = useState([]);
   const navigation = useNavigation();
 
+  // Fetch cart data on component mount
   useEffect(() => {
     fetch("http://localhost:8000/api/cart")
       .then((response) => {
@@ -36,6 +39,8 @@ const Cart = () => {
   const totalPrice = products.reduce((total, product) => {
     return total + product.rupees * product.quantity;
   }, 0);
+
+  // Navigation function to navigate to buy screen with product details
   const handleBuyNow = (product) => {
     if (product) {
       navigation.navigate("Components/Buy", { product: product });
@@ -44,8 +49,8 @@ const Cart = () => {
     }
   };
 
+  // Remove product from cart
   const handleRemove = (productId) => {
-    // Send a DELETE request to your backend API to remove the product from the cart
     fetch(`http://localhost:8000/cart/${productId}`, {
       method: "DELETE",
     })
@@ -62,6 +67,7 @@ const Cart = () => {
       .catch((error) => console.error("Error removing product:", error));
   };
 
+  // Navigation function to navigate to product details screen
   const productDetails = (product) => {
     if (product) {
       navigation.navigate("Components/CartProductDetails", {
@@ -72,12 +78,9 @@ const Cart = () => {
     }
   };
 
-  const handleBuyNowPayment = (product) => {
-    if (product) {
-      navigation.navigate("Components/Payment", { product: totalPrice });
-    } else {
-      console.error("Product information is missing.");
-    }
+  // Navigation function to navigate to payment screen with total price
+  const handleBuyNowPayment = () => {
+    navigation.navigate("Components/Payment", { product: totalPrice });
   };
 
   return (
@@ -126,6 +129,7 @@ const Cart = () => {
   );
 };
 
+// Styles
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -174,7 +178,6 @@ const styles = StyleSheet.create({
     whiteSpace: "nowrap",
     textOverflow: "ellipsis",
   },
-
   itemPrice: {
     fontSize: 16,
     fontWeight: "bold",
@@ -213,7 +216,7 @@ const styles = StyleSheet.create({
   },
   buynow: {
     backgroundColor: "green",
-    width: "50%", // Occupy half of the screen width
+    width: "50%",
     borderRadius: 10,
     alignItems: "center",
     justifyContent: "center",
@@ -227,9 +230,9 @@ const styles = StyleSheet.create({
   totalPriceText: {
     fontSize: 20,
     fontWeight: "bold",
-    alignSelf: "flex-start", // Align text to the start of the container
-    flex: 1, // Take up remaining space in the container
-    marginBottom: 10, // Add some bottom margin for separation
+    alignSelf: "flex-start",
+    flex: 1,
+    marginBottom: 10,
     justifyContent: "center",
     alignItems: "center",
     marginTop: 12,

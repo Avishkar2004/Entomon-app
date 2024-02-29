@@ -14,19 +14,23 @@ import { Feather, Ionicons, AntDesign } from "@expo/vector-icons";
 
 import { Link } from "expo-router";
 import { useNavigation } from "@react-navigation/native";
-import { Button } from "react-native";
 
 const HomePage = () => {
+  // Navigation hook
   const navigation = useNavigation();
+  // State to toggle visibility of navbar
   const [isNavbarVisible, setIsNavbarVisible] = useState(false);
 
+  // Function to toggle visibility of navbar
   const toggleNavbarVisibility = () => {
     setIsNavbarVisible(!isNavbarVisible);
   };
 
+  // State for products and search query
   const [products, setProducts] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
 
+  // Fetching product data on component mount
   useEffect(() => {
     fetch("http://localhost:8000/api/productData")
       .then((response) => response.json())
@@ -39,10 +43,12 @@ const HomePage = () => {
       .catch((error) => console.error("Error fetching data:", error));
   }, []);
 
+  // Filtering products based on search query
   const filteredProducts = products.filter((product) =>
     product.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
+  // Render message when no search results found
   const noResultsMessage = () => {
     if (filteredProducts.length === 0 && searchQuery.length > 0) {
       return (
@@ -53,6 +59,8 @@ const HomePage = () => {
     }
     return null;
   };
+
+  // Navigate to product details screen
   const productDetails = (product) => {
     if (product) {
       navigation.navigate("Components/ProductDetails", { product: product });
@@ -61,12 +69,14 @@ const HomePage = () => {
     }
   };
 
+  // Handle call press to open phone app
   const handleCallPress = () => {
     Linking.openURL("tel:+8010281236");
   };
 
   return (
     <View style={styles.container}>
+      {/* Navbar */}
       <View style={[styles.options, styles.iconsContainer]}>
         {/* Notification Icon */}
         <TouchableOpacity
@@ -95,6 +105,7 @@ const HomePage = () => {
         </TouchableOpacity>
       </View>
 
+      {/* Options */}
       <View style={styles.options}>
         <TouchableOpacity style={styles.option}>
           <Text style={styles.optionText}>Entomon</Text>
@@ -103,6 +114,8 @@ const HomePage = () => {
           <Text style={styles.optionText}>Is A Products</Text>
         </TouchableOpacity>
       </View>
+
+      {/* Header with Search */}
       <View style={styles.header}>
         <Feather
           name="search"
@@ -125,7 +138,9 @@ const HomePage = () => {
           </TouchableOpacity>
         )}
       </View>
-      {/* Horizontally scrollable names */}
+
+      {/* Scrollable names */}
+      {/* Show Camera option */}
       <TouchableOpacity
         onPress={() => navigation.navigate("Components/Camera")}
       >
@@ -133,25 +148,10 @@ const HomePage = () => {
         <Image
           source={require("../assets/images/image-removebg-preview.png")}
           style={styles.cameraImage}
-        />{" "}
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.scrollableName}>
-        <View style={styles.headerForPrompt}>
-          <Feather
-            name="search"
-            size={24}
-            color="black"
-            style={styles.searchIconForPrompt}
-          />
-          <TextInput
-            style={styles.searchInputForPrompt}
-            placeholder="Message Agro Easy..."
-            value={searchQuery}
-            onChangeText={(text) => setSearchQuery(text)}
-          />
-        </View>
+        />
       </TouchableOpacity>
 
+      {/* Horizontal scrollable names */}
       <ScrollView horizontal contentContainerStyle={styles.scrollableNames}>
         {[1, 2, 3, 4, 5, 6].map((name, index) => (
           <TouchableOpacity key={index} style={styles.scrollableName}>
@@ -159,11 +159,12 @@ const HomePage = () => {
               source={require("../assets/images/kaka-front_600x.webp")}
               style={styles.imageforname}
             />
-
             <Text style={styles.scrollableNameText}>Name {name}</Text>
           </TouchableOpacity>
         ))}
       </ScrollView>
+
+      {/* Navbar options */}
       {isNavbarVisible && (
         <View style={styles.navbar}>
           <TouchableOpacity style={styles.navbarItem}>
@@ -177,9 +178,13 @@ const HomePage = () => {
           </TouchableOpacity>
         </View>
       )}
+
+      {/* Products list we are fetching from backend (dynamically) */}
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.productsContainer}>
+          {/* Render no results message */}
           {noResultsMessage()}
+          {/* Render filtered products */}
           {filteredProducts.map((product, index) => (
             <TouchableOpacity
               key={product.product_id}
@@ -208,16 +213,18 @@ const HomePage = () => {
           ))}
         </View>
       </ScrollView>
+
+      {/* Footer */}
       <View style={styles.footer}>
+        {/* Profile link when user click button*/}
         <Link href={"Components/Profile"} style={styles.footerIcon}>
           <AntDesign name="user" size={24} color="black" />
         </Link>
+        {/* Cart link when user click button*/}
         <Link href={"Components/Cart/Cart"} style={styles.footerIcon}>
           <AntDesign name="shoppingcart" size={25} color="black" />
         </Link>
-        {/* <Link href={"Components/Camera"} style={styles.footerIcon}>
-            <Entypo name="camera" size={24} color="black" />
-          </Link> */}
+        {/* More options */}
         <View>
           <Feather
             name="more-horizontal"

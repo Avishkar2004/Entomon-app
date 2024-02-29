@@ -19,6 +19,7 @@ const Page = () => {
         </View>
         <View style={styles.middleContainer}>
           <View style={styles.photoContainer}>
+            {/* 3 images for logos */}
             <Image
               source={require("../assets/images/Logo.jpeg")}
               style={styles.photo}
@@ -41,6 +42,7 @@ const Page = () => {
           Explore the new ways of Agriculture Shopping
         </Text>
         <TouchableOpacity style={styles.continueButton}>
+          {/* route to render on next page */}
           <Link style={styles.continueText} href={"/SecondPage"}>
             Continue With Number
           </Link>{" "}
@@ -49,6 +51,7 @@ const Page = () => {
         {/* New button for Continue with Google */}
         <TouchableOpacity style={styles.continueWithGoogleButton}>
           <AntDesign name="google" size={24} color="white" />
+          {/* route to render on next page */}
           <Link href={"/SecondPage"} style={styles.continueWithGoogleText}>
             Continue With Google
           </Link>

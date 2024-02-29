@@ -9,7 +9,7 @@ import {
   Alert,
 } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import { useNavigation } from "@react-navigation/native"; // Import useNavigation hook
+import { useNavigation } from "@react-navigation/native";
 
 const ThirdPage = () => {
   const [name, setName] = useState("");
@@ -59,6 +59,7 @@ const ThirdPage = () => {
           style={styles.registerButton}
           onPress={handleRegister}
         >
+          {/* route to render on next page */}
           <Link href={"/HomePage"} style={styles.registerButtonText}>
             Register
           </Link>

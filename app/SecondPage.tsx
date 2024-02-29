@@ -7,17 +7,19 @@ import {
   Animated,
   Easing,
 } from "react-native";
-import { useNavigation } from "@react-navigation/native"; // Import useNavigation hook
+import { useNavigation } from "@react-navigation/native";
 import { CountryPicker } from "react-native-country-codes-picker";
 
 const SecondPage = () => {
-  const navigation = useNavigation(); // Initialize navigation
+  const navigation = useNavigation();
   const [show, setShow] = useState(false);
   const [countryCode, setCountryCode] = useState("+91");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [buttonScale] = useState(new Animated.Value(1));
 
+  // Function to handle continue button press
   const handleContinue = () => {
+    // Validate phone number
     if (phoneNumber.trim() === "") {
       alert("Please enter your phone number.");
       return;
@@ -27,25 +29,26 @@ const SecondPage = () => {
       return;
     }
 
-    // Navigate to next page only if phone number is entered
+    // Navigate to the next page if phone number is entered
     navigation.navigate("ThirdPage");
   };
 
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+      {/* Title */}
       <Text style={{ fontSize: 24.5, marginBottom: 20 }}>
         Enter the number for verification
       </Text>
 
-      {/* Text related to phone number */}
+      {/* Explanation */}
       <Text style={{ fontSize: 12, marginBottom: 20, textAlign: "center" }}>
         This number will be used for all rides and shopping-related
         communication. You shall receive an SMS with a code for verification.
       </Text>
 
-      {/* Parent View for Country Picker and Input Field */}
+      {/* Country Picker and Input Field */}
       <View style={{ flexDirection: "row", alignItems: "center" }}>
-        {/* Country picker */}
+        {/* Country picker button */}
         <TouchableOpacity
           onPress={() => setShow(true)}
           style={{
@@ -73,7 +76,7 @@ const SecondPage = () => {
           }}
         />
 
-        {/* Input field for phone number */}
+        {/* Phone number input */}
         <TextInput
           style={{
             flex: 1,

@@ -11,19 +11,26 @@ import { AntDesign } from "@expo/vector-icons";
 import { useNavigation } from "expo-router";
 
 const Payment = () => {
+  // Accessing the route and navigation objects
   const route = useRoute();
   const navigation = useNavigation();
+
+  // Extracting the product object from route params
   const { product } = route.params;
+
+  // State variables for managing payment details
   const [mobileNumber, setMobileNumber] = useState("");
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("");
   const [cardNumber, setCardNumber] = useState("");
   const [validThru, setValidThru] = useState("");
   const [cvv, setCvv] = useState("");
 
+  // Handler for mobile number change
   const handleMobileNumberChange = (text) => {
     setMobileNumber(text);
   };
 
+  // Handler for initiating payment
   const handlePayment = () => {};
 
   return (

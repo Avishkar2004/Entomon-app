@@ -12,19 +12,12 @@ import { useRoute } from "@react-navigation/native";
 import { useNavigation } from "expo-router";
 
 const ProductDetails = () => {
-  const route = useRoute();
+  const route = useRoute(); // Access route object
   const { product } = route.params;
   const navigation = useNavigation();
   const [quantity, setQuantity] = useState(1);
 
-  if (!route.params || !product) {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.errorText}>Product information is incomplete</Text>
-      </View>
-    );
-  }
-
+  // Function to add the product to the cart
   const addToCart = async (
     product_id,
     name,
@@ -41,6 +34,7 @@ const ProductDetails = () => {
     address
   ) => {
     try {
+      // Fetch request to add the product to the cart
       const response = await fetch(`http://localhost:8000/cart/${product_id}`, {
         method: "POST",
         headers: {
@@ -63,6 +57,7 @@ const ProductDetails = () => {
         }),
       });
 
+      // Check if the response is successful
       if (!response.ok) {
         throw new Error("Failed to add item to cart");
       }
@@ -73,29 +68,41 @@ const ProductDetails = () => {
     }
   };
 
+  // Function to handle Buy Now button press
   const handleBuyNow = (product) => {
     if (product) {
-      navigation.navigate("Components/Buy", { product: product });
+      navigation.navigate("Components/Buy", { product: product }); // Navigate to Buy screen with product information
     } else {
       console.error("Product information is missing.");
     }
   };
 
+  // Return JSX for rendering the component
   return (
     <View style={styles.container}>
+      {/* Back button */}
       <TouchableOpacity
         onPress={() => navigation.goBack()}
         style={styles.backButton}
       >
         <Text style={styles.backButtonText}>Back</Text>
       </TouchableOpacity>
+
+      {/* ScrollView for scrolling content */}
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
+        {/* Product image */}
         <Image source={{ uri: product.photo }} style={styles.image} />
+
+        {/* Product title */}
         <Text style={styles.title}>{product.name}</Text>
+
+        {/* Quantity info */}
         <View style={styles.quantityInfoContainer}>
           <Text style={styles.quantityInfo}>Minimum Order Quantity: 3</Text>
           <Text style={styles.quantityInfo}> @ ₹78/100ml</Text>
         </View>
+
+        {/* Offer info */}
         <View style={styles.offerContainer}>
           <Text style={styles.offerText}>
             Combo Offer: Buy 3 items save 3%; Buy 4 or more save 5%
@@ -104,6 +111,8 @@ const ProductDetails = () => {
             Bank Offer: 10% off on HSBC Bank Credit Card and EMI Transactions
           </Text>
         </View>
+
+        {/* Quantity input */}
         <TextInput
           style={styles.quantityInput}
           value={quantity}
@@ -111,6 +120,8 @@ const ProductDetails = () => {
           keyboardType="numeric"
           placeholder="Enter Quantity"
         />
+
+        {/* Additional product info */}
         <View style={styles.specificInfoContainer}>
           <Text style={styles.specificInfoText}>
             Delivery Charges: {product.delivery_charges}
@@ -125,14 +136,22 @@ const ProductDetails = () => {
             6 Month Cost EMI Plan with HDFC credit-cart.
           </Text>
         </View>
+
+        {/* Product price */}
         <Text style={styles.price}>
           ₹{product.rupees} <Text style={styles.oldPrice}>20</Text>
         </Text>
+
+        {/* Product description and delivery info */}
         <Text style={styles.description}>{product.address}</Text>
         <Text style={styles.description}>
           Free delivery by: {product.delivery_time}
         </Text>
+
+        {/* Stock status */}
         <Text style={styles.stockStatus}>{product.stockStatus}</Text>
+
+        {/* Product specifications */}
         <View style={styles.specifications}>
           <Text style={styles.specsTitle}>Specifications:</Text>
           <Text style={styles.specsDetail}>
@@ -140,7 +159,10 @@ const ProductDetails = () => {
           </Text>
         </View>
       </ScrollView>
+
+      {/* Button container */}
       <View style={styles.buttonContainer}>
+        {/* Add to Cart button it will add item in cart*/}
         <TouchableOpacity
           style={[styles.button, styles.addToCartButton]}
           onPress={() =>
@@ -165,6 +187,8 @@ const ProductDetails = () => {
             Add to Cart
           </Text>
         </TouchableOpacity>
+
+        {/* Buy Now button it also pass data to the Buy component*/}
         <TouchableOpacity
           style={[styles.button, styles.buyNowButton]}
           onPress={() => handleBuyNow(product)}

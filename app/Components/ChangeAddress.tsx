@@ -1,48 +1,51 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, TextInput, Button, StyleSheet, Alert } from "react-native";
-import * as Location from "expo-location";
-import { RadioButton } from "react-native-paper";
-import { useRoute, useNavigation } from "@react-navigation/native";
-import { AntDesign } from "@expo/vector-icons";
+import * as Location from "expo-location"; // Import Location from Expo for accessing device location
+import { RadioButton } from "react-native-paper"; // Import RadioButton component from react-native-paper
+import { useRoute, useNavigation } from "@react-navigation/native"; // Import useRoute and useNavigation hooks
+import { AntDesign } from "@expo/vector-icons"; // Import AntDesign icons
 
 const ChangeAddress = () => {
-  const navigation = useNavigation();
-  const route = useRoute();
-  const productId = route.params?.productId;
-  const [location, setLocation] = useState(null);
-  const [errorMsg, setErrorMsg] = useState(null);
-  const [pincode, setPincode] = useState("");
-  const [locality, setLocality] = useState("");
-  const [city, setCity] = useState("");
-  const [state, setState] = useState("");
-  const [landmark, setLandmark] = useState("");
-  const [addressType, setAddressType] = useState("Home");
+  const navigation = useNavigation(); // Initialize navigation
+  const route = useRoute(); // Access route object
+  const productId = route.params?.productId; // Get productId from route params
+  const [location, setLocation] = useState(null); // State to store device location
+  const [errorMsg, setErrorMsg] = useState(null); // State for error message
+  const [pincode, setPincode] = useState(""); // State for pincode input
+  const [locality, setLocality] = useState(""); // State for locality input
+  const [city, setCity] = useState(""); // State for city input
+  const [state, setState] = useState(""); // State for state input
+  const [landmark, setLandmark] = useState(""); // State for landmark input
+  const [addressType, setAddressType] = useState("Home"); // State for address type (Home/Work)
 
   useEffect(() => {
+    // Function to fetch current location on component mount
     (async () => {
-      let { status } = await Location.requestForegroundPermissionsAsync();
+      let { status } = await Location.requestForegroundPermissionsAsync(); // Request location permission
       if (status !== "granted") {
         setErrorMsg("Permission to access location was denied");
         return;
       }
 
-      let location = await Location.getCurrentPositionAsync({});
+      let location = await Location.getCurrentPositionAsync({}); // Get current location
       setLocation(location);
     })();
   }, []);
 
   const handleUseCurrentLocation = async () => {
-    let { status } = await Location.requestForegroundPermissionsAsync();
+    // Function to use current location as address
+    let { status } = await Location.requestForegroundPermissionsAsync(); // Request location permission
     if (status !== "granted") {
       setErrorMsg("Permission to access location was denied");
       return;
     }
 
-    let location = await Location.getCurrentPositionAsync({});
+    let location = await Location.getCurrentPositionAsync({}); // Get current location
     setLocation(location);
   };
 
   const handleSaveAddress = () => {
+    // Function to save updated address
     const data = {
       address: {
         pincode,
@@ -79,6 +82,7 @@ const ChangeAddress = () => {
 
   return (
     <View style={styles.container}>
+      {/* Header */}
       <View style={styles.header}>
         <AntDesign
           name="arrowleft"
@@ -88,11 +92,15 @@ const ChangeAddress = () => {
         />
         <Text style={styles.heading}>Change Address</Text>
       </View>
+
+      {/* Button to use current location */}
       <Button
         title="Use Current Location"
         onPress={handleUseCurrentLocation}
         style={styles.button}
       />
+
+      {/* Text inputs for address details */}
       <TextInput
         style={styles.input}
         placeholder="Pincode"
@@ -124,6 +132,8 @@ const ChangeAddress = () => {
         value={landmark}
         onChangeText={setLandmark}
       />
+
+      {/* Radio buttons for address type */}
       <View style={styles.radioContainer}>
         <RadioButton.Group
           onValueChange={(newValue) => setAddressType(newValue)}
@@ -141,6 +151,8 @@ const ChangeAddress = () => {
           </View>
         </RadioButton.Group>
       </View>
+
+      {/* Button to save address */}
       <Button title="Save Address" onPress={handleSaveAddress} />
     </View>
   );

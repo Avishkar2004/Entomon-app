@@ -17,6 +17,7 @@ const Profile = () => {
 
   return (
     <View style={styles.container}>
+      {/* User information */}
       <View style={styles.userInfo}>
         <Text style={styles.label}>Name:</Text>
         <Text style={styles.userInfoText}>{user.name}</Text>
@@ -25,7 +26,10 @@ const Profile = () => {
         <Text style={styles.label}>Address:</Text>
         <Text style={styles.userInfoText}>{user.address}</Text>
       </View>
+
+      {/* Options */}
       <View style={styles.options}>
+        {/* View Cart */}
         <TouchableOpacity
           style={styles.option}
           onPress={() => console.log("View Cart")}
@@ -35,13 +39,19 @@ const Profile = () => {
             <AntDesign name="shoppingcart" size={24} color="#333" />
           </Link>
         </TouchableOpacity>
+
+        {/* Log Out */}
         <TouchableOpacity style={styles.option} onPress={handleLogout}>
           <Text style={styles.optionText}>Log Out</Text>
           <AntDesign name="logout" size={24} color="#333" />
         </TouchableOpacity>
+
+        {/* Privacy Policy */}
         <TouchableOpacity style={styles.option}>
           <Link href={"Components/privacyPolicy"}>Privacy And Policy</Link>
         </TouchableOpacity>
+
+        {/* About Company */}
         <TouchableOpacity style={styles.option}>
           <Link href={"Components/CompInfo"}>About Company</Link>
         </TouchableOpacity>
