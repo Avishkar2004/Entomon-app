@@ -300,7 +300,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: "#F8F8F8", // Light gray background color
+    backgroundColor: "#F8F8F8",
   },
   options: {
     flexDirection: "row",
@@ -316,7 +316,7 @@ const styles = StyleSheet.create({
   },
   optionText: {
     fontSize: 20,
-    color: "white", // White text color
+    color: "white",
     fontWeight: "bold",
   },
 
@@ -324,9 +324,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     paddingVertical: 10,
     paddingHorizontal: 5,
-    marginBottom: 100, // Increase or decrease this value as needed
-    alignItems: "center", // Center the items horizontally
-    marginTop: 40,
+    marginBottom: 100,
+    alignItems: "center",
+    marginTop: 70,
   },
   scrollableName: {
     paddingHorizontal: 15,
@@ -335,8 +335,8 @@ const styles = StyleSheet.create({
     marginRight: 10,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#FFFFFF", // White background color
-    elevation: 2, // Shadow effect
+    backgroundColor: "#FFFFFF",
+    elevation: 2,
   },
   scrollableNameText: {
     fontSize: 14,
@@ -381,7 +381,7 @@ const styles = StyleSheet.create({
     borderColor: "#ccc",
     borderRadius: 5,
     padding: 10,
-    backgroundColor: "#FFFFFF", // White background color
+    backgroundColor: "#FFFFFF",
   },
   searchIconForPrompt: {
     position: "absolute",
@@ -397,7 +397,7 @@ const styles = StyleSheet.create({
     padding: 10,
     paddingLeft: 40,
     width: Dimensions.get("window").width - 20,
-    paddingRight: 40, // Adjust as needed
+    paddingRight: 40,
   },
 
   messageInput: {
@@ -428,8 +428,8 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     width: "48%",
     paddingHorizontal: 10,
-    backgroundColor: "#FFFFFF", // White background color
-    elevation: 2, // Shadow effect
+    backgroundColor: "#FFFFFF",
+    elevation: 2,
   },
   image: {
     width: "100%",
@@ -455,7 +455,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: "#ccc",
     paddingVertical: 10,
-    backgroundColor: "#FFFFFF", // White background color
+    backgroundColor: "#FFFFFF",
   },
   navbarItem: {
     flex: 1,
@@ -483,7 +483,7 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     zIndex: 2,
-    backgroundColor: "#FFFFFF", // White background color
+    backgroundColor: "#FFFFFF",
   },
   footerIcon: {
     marginLeft: 10,

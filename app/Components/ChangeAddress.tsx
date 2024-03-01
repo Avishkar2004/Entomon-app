@@ -8,7 +8,8 @@ import { AntDesign } from "@expo/vector-icons"; // Import AntDesign icons
 const ChangeAddress = () => {
   const navigation = useNavigation(); // Initialize navigation
   const route = useRoute(); // Access route object
-  const productId = route.params?.productId; // Get productId from route params
+  console.log("Route Params:", route.params);
+  const productId = route.params?.productId;
   const [location, setLocation] = useState(null); // State to store device location
   const [errorMsg, setErrorMsg] = useState(null); // State for error message
   const [pincode, setPincode] = useState(""); // State for pincode input
