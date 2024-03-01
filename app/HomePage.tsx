@@ -260,7 +260,15 @@ const styles = StyleSheet.create({
     height: 40,
     elevation: 3,
   },
-
+  review: {
+    fontSize: 12, // Adjusted font size
+    color: "#666", // Adjusted font color
+    marginBottom: 5,
+  },
+  percentOff: {
+    fontSize: 12, // Adjusted font size
+    color: "#FF5733", // Adjusted font color
+  },
   notificationBadge: {
     position: "absolute",
     top: -8,
@@ -272,13 +280,21 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+  deliveryCharges: {
+    fontSize: 12, // Adjusted font size
+    color: "#666", // Adjusted font color
+    marginBottom: 5,
+  },
 
   notificationText: {
     color: "white",
     fontSize: 12,
     fontWeight: "bold",
   },
-
+  time: {
+    fontSize: 12, // Adjusted font size
+    color: "#666", // Adjusted font color
+  },
   iconsContainer: {
     justifyContent: "flex-end",
     alignItems: "center",
@@ -414,6 +430,7 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     alignItems: "center",
     marginTop: 12,
+    marginBottom: 40,
   },
   productsContainer: {
     flexDirection: "row",
@@ -423,13 +440,20 @@ const styles = StyleSheet.create({
   },
   product: {
     marginBottom: 20,
-    borderWidth: 1,
-    borderColor: "#ccc",
     borderRadius: 10,
     width: "48%",
-    paddingHorizontal: 10,
     backgroundColor: "#FFFFFF",
     elevation: 2,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    padding: 10,
+    marginRight: "2%", // Adjusted for spacing between cards
+    marginBottom: "4%", // Adjusted for spacing between rows
   },
   image: {
     width: "100%",
@@ -442,9 +466,10 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   title: {
-    fontSize: 18,
+    fontSize: 16, // Adjusted font size
     fontWeight: "bold",
     marginBottom: 5,
+    color: "#333", // Adjusted font color
   },
   menuIcon: {
     marginLeft: 10,

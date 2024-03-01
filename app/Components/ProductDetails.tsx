@@ -219,8 +219,8 @@ const styles = StyleSheet.create({
     color: "#007BFF",
   },
   scrollViewContent: {
-    paddingHorizontal: 20,
-    paddingBottom: 100,
+    paddingHorizontal: 25,
+    paddingBottom: 80,
     alignItems: "center",
     backgroundColor: "#FFFFFF", // White background color
   },
