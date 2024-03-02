@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -16,9 +16,34 @@ const ProductDetails = () => {
   const { product } = route.params;
   const navigation = useNavigation();
   const [quantity, setQuantity] = useState(1);
+  const [isInCart, setIsInCart] = useState(false);
+
+  useEffect(() => {
+    checkCart();
+  });
+
+  const checkCart = async () => {
+    try {
+      // Fetch cart data from the server
+      const response = await fetch("http://localhost:8000/api/cart");
+      const cartData = await response.json();
+
+      // Check if the current product is in the cart
+      const isInCart = cartData.some(
+        (item) => item.product_id === product.product_id
+      );
+      setIsInCart(isInCart);
+    } catch (error) {
+      console.error("Error checking cart:", error);
+    }
+  };
+
+  const handleGoToCart = () => {
+    navigation.navigate("Components/Cart/Cart"); // Navigate to Cart screen
+  };
 
   // Function to add the product to the cart
-  const addToCart = async (
+  const handleAddToCart = async (
     product_id,
     name,
     rupees,
@@ -162,33 +187,44 @@ const ProductDetails = () => {
 
       {/* Button container */}
       <View style={styles.buttonContainer}>
-        {/* Add to Cart button it will add item in cart*/}
-        <TouchableOpacity
-          style={[styles.button, styles.addToCartButton]}
-          onPress={() =>
-            addToCart(
-              product.product_id,
-              product.name,
-              product.rupees,
-              product.stockStatus,
-              product.photo,
-              quantity,
-              product.review,
-              product.percent_off,
-              product.delivery_charges,
-              product.delivery_time,
-              product.emi_per_month,
-              product.emi_month,
-              product.address
-            )
-          }
-        >
-          <Text style={[styles.buttonText, styles.addToCartButtonText]}>
-            Add to Cart
-          </Text>
-        </TouchableOpacity>
+        {/* Conditional rendering for cart buttons */}
+        {isInCart ? (
+          <TouchableOpacity
+            style={[styles.button, styles.goToCartButton]}
+            onPress={handleGoToCart}
+          >
+            <Text style={[styles.buttonText, styles.goToCartButtonText]}>
+              Go to Cart
+            </Text>
+          </TouchableOpacity>
+        ) : (
+          <TouchableOpacity
+            style={[styles.button, styles.addToCartButton]}
+            onPress={() =>
+              handleAddToCart(
+                product.product_id,
+                product.name,
+                product.rupees,
+                product.stockStatus,
+                product.photo,
+                quantity,
+                product.review,
+                product.percent_off,
+                product.delivery_charges,
+                product.delivery_time,
+                product.emi_per_month,
+                product.emi_month,
+                product.address
+              )
+            }
+          >
+            <Text style={[styles.buttonText, styles.addToCartButtonText]}>
+              Add to Cart
+            </Text>
+          </TouchableOpacity>
+        )}
 
-        {/* Buy Now button it also pass data to the Buy component*/}
+        {/* Buy Now button */}
         <TouchableOpacity
           style={[styles.button, styles.buyNowButton]}
           onPress={() => handleBuyNow(product)}
