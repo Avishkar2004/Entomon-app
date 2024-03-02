@@ -5,7 +5,6 @@ import {
   TouchableOpacity,
   TextInput,
   Animated,
-  Easing,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { CountryPicker } from "react-native-country-codes-picker";
