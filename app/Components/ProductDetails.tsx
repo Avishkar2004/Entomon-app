@@ -189,13 +189,8 @@ const ProductDetails = () => {
       <View style={styles.buttonContainer}>
         {/* Conditional rendering for cart buttons */}
         {isInCart ? (
-          <TouchableOpacity
-            style={[styles.button, styles.goToCartButton]}
-            onPress={handleGoToCart}
-          >
-            <Text style={[styles.buttonText, styles.goToCartButtonText]}>
-              Go to Cart
-            </Text>
+          <TouchableOpacity style={[styles.button]} onPress={handleGoToCart}>
+            <Text style={[styles.buttonText]}>Go to Cart</Text>
           </TouchableOpacity>
         ) : (
           <TouchableOpacity
