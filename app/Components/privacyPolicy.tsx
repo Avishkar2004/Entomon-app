@@ -1,5 +1,5 @@
 import React from "react";
-import {  Text, StyleSheet, ScrollView } from "react-native";
+import { Text, StyleSheet, ScrollView } from "react-native";
 
 const privacyPolicyText = `
 Welcome to Entomon Pest Solutions's Privacy Policy!

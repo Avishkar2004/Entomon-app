@@ -1,4 +1,4 @@
-import React, {  useState } from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -13,7 +13,7 @@ import { useNavigation } from "expo-router"; // Import useNavigation hook to nav
 import { AntDesign } from "@expo/vector-icons"; // Import AntDesign icons
 import HorizontalLinearStepper from "./HorizontalLinearStepper"; // Import HorizontalLinearStepper component
 
-const Buy = ({ productId }) => {
+const Buy = () => {
   const route = useRoute(); // Access route object
   const navigation = useNavigation(); // Initialize navigation
   const { product } = route.params; // Extract product object from route params
@@ -39,18 +39,15 @@ const Buy = ({ productId }) => {
     }
   };
 
-  // Function to handle the address change
   const handleAddress = () => {
     if (product) {
       navigation.navigate("Components/ChangeAddress", {
         product: product,
-        productId: productId,
       });
     } else {
       console.error("Product info is missing");
     }
   };
-
   // Return JSX for rendering the component
   return (
     <View style={styles.container}>
@@ -96,11 +93,10 @@ const Buy = ({ productId }) => {
           </View>
         </View>
         {/* GST container */}
-        <View style={styles.gstContainer}>
-          <Text style={styles.gstText}>Use GST Invoice</Text>
-        </View>
+        <View style={styles.gstContainer}></View>
         {/* Price details */}
         <View style={styles.priceDetails}>
+          <Text style={styles.gstText}>Use GST Invoice :- </Text>
           <Text style={styles.priceText}>Item Discount: 0%</Text>
           <Text style={styles.priceText}>
             Delivery charges :- {product.delivery_charges}
@@ -239,6 +235,12 @@ const styles = StyleSheet.create({
   },
   priceDetails: {
     marginBottom: 20,
+    borderWidth: 0.5,
+    borderColor: "#ccc",
+    borderRadius: 10,
+    padding: 10,
+    // marginBottom: 20,
+    elevation: 2,
   },
   priceText: {
     fontSize: 16,

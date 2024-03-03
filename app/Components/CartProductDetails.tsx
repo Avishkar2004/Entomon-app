@@ -281,6 +281,12 @@ const styles = StyleSheet.create({
   },
   specifications: {
     alignItems: "flex-start",
+    borderWidth: 0.5,
+    borderColor: "#ccc",
+    borderRadius: 10,
+    padding: 10,
+    marginBottom: 20,
+    elevation: 2,
   },
   specsTitle: {
     fontSize: 18,

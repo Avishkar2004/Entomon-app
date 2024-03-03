@@ -355,6 +355,11 @@ const styles = StyleSheet.create({
   },
   specifications: {
     alignItems: "flex-start",
+    borderWidth: 1,
+    borderColor: "#ccc",
+    padding: 10,
+    marginBottom: 20,
+    borderRadius: 5,
   },
   specsTitle: {
     fontSize: 18,
