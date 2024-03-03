@@ -103,46 +103,80 @@ const Cart = () => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.cartHeader}>
-        <AntDesign name="shoppingcart" size={40} color="black" />
-        <Text style={styles.cartHeaderText}>Your Cart ({products.length})</Text>
-      </View>
-      <ScrollView>
-        {products.map((product) => (
+      {products.length === 0 ? (
+        <View>
           <TouchableOpacity
-            key={product.product_id}
-            style={styles.itemContainer}
-            onPress={() => productDetails(product)}
+            onPress={() => navigation.goBack()}
+            style={styles.backButton}
           >
-            <Image source={{ uri: product.photo }} style={styles.itemImage} />
-            <View style={styles.itemDetails}>
-              <Text style={styles.itemName}>{product.name}</Text>
-              <Text style={styles.itemPrice}>₹ {product.rupees}</Text>
-              <Text style={styles.itemPrice}>Quantity: {product.quantity}</Text>
-            </View>
-            <View style={styles.buttonsContainer}>
-              <TouchableOpacity
-                style={[styles.button, styles.removeButton]}
-                onPress={() => showRemoveConfirmation(product.product_id)}
-              >
-                <Text style={styles.buttonText}>Remove</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={[styles.button, styles.buyNowButton]}
-                onPress={() => handleBuyNow(product)}
-              >
-                <Text style={styles.buttonText}>Buy Now</Text>
-              </TouchableOpacity>
-            </View>
+            <Text style={styles.BackButton}>
+              <AntDesign
+                name="arrowleft"
+                size={20}
+                color="black"
+                style={{ gap: 30 }}
+              />
+              Go Back
+            </Text>
           </TouchableOpacity>
-        ))}
-      </ScrollView>
-      <View style={styles.footer}>
-        <Text style={styles.totalPriceText}>Total Price: ₹{totalPrice}</Text>
-        <TouchableOpacity style={styles.buynow} onPress={handleBuyNowPayment}>
-          <Text style={styles.BuybuttonText}>Buy</Text>
-        </TouchableOpacity>
-      </View>
+
+          <Text style={styles.emptyCartText}>Your Cart Is Empty</Text>
+        </View>
+      ) : (
+        // <Text style={styles.emptyCartText}>Your Cart Is Empty</Text>
+        <ScrollView style={styles.scrollView}>
+          <View>
+            <View style={styles.cartHeader}>
+              <AntDesign name="shoppingcart" size={40} color="black" />
+              <Text style={styles.cartHeaderText}>
+                Your Cart ({products.length})
+              </Text>
+            </View>
+            {products.map((product) => (
+              <TouchableOpacity
+                key={product.product_id}
+                style={styles.itemContainer}
+                onPress={() => productDetails(product)}
+              >
+                <Image
+                  source={{ uri: product.photo }}
+                  style={styles.itemImage}
+                />
+                <View style={styles.itemDetails}>
+                  <Text style={styles.itemName}>{product.name}</Text>
+                  <Text style={styles.itemPrice}>₹ {product.rupees}</Text>
+                  <Text style={styles.itemPrice}>
+                    Quantity: {product.quantity}
+                  </Text>
+                </View>
+                <View style={styles.buttonsContainer}>
+                  <TouchableOpacity
+                    style={[styles.button, styles.removeButton]}
+                    onPress={() => showRemoveConfirmation(product.product_id)}
+                  >
+                    <Text style={styles.buttonText}>Remove</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={[styles.button, styles.buyNowButton]}
+                    onPress={() => handleBuyNow(product)}
+                  >
+                    <Text style={styles.buttonText}>Buy Now</Text>
+                  </TouchableOpacity>
+                </View>
+              </TouchableOpacity>
+            ))}
+          </View>
+        </ScrollView>
+      )}
+      {/* Total Price and Buy Now button */}
+      {products.length > 0 && (
+        <View style={styles.footer}>
+          <Text style={styles.totalPriceText}>Total Price: ₹{totalPrice}</Text>
+          <TouchableOpacity style={styles.buynow} onPress={handleBuyNowPayment}>
+            <Text style={styles.BuybuttonText}>Buy</Text>
+          </TouchableOpacity>
+        </View>
+      )}
       {/* Confirmation Prompt */}
       {showConfirmation && (
         <View style={styles.confirmationContainer}>
@@ -175,6 +209,19 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
     backgroundColor: "#fff",
+  },
+  backButton: {
+    marginTop: 20,
+    marginBottom: 10,
+  },
+  BackButton: {
+    fontWeight: "bold",
+    color: "black",
+  },
+  emptyCartText: {
+    fontSize: 40,
+    textAlign: "center",
+    marginTop: 50,
   },
   cartHeader: {
     flexDirection: "row",
