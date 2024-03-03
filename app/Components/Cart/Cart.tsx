@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Image,
   ScrollView,
+  Alert,
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
@@ -14,6 +15,8 @@ import { useNavigation } from "@react-navigation/native";
 const Cart = () => {
   // State variables
   const [products, setProducts] = useState([]);
+  const [showConfirmation, setShowConfirmation] = useState(false); // State for confirmation prompt
+  const [productIdToRemove, setProductIdToRemove] = useState(null); // State to store product id to be removed
   const navigation = useNavigation();
 
   // Fetch cart data on component mount
@@ -40,17 +43,17 @@ const Cart = () => {
     return total + product.rupees * product.quantity;
   }, 0);
 
-  // Navigation function to navigate to buy screen with product details
-  const handleBuyNow = (product) => {
-    if (product) {
-      navigation.navigate("Components/Buy", { product: product });
-    } else {
-      console.error("Product information is missing.");
-    }
+  // Function to show confirmation prompt
+  const showRemoveConfirmation = (productId) => {
+    setProductIdToRemove(productId);
+    setShowConfirmation(true);
   };
 
   // Remove product from cart
   const handleRemove = (productId) => {
+    // Hide confirmation prompt
+    setShowConfirmation(false);
+
     fetch(`http://localhost:8000/cart/${productId}`, {
       method: "DELETE",
     })
@@ -66,7 +69,6 @@ const Cart = () => {
       })
       .catch((error) => console.error("Error removing product:", error));
   };
-
   // Navigation function to navigate to product details screen
   const productDetails = (product) => {
     if (product) {
@@ -77,10 +79,26 @@ const Cart = () => {
       console.error("Product information is missing.");
     }
   };
+  // Cancel removing product
+  const cancelRemove = () => {
+    // Hide confirmation prompt
+    setShowConfirmation(false);
+    // Reset product id to remove
+    setProductIdToRemove(null);
+  };
 
   // Navigation function to navigate to payment screen with total price
   const handleBuyNowPayment = () => {
     navigation.navigate("Components/Payment", { product: totalPrice });
+  };
+
+  // Navigation function to navigate to buy screen with product details
+  const handleBuyNow = (product) => {
+    if (product) {
+      navigation.navigate("Components/Buy", { product: product });
+    } else {
+      console.error("Product information is missing.");
+    }
   };
 
   return (
@@ -105,7 +123,7 @@ const Cart = () => {
             <View style={styles.buttonsContainer}>
               <TouchableOpacity
                 style={[styles.button, styles.removeButton]}
-                onPress={() => handleRemove(product.product_id)}
+                onPress={() => showRemoveConfirmation(product.product_id)}
               >
                 <Text style={styles.buttonText}>Remove</Text>
               </TouchableOpacity>
@@ -125,6 +143,28 @@ const Cart = () => {
           <Text style={styles.BuybuttonText}>Buy</Text>
         </TouchableOpacity>
       </View>
+      {/* Confirmation Prompt */}
+      {showConfirmation && (
+        <View style={styles.confirmationContainer}>
+          <Text style={styles.confirmationText}>
+            Are you sure you want to remove this item?
+          </Text>
+          <View style={styles.confirmationButtonsContainer}>
+            <TouchableOpacity
+              style={[styles.button, styles.removeButton]}
+              onPress={() => handleRemove(productIdToRemove)}
+            >
+              <Text style={styles.buttonText}>Remove</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[styles.button, styles.cancelButton]}
+              onPress={cancelRemove}
+            >
+              <Text style={styles.buttonText}>Cancel</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      )}
     </View>
   );
 };
@@ -236,6 +276,36 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginTop: 12,
+  },
+  confirmationContainer: {
+    backgroundColor: "#fff",
+    borderRadius: 10,
+    elevation: 3,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    padding: 20,
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: [{ translateX: "-50%" }, { translateY: "-50%" }],
+    width: "80%",
+    zIndex: 999,
+  },
+  confirmationText: {
+    fontSize: 16,
+    marginBottom: 20,
+  },
+  confirmationButtonsContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  cancelButton: {
+    backgroundColor: "black",
   },
 });
 
