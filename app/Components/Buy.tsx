@@ -8,28 +8,25 @@ import {
   ScrollView,
   Modal,
 } from "react-native";
-import { useRoute } from "@react-navigation/native"; // Import useRoute hook to access route parameters
-import { useNavigation } from "expo-router"; // Import useNavigation hook to navigate between screens
-import { AntDesign } from "@expo/vector-icons"; // Import AntDesign icons
-import HorizontalLinearStepper from "./HorizontalLinearStepper"; // Import HorizontalLinearStepper component
+import { useRoute } from "@react-navigation/native";
+import { useNavigation } from "expo-router";
+import { AntDesign } from "@expo/vector-icons";
+import HorizontalLinearStepper from "./HorizontalLinearStepper";
 
 const Buy = () => {
-  const route = useRoute(); // Access route object
-  const navigation = useNavigation(); // Initialize navigation
-  const { product } = route.params; // Extract product object from route params
-  const [showModal, setShowModal] = useState(false); // State to control modal visibility
+  const route = useRoute();
+  const navigation = useNavigation();
+  const { product } = route.params;
+  const [showModal, setShowModal] = useState(false);
 
-  // Function to handle the Buy to Cart button press
   const handleBuyToCart = () => {
-    setShowModal(true); // Show the modal
+    setShowModal(true);
   };
 
-  // Function to close the modal
   const closeModal = () => {
     setShowModal(false);
   };
 
-  // Function to pass data to the Payment screen and navigate
   const passDataToPayment = (product) => {
     if (product) {
       navigation.navigate("Components/Payment", { product: product });
@@ -47,14 +44,10 @@ const Buy = () => {
       console.error("Product info is missing");
     }
   };
-  // Return JSX for rendering the component
+
   return (
     <View style={styles.container}>
-      <ScrollView
-        contentContainerStyle={styles.scrollContent}
-        stickyHeaderIndices={[0]}
-      >
-        {/* Back button */}
+      <ScrollView contentContainerStyle={styles.scrollContent}>
         <TouchableOpacity
           onPress={() => navigation.goBack()}
           style={styles.backButton}
@@ -64,22 +57,19 @@ const Buy = () => {
               name="arrowleft"
               size={20}
               color="black"
-              style={{ gap: 30 }}
+              style={{ marginRight: 10 }}
             />
             Order Summary
           </Text>
         </TouchableOpacity>
-        {/* Horizontal stepper */}
         <View style={styles.stepper}>
           <HorizontalLinearStepper />
         </View>
-        {/* Product details */}
         <View style={styles.productDetails}>
           <Image source={{ uri: product.photo }} style={styles.image} />
           <Text style={styles.title}>{product.name}</Text>
           <Text style={styles.price}>₹ {product.rupees}</Text>
         </View>
-        {/* Address container */}
         <View style={styles.addressContainer}>
           <Text style={styles.deliverTo}>Deliver To:</Text>
           <View style={styles.addressInfo}>
@@ -91,9 +81,6 @@ const Buy = () => {
             <Text style={styles.pincode}>932203</Text>
           </View>
         </View>
-        {/* GST container */}
-        <View style={styles.gstContainer}></View>
-        {/* Price details */}
         <View style={styles.priceDetails}>
           <Text style={styles.gstText}>Use GST Invoice :- </Text>
           <Text style={styles.priceText}>Item Discount: 0%</Text>
@@ -106,13 +93,10 @@ const Buy = () => {
           <Text>100% Authentic products.</Text>
         </View>
       </ScrollView>
-      {/* Buttons container */}
       <View style={styles.buttonsContainer}>
-        {/* Buy button */}
         <TouchableOpacity style={styles.buyButton} onPress={handleBuyToCart}>
           <Text style={styles.buyButtonText}>{product.rupees}</Text>
         </TouchableOpacity>
-        {/* Continue button */}
         <TouchableOpacity
           style={styles.continueButton}
           onPress={handleBuyToCart}
@@ -120,7 +104,6 @@ const Buy = () => {
           <Text style={styles.continueButtonText}>Continue</Text>
         </TouchableOpacity>
       </View>
-      {/* Modal */}
       <Modal
         animationType="slide"
         transparent={true}
@@ -163,6 +146,8 @@ const styles = StyleSheet.create({
   BackButton: {
     fontWeight: "bold",
     color: "#007BFF",
+    flexDirection: "row",
+    alignItems: "center",
   },
   stepper: {
     marginTop: 30,
@@ -222,23 +207,12 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     color: "#4CAF50",
   },
-  gstContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginBottom: 20,
-  },
-  gstText: {
-    fontSize: 16,
-    marginRight: 10,
-    color: "#555",
-  },
   priceDetails: {
     marginBottom: 20,
     borderWidth: 0.5,
     borderColor: "#ccc",
     borderRadius: 10,
     padding: 10,
-    // marginBottom: 20,
     elevation: 2,
   },
   priceText: {
