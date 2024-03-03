@@ -211,8 +211,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
   backButton: {
-    marginTop: 20,
-    marginBottom: 10,
+    marginTop: -0,
+    marginBottom: 1,
   },
   BackButton: {
     fontWeight: "bold",

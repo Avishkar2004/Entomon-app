@@ -17,7 +17,6 @@ const Buy = () => {
   const route = useRoute(); // Access route object
   const navigation = useNavigation(); // Initialize navigation
   const { product } = route.params; // Extract product object from route params
-  const [quantity, setQuantity] = useState(1); // State to manage quantity of the product
   const [showModal, setShowModal] = useState(false); // State to control modal visibility
 
   // Function to handle the Buy to Cart button press
