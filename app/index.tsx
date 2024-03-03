@@ -55,12 +55,11 @@ const Page = () => {
       </LinearGradient>
       <View style={styles.footerContainer}>
         <Text style={styles.footerText}>
-          By continuing, you agree that you have read and accept our T&C and
+          By continuing, you agree that you have read and accept our T&C and{" "}
           <Link
             href={"/Components/privacyPolicy"}
-            style={{ textDecorationLine: "underline" }}
+            style={{ textDecorationLine: "underline", color: "blue" }}
           >
-            {" "}
             Privacy Policy
           </Link>{" "}
         </Text>
