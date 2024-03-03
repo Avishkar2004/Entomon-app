@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   TextInput,
   Animated,
+  StyleSheet,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { CountryPicker } from "react-native-country-codes-picker";
@@ -16,9 +17,7 @@ const SecondPage = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [buttonScale] = useState(new Animated.Value(1));
 
-  // Function to handle continue button press
   const handleContinue = () => {
-    // Validate phone number
     if (phoneNumber.trim() === "") {
       alert("Please enter your phone number.");
       return;
@@ -28,45 +27,26 @@ const SecondPage = () => {
       return;
     }
 
-    // Navigate to the next page if phone number is entered
     navigation.navigate("ThirdPage");
   };
 
   return (
-    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-      {/* Title */}
-      <Text style={{ fontSize: 24.5, marginBottom: 20 }}>
-        Enter the number for verification
-      </Text>
+    <View style={styles.container}>
+      <Text style={styles.title}>Enter the number for verification</Text>
 
-      {/* Explanation */}
-      <Text style={{ fontSize: 12, marginBottom: 20, textAlign: "center" }}>
+      <Text style={styles.description}>
         This number will be used for all rides and shopping-related
         communication. You shall receive an SMS with a code for verification.
       </Text>
 
-      {/* Country Picker and Input Field */}
-      <View style={{ flexDirection: "row", alignItems: "center" }}>
-        {/* Country picker button */}
+      <View style={styles.inputContainer}>
         <TouchableOpacity
           onPress={() => setShow(true)}
-          style={{
-            width: 80,
-            height: 40,
-            padding: 10,
-            marginBottom: 20,
-            marginRight: 10,
-            borderRadius: 5,
-            borderWidth: 1,
-            borderColor: "gray",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
+          style={styles.countryPickerButton}
         >
-          <Text style={{ color: "black", fontSize: 16 }}>{countryCode}</Text>
+          <Text style={styles.countryPickerButtonText}>{countryCode}</Text>
         </TouchableOpacity>
 
-        {/* CountryPicker component */}
         <CountryPicker
           show={show}
           pickerButtonOnPress={(item) => {
@@ -75,23 +55,10 @@ const SecondPage = () => {
           }}
         />
 
-        {/* Phone number input */}
         <TextInput
-          style={{
-            flex: 1,
-            height: 40,
-            borderColor: "gray",
-            borderWidth: 1,
-            paddingHorizontal: 10,
-            marginBottom: 20,
-            fontSize: 16,
-            marginLeft: 10,
-            borderRadius: 5,
-          }}
+          style={styles.phoneNumberInput}
           onChangeText={(text) => {
-            // Remove non-numeric characters
             const formattedText = text.replace(/[^0-9]/g, "");
-            // Limit to 10 digits
             if (formattedText.length <= 10) {
               setPhoneNumber(formattedText);
             }
@@ -102,24 +69,75 @@ const SecondPage = () => {
         />
       </View>
 
-      {/* Continue with number button */}
       <TouchableOpacity
         onPress={handleContinue}
         activeOpacity={0.8}
-        style={{
-          backgroundColor: "blue",
-          paddingVertical: 10,
-          paddingHorizontal: 20,
-          borderRadius: 5,
-          transform: [{ scale: buttonScale }],
-        }}
+        style={styles.continueButton}
       >
-        <Text style={{ color: "white", fontSize: 16 }}>
-          Continue with Number
-        </Text>
+        <Text style={styles.continueButtonText}>Continue with Number</Text>
       </TouchableOpacity>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    paddingHorizontal: 20,
+  },
+  title: {
+    fontSize: 24,
+    marginBottom: 20,
+    textAlign: "center",
+    fontWeight: "bold",
+  },
+  description: {
+    fontSize: 16,
+    marginBottom: 20,
+    textAlign: "center",
+  },
+  inputContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 20,
+  },
+  countryPickerButton: {
+    width: 80,
+    height: 40,
+    padding: 10,
+    marginRight: 10,
+    borderRadius: 5,
+    borderWidth: 1,
+    borderColor: "gray",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  countryPickerButtonText: {
+    color: "black",
+    fontSize: 16,
+  },
+  phoneNumberInput: {
+    flex: 1,
+    height: 40,
+    paddingHorizontal: 10,
+    borderRadius: 5,
+    borderWidth: 1,
+    borderColor: "gray",
+    fontSize: 16,
+  },
+  continueButton: {
+    backgroundColor: "blue",
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 5,
+  },
+  continueButtonText: {
+    color: "white",
+    fontSize: 16,
+    textAlign: "center",
+  },
+});
 
 export default SecondPage;

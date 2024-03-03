@@ -19,21 +19,20 @@ const Page = () => {
         </View>
         <View style={styles.middleContainer}>
           <View style={styles.photoContainer}>
-            {/* 3 images for logos */}
             <Image
-              source={require("../assets/images/Logo.jpeg")}
+              source={require("../assets/images/ACTIVPLUS_400x.webp")}
               style={styles.photo}
             />
           </View>
           <View style={styles.photoContainer}>
             <Image
-              source={require("../assets/images/Logo.jpeg")}
+              source={require("../assets/images/kaka-front_600x.webp")}
               style={styles.photo}
             />
           </View>
           <View style={styles.photoContainer}>
             <Image
-              source={require("../assets/images/Logo.jpeg")}
+              source={require("../assets/images/ACTIVPLUS_400x.webp")}
               style={styles.photo}
             />
           </View>
@@ -42,16 +41,13 @@ const Page = () => {
           Explore the new ways of Agriculture Shopping
         </Text>
         <TouchableOpacity style={styles.continueButton}>
-          {/* route to render on next page */}
           <Link style={styles.continueText} href={"/SecondPage"}>
             Continue With Number
-          </Link>{" "}
+          </Link>
         </TouchableOpacity>
 
-        {/* New button for Continue with Google */}
         <TouchableOpacity style={styles.continueWithGoogleButton}>
           <AntDesign name="google" size={24} color="white" />
-          {/* route to render on next page */}
           <Link href={"/SecondPage"} style={styles.continueWithGoogleText}>
             Continue With Google
           </Link>
@@ -123,7 +119,6 @@ const styles = StyleSheet.create({
     color: "#fff",
     textAlign: "center",
   },
-  // Styles for Continue with Google button
   continueWithGoogleButton: {
     flexDirection: "row",
     alignItems: "center",
