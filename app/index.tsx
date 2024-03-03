@@ -56,7 +56,13 @@ const Page = () => {
       <View style={styles.footerContainer}>
         <Text style={styles.footerText}>
           By continuing, you agree that you have read and accept our T&C and
-          Privacy Policy
+          <Link
+            href={"/Components/privacyPolicy"}
+            style={{ textDecorationLine: "underline" }}
+          >
+            {" "}
+            Privacy Policy
+          </Link>{" "}
         </Text>
       </View>
     </View>
