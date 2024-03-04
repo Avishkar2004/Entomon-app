@@ -302,7 +302,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     width: "100%",
     position: "absolute",
-    bottom: 20,
+    bottom: 1,
     paddingHorizontal: 16,
     backgroundColor: "#FFFFFF", // White background color
   },
@@ -339,6 +339,7 @@ const styles = StyleSheet.create({
   },
   stockStatus: {
     color: "red",
+    marginBottom: 12,
   },
   specificInfoContainer: {
     borderWidth: 1,

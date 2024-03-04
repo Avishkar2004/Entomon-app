@@ -188,13 +188,13 @@ const Cart = () => {
               style={[styles.button, styles.removeButton]}
               onPress={() => handleRemove(productIdToRemove)}
             >
-              <Text style={styles.buttonText}>Remove</Text>
+              <Text style={styles.buttonTextRC}>Remove</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={[styles.button, styles.cancelButton]}
               onPress={cancelRemove}
             >
-              <Text style={styles.buttonText}>Cancel</Text>
+              <Text style={styles.buttonTextRC}>Cancel</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -287,6 +287,7 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     paddingVertical: 20,
     paddingHorizontal: 10,
+    marginBottom: -35,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
@@ -300,6 +301,11 @@ const styles = StyleSheet.create({
   buttonText: {
     color: "#fff",
     fontWeight: "bold",
+  },
+  buttonTextRC: {
+    color: "#fff",
+    fontWeight: "bold",
+    fontSize: 20,
   },
   buynow: {
     backgroundColor: "green",
@@ -319,7 +325,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     alignSelf: "flex-start",
     flex: 1,
-    marginBottom: 10,
     justifyContent: "center",
     alignItems: "center",
     marginTop: 12,

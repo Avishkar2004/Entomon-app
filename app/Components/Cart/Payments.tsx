@@ -44,9 +44,7 @@ const Payments = () => {
           <AntDesign name="questioncircleo" size={24} color="black" />
         </TouchableOpacity>
       </View>
-      <Text style={styles.totalAmount}>
-        Total Amount: ₹ {product}
-      </Text>
+      <Text style={styles.totalAmount}>Total Amount: ₹ {product}</Text>
       <Text style={styles.discount}>20% Off</Text>
       <View style={styles.paymentMethodContainer}>
         <Text style={styles.paymentMethodHeader}>Payment Method</Text>
