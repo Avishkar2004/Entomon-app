@@ -89,7 +89,7 @@ const Cart = () => {
 
   // Navigation function to navigate to payment screen with total price
   const handleBuyNowPayment = () => {
-    navigation.navigate("Components/Payment", { product: totalPrice });
+    navigation.navigate("Components/Cart/Payments", { product: totalPrice });
   };
 
   // Navigation function to navigate to buy screen with product details
