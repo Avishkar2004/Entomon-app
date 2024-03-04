@@ -1,10 +1,43 @@
-import React from "react";
-import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
+import React, { useEffect, useRef } from "react";
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+  Animated,
+} from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { AntDesign } from "@expo/vector-icons";
 import { Link } from "expo-router";
 
 const Page = () => {
+  const animatedValue1 = useRef(new Animated.Value(0)).current;
+  const animatedValue2 = useRef(new Animated.Value(0)).current;
+  const animatedValue3 = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+  Animated.sequence([
+    Animated.timing(animatedValue1, {
+      toValue: 1,
+      duration: 600,
+      useNativeDriver: true,
+    }),
+    Animated.delay(200), // Delay before animating the second photo
+    Animated.timing(animatedValue2, {
+      toValue: 1,
+      duration: 800,
+      useNativeDriver: true,
+    }),
+    Animated.delay(200), // Delay before animating the third photo
+    Animated.timing(animatedValue3, {
+      toValue: 1,
+      duration: 400,
+      useNativeDriver: true,
+    }),
+  ]).start();
+}, []);
+
   return (
     <View style={styles.container}>
       <LinearGradient
@@ -18,24 +51,30 @@ const Page = () => {
           />
         </View>
         <View style={styles.middleContainer}>
-          <View style={styles.photoContainer}>
+          <Animated.View
+            style={[styles.photoContainer, { opacity: animatedValue1 }]}
+          >
             <Image
               source={require("../assets/images/ACTIVPLUS_400x.webp")}
               style={styles.photo}
             />
-          </View>
-          <View style={styles.photoContainer}>
+          </Animated.View>
+          <Animated.View
+            style={[styles.photoContainer, { opacity: animatedValue2 }]}
+          >
             <Image
               source={require("../assets/images/kaka-front_600x.webp")}
               style={styles.photo}
             />
-          </View>
-          <View style={styles.photoContainer}>
+          </Animated.View>
+          <Animated.View
+            style={[styles.photoContainer, { opacity: animatedValue3 }]}
+          >
             <Image
               source={require("../assets/images/ACTIVPLUS_400x.webp")}
               style={styles.photo}
             />
-          </View>
+          </Animated.View>
         </View>
         <Text style={styles.shopping}>
           Explore the new ways of Agriculture Shopping
