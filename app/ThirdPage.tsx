@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/native";
+import { AntDesign } from "@expo/vector-icons";
 
 const ThirdPage = () => {
   const [name, setName] = useState("");
@@ -30,6 +31,20 @@ const ThirdPage = () => {
 
   return (
     <GestureHandlerRootView style={styles.container}>
+      <TouchableOpacity
+        onPress={() => navigation.goBack()}
+        style={styles.backButton}
+      >
+        <Text style={styles.backButtonText}>
+          <AntDesign
+            name="arrowleft"
+            size={20}
+            color="blue"
+            style={{ marginRight: 10 }}
+          />
+          Back
+        </Text>
+      </TouchableOpacity>
       <View style={styles.content}>
         <Text style={styles.title}>Setup Your Entomon Account</Text>
         <Text style={styles.subtitle}>
@@ -74,6 +89,16 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
+  },
+  backButton: {
+    position: "absolute",
+    top: 20,
+    left: 20,
+    zIndex: 1,
+  },
+  backButtonText: {
+    fontSize: 16,
+    color: "blue",
   },
   content: {
     width: "80%",

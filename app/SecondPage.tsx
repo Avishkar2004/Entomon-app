@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { CountryPicker } from "react-native-country-codes-picker";
+import { AntDesign } from "@expo/vector-icons";
 
 const SecondPage = () => {
   const navigation = useNavigation();
@@ -36,7 +37,15 @@ const SecondPage = () => {
         onPress={() => navigation.goBack()}
         style={styles.backButton}
       >
-        <Text style={styles.backButtonText}>Back</Text>
+        <Text style={styles.backButtonText}>
+          <AntDesign
+            name="arrowleft"
+            size={20}
+            color="blue"
+            style={{ marginRight: 10 }}
+          />
+          Back
+        </Text>
       </TouchableOpacity>
       <Text style={styles.title}>Enter the number for verification</Text>
 
@@ -101,7 +110,7 @@ const styles = StyleSheet.create({
   },
   backButtonText: {
     fontSize: 16,
-    color: "#007BFF",
+    color: "blue",
   },
   title: {
     fontSize: 24,

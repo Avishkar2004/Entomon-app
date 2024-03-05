@@ -117,12 +117,19 @@ const HomePage = () => {
         </TouchableOpacity>
 
         {/* Cart Icon */}
+        {/* Cart Icon */}
         <TouchableOpacity
           style={styles.iconOption}
           onPress={() => navigation.navigate("Components/Cart/Cart")}
         >
-          {cartCount}
-          <AntDesign name="shoppingcart" size={24} color="black" />
+          <View style={styles.iconWrapper}>
+            <AntDesign name="shoppingcart" size={24} color="black" />
+            {cartCount > 0 && (
+              <View style={styles.cartBadge}>
+                <Text style={styles.cartBadgeText}>{cartCount}</Text>
+              </View>
+            )}
+          </View>
         </TouchableOpacity>
       </View>
 
@@ -242,10 +249,16 @@ const HomePage = () => {
           <AntDesign name="user" size={24} color="black" />
         </Link>
         {/* Cart link when user click button*/}
+        {/* Cart link when user click button*/}
         <Link href={"Components/Cart/Cart"} style={styles.footerIcon}>
-          {cartCount}
           <AntDesign name="shoppingcart" size={25} color="black" />
+          {cartCount > 0 && (
+            <View style={styles.footerCartBadge}>
+              <Text style={styles.cartBadgeText}>{cartCount}</Text>
+            </View>
+          )}
         </Link>
+
         {/* More options */}
         <View>
           <Feather
@@ -282,6 +295,23 @@ const styles = StyleSheet.create({
     height: 40,
     elevation: 3,
   },
+  cartBadge: {
+    position: "absolute",
+    top: -5,
+    right: -5,
+    backgroundColor: "red",
+    borderRadius: 10,
+    width: 20,
+    height: 20,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  cartBadgeText: {
+    color: "white",
+    fontSize: 12,
+    fontWeight: "bold",
+  },
+
   review: {
     fontSize: 12, // Adjusted font size
     color: "#666", // Adjusted font color
@@ -532,6 +562,18 @@ const styles = StyleSheet.create({
     zIndex: 2,
     backgroundColor: "#FFFFFF",
   },
+  footerCartBadge: {
+    position: "absolute",
+    top: -5,
+    right: -5,
+    backgroundColor: "red",
+    borderRadius: 10,
+    width: 20,
+    height: 20,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
   footerIcon: {
     marginLeft: 10,
   },
