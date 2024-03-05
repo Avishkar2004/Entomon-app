@@ -29,6 +29,7 @@ const HomePage = () => {
   // State for products and search query
   const [products, setProducts] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
+  const [cartCount, setCartCount] = useState(0);
 
   // Fetching product data on component mount
   useEffect(() => {
@@ -39,6 +40,25 @@ const HomePage = () => {
           (product) => product.product_id !== 100
         );
         setProducts(filteredProducts);
+      })
+      .catch((error) => console.error("Error fetching data:", error));
+  }, []);
+
+  // Fetch cart data on component mount
+  useEffect(() => {
+    fetch("http://localhost:8000/api/cart")
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        if (Array.isArray(data)) {
+          setCartCount(data.length); // Set the count of products in the cart
+        } else {
+          throw new Error("Data received is not an array");
+        }
       })
       .catch((error) => console.error("Error fetching data:", error));
   }, []);
@@ -101,6 +121,7 @@ const HomePage = () => {
           style={styles.iconOption}
           onPress={() => navigation.navigate("Components/Cart/Cart")}
         >
+          {cartCount}
           <AntDesign name="shoppingcart" size={24} color="black" />
         </TouchableOpacity>
       </View>
@@ -222,6 +243,7 @@ const HomePage = () => {
         </Link>
         {/* Cart link when user click button*/}
         <Link href={"Components/Cart/Cart"} style={styles.footerIcon}>
+          {cartCount}
           <AntDesign name="shoppingcart" size={25} color="black" />
         </Link>
         {/* More options */}
