@@ -32,6 +32,12 @@ const SecondPage = () => {
 
   return (
     <View style={styles.container}>
+      <TouchableOpacity
+        onPress={() => navigation.goBack()}
+        style={styles.backButton}
+      >
+        <Text style={styles.backButtonText}>Back</Text>
+      </TouchableOpacity>
       <Text style={styles.title}>Enter the number for verification</Text>
 
       <Text style={styles.description}>
@@ -86,6 +92,16 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     paddingHorizontal: 20,
+  },
+  backButton: {
+    position: "absolute",
+    top: 20,
+    left: 20,
+    zIndex: 1,
+  },
+  backButtonText: {
+    fontSize: 16,
+    color: "#007BFF",
   },
   title: {
     fontSize: 24,

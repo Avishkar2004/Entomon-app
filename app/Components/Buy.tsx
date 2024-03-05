@@ -47,21 +47,21 @@ const Buy = () => {
 
   return (
     <View style={styles.container}>
+      <TouchableOpacity
+        onPress={() => navigation.goBack()}
+        style={styles.backButton}
+      >
+        <Text style={styles.BackButton}>
+          <AntDesign
+            name="arrowleft"
+            size={20}
+            color="black"
+            style={{ marginRight: 10 }}
+          />
+          Order Summary
+        </Text>
+      </TouchableOpacity>
       <ScrollView contentContainerStyle={styles.scrollContent}>
-        <TouchableOpacity
-          onPress={() => navigation.goBack()}
-          style={styles.backButton}
-        >
-          <Text style={styles.BackButton}>
-            <AntDesign
-              name="arrowleft"
-              size={20}
-              color="black"
-              style={{ marginRight: 10 }}
-            />
-            Order Summary
-          </Text>
-        </TouchableOpacity>
         <View style={styles.stepper}>
           <HorizontalLinearStepper />
         </View>
@@ -140,14 +140,14 @@ const styles = StyleSheet.create({
     paddingBottom: 80,
   },
   backButton: {
-    marginTop: 20,
-    marginBottom: 10,
+    position: "absolute",
+    top: 20,
+    left: 20,
+    zIndex: 1,
   },
   BackButton: {
-    fontWeight: "bold",
+    fontSize: 16,
     color: "#007BFF",
-    flexDirection: "row",
-    alignItems: "center",
   },
   stepper: {
     marginTop: 30,

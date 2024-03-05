@@ -17,26 +17,26 @@ const Page = () => {
   const animatedValue3 = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
-  Animated.sequence([
-    Animated.timing(animatedValue1, {
-      toValue: 1,
-      duration: 600,
-      useNativeDriver: true,
-    }),
-    Animated.delay(200), // Delay before animating the second photo
-    Animated.timing(animatedValue2, {
-      toValue: 1,
-      duration: 800,
-      useNativeDriver: true,
-    }),
-    Animated.delay(200), // Delay before animating the third photo
-    Animated.timing(animatedValue3, {
-      toValue: 1,
-      duration: 400,
-      useNativeDriver: true,
-    }),
-  ]).start();
-}, []);
+    Animated.sequence([
+      Animated.timing(animatedValue1, {
+        toValue: 1,
+        duration: 600,
+        useNativeDriver: true,
+      }),
+      Animated.delay(200), // Delay before animating the second photo
+      Animated.timing(animatedValue2, {
+        toValue: 1,
+        duration: 800,
+        useNativeDriver: true,
+      }),
+      Animated.delay(200), // Delay before animating the third photo
+      Animated.timing(animatedValue3, {
+        toValue: 1,
+        duration: 400,
+        useNativeDriver: true,
+      }),
+    ]).start();
+  }, []);
 
   return (
     <View style={styles.container}>

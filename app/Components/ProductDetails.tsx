@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   TextInput,
   ScrollView,
+  ActivityIndicator,
 } from "react-native";
 import { useRoute } from "@react-navigation/native";
 import { useNavigation } from "expo-router";
@@ -17,10 +18,11 @@ const ProductDetails = () => {
   const navigation = useNavigation();
   const [quantity, setQuantity] = useState(1);
   const [isInCart, setIsInCart] = useState(false);
+  const [isLoading, setIsLoading] = useState(false); // Add isLoading state
 
   useEffect(() => {
     checkCart();
-  });
+  }, []);
 
   const checkCart = async () => {
     try {
@@ -42,7 +44,6 @@ const ProductDetails = () => {
     navigation.navigate("Components/Cart/Cart"); // Navigate to Cart screen
   };
 
-  // Function to add the product to the cart
   const handleAddToCart = async (
     product_id,
     name,
@@ -59,6 +60,8 @@ const ProductDetails = () => {
     address
   ) => {
     try {
+      setIsLoading(true); // Show loader
+
       // Fetch request to add the product to the cart
       const response = await fetch(`http://localhost:8000/cart/${product_id}`, {
         method: "POST",
@@ -86,12 +89,15 @@ const ProductDetails = () => {
       if (!response.ok) {
         throw new Error("Failed to add item to cart");
       }
+
+      setIsLoading(false); // Hide loader
+      setIsInCart(true); // Update isInCart state
     } catch (error) {
       console.error("Error adding item to cart:", error);
+      setIsLoading(false); // Hide loader
     }
   };
 
-  // Function to handle Buy Now button press
   const handleBuyNow = (product) => {
     if (product) {
       navigation.navigate("Components/Buy", { product: product }); // Navigate to Buy screen with product information
@@ -100,7 +106,6 @@ const ProductDetails = () => {
     }
   };
 
-  // Return JSX for rendering the component
   return (
     <View style={styles.container}>
       {/* Back button */}
@@ -186,7 +191,9 @@ const ProductDetails = () => {
       {/* Button container */}
       <View style={styles.buttonContainer}>
         {/* Conditional rendering for cart buttons */}
-        {isInCart ? (
+        {isLoading ? ( // Show loader if isLoading is true
+          <ActivityIndicator size="small" color="#007BFF" />
+        ) : isInCart ? (
           <TouchableOpacity style={[styles.button]} onPress={handleGoToCart}>
             <Text style={[styles.buttonText]}>Go to Cart</Text>
           </TouchableOpacity>
