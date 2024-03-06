@@ -90,8 +90,10 @@ const ProductDetails = () => {
         throw new Error("Failed to add item to cart");
       }
 
-      setIsLoading(false); // Hide loader
-      setIsInCart(true); // Update isInCart state
+      setTimeout(() => {
+        setIsLoading(false); // Hide loader
+        setIsInCart(true); // Update isInCart state
+      }, 1000);
     } catch (error) {
       console.error("Error adding item to cart:", error);
       setIsLoading(false); // Hide loader
