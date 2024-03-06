@@ -11,7 +11,6 @@ import {
   Linking,
 } from "react-native";
 import { Feather, Ionicons, AntDesign } from "@expo/vector-icons";
-
 import { Link } from "expo-router";
 import { useNavigation } from "@react-navigation/native";
 
@@ -203,6 +202,11 @@ const HomePage = () => {
           </TouchableOpacity>
           <TouchableOpacity style={styles.navbarItem}>
             <Text style={styles.navbarText}>Wishlist</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.navbarItem}>
+            <Link href={"/Components/Seller"} style={styles.navbarText}>
+              Sell on Entomon
+            </Link>
           </TouchableOpacity>
         </View>
       )}
