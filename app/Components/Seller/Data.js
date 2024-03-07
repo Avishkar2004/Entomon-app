@@ -6,7 +6,7 @@ const Data = [
   },
   {
     title: "Higher Profits",
-    info: "With 0% commission* , you take 100% profits with you",
+    info: "With 0% commission * , you take 100% profits with you",
     photo: require("../../../assets/images/person.jpg"),
   },
   {

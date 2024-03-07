@@ -5,6 +5,7 @@ import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
 import { CheckBox } from "react-native-elements";
 import { Link } from "expo-router";
 import WhySell from "./WhySell";
+import Stepper from "./Stepper";
 
 const Index = () => {
   const [name, setName] = useState("");
@@ -17,21 +18,18 @@ const Index = () => {
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.scrollViewContent}>
-      <View style={styles.container}>
-        <View style={styles.logoContainer}>
-          <Image
-            style={styles.logo}
-            source={require("../../../assets/images/Logo.jpeg")}
-          />
-          <FontAwesome6
-            style={{ marginLeft: 12 }}
-            name="bag-shopping"
-            size={24}
-            color="blue"
-          />
-          <View style={styles.verticalBorder} />
-        </View>
+    <View style={styles.container}>
+      <View style={styles.header}>
+        <Image
+          style={styles.logo}
+          source={require("../../../assets/images/Logo.jpeg")}
+        />
+        <FontAwesome6
+          style={{ marginLeft: 12 }}
+          name="bag-shopping"
+          size={24}
+          color="blue"
+        />
         <AntDesign
           name="questioncircleo"
           size={24}
@@ -39,121 +37,106 @@ const Index = () => {
           style={[styles.icon, styles.questionIcon]}
         />
       </View>
-      <View style={styles.option}>
-        <View style={styles.checkIconContainer}>
-          <AntDesign name="checkcircleo" size={24} color="black" />
-          <Text style={styles.optionText}>Email Id & GST</Text>
+      <ScrollView contentContainerStyle={styles.scrollViewContent}>
+        <Stepper />
+        <View style={styles.inputContainer}>
+          <Text style={styles.label}>Full Name* :-</Text>
+          <View style={styles.inputWrapper}>
+            <TextInput
+              style={styles.input}
+              placeholder="Enter Mobile Number *"
+              value={name}
+              onChangeText={(text) => setName(text)} // Update name state
+            />
+            <TouchableOpacity
+              style={styles.sendOTPButton}
+              onPress={handleSendOTP}
+            >
+              <Text style={styles.sendOTPText}>Send OTP</Text>
+            </TouchableOpacity>
+          </View>
         </View>
-        <View style={styles.checkIconContainer}>
-          <AntDesign name="checkcircleo" size={24} color="black" />
-          <Text style={styles.optionText}>Password Creation</Text>
+        <View style={styles.inputContainer}>
+          <Text style={styles.label}>Email :-</Text>
+          <TextInput style={styles.input} placeholder="Email ID *" />
         </View>
-        <View style={styles.checkIconContainer}>
-          <AntDesign name="checkcircleo" size={24} color="black" />
-          <Text style={styles.optionText}>Onbroad Dashing</Text>
+        <View style={styles.options}>
+          <Text style={styles.looking}>
+            What are you looking to sell on Flipkart?
+          </Text>
+          <View style={styles.checkboxContainer}>
+            <CheckBox
+              title="All categories"
+              checked={isSelectedAllCategories}
+              onPress={() =>
+                setIsSelectedAllCategories(!isSelectedAllCategories)
+              }
+            />
+            <CheckBox
+              title="Books"
+              checked={isSelectedBooks}
+              onPress={() => setIsSelectedBooks(!isSelectedBooks)}
+            />
+          </View>
+          <View style={styles.inputContainer}>
+            <Text style={styles.label}>Enter GSTIN :-</Text>
+            <TextInput style={styles.input} placeholder="Enter GSTIN *" />
+          </View>
+          <Text style={styles.gstin}>
+            GSTIN is required to sell products on Flipkart. You can also share
+            it in the final step.
+          </Text>
+          {/* for showing why sell info  */}
+          <WhySell />
         </View>
-      </View>
-      <View style={styles.inputContainer}>
-        <Text style={styles.label}>Full Name* :-</Text>
-        <View style={styles.inputWrapper}>
-          <TextInput
-            style={styles.input}
-            placeholder="Enter Mobile Number *"
-            value={name}
-            onChangeText={(text) => setName(text)} // Update name state
-          />
-          <TouchableOpacity
-            style={styles.sendOTPButton}
-            onPress={handleSendOTP}
-          >
-            <Text style={styles.sendOTPText}>Send OTP</Text>
+      </ScrollView>
+      <View style={styles.footer}>
+        <View>
+          <Text style={styles.terms}>
+            By continuing, I agree to Flipkart’s{" "}
+            <Link href={"/Components/privacyPolicy"} style={styles.blue}>
+              Terms of Use
+            </Link>{" "}
+            &{" "}
+            <Link href={"/Components/privacyPolicy"} style={styles.blue}>
+              Privacy Policy
+            </Link>
+          </Text>
+          <TouchableOpacity style={styles.continueButton}>
+            <Link
+              style={styles.continueText}
+              href={"/Components/Seller/PassCreation"}
+            >
+              Continue With Number
+            </Link>
           </TouchableOpacity>
         </View>
       </View>
-      <View style={styles.inputContainer}>
-        <Text style={styles.label}>Email :-</Text>
-        <TextInput style={styles.input} placeholder="Email ID *" />
-      </View>
-      <View style={styles.options}>
-        <Text style={styles.looking}>
-          What are you looking to sell on Flipkart?
-        </Text>
-        <View style={styles.checkboxContainer}>
-          <CheckBox
-            title="All categories"
-            checked={isSelectedAllCategories}
-            onPress={() => setIsSelectedAllCategories(!isSelectedAllCategories)}
-          />
-          <CheckBox
-            title="Books"
-            checked={isSelectedBooks}
-            onPress={() => setIsSelectedBooks(!isSelectedBooks)}
-          />
-        </View>
-        <View style={styles.inputContainer}>
-          <Text style={styles.label}>Enter GSTIN :-</Text>
-          <TextInput style={styles.input} placeholder="Enter GSTIN *" />
-        </View>
-        <Text style={styles.gstin}>
-          GSTIN is required to sell products on Flipkart. You can also share it
-          in the final step.
-        </Text>
-        {/* for showing why sell info  */}
-        <WhySell />
-        <Text style={styles.terms}>
-          By continuing, I agree to Flipkart’s{" "}
-          <Link href={"/Components/privacyPolicy"} style={styles.blue}>
-            Terms of Use
-          </Link>{" "}
-          &{" "}
-          <Link href={"/Components/privacyPolicy"} style={styles.blue}>
-            Privacy Policy
-          </Link>
-        </Text>
-        <TouchableOpacity style={styles.continueButton}>
-          <Link style={styles.continueText} href={"/SecondPage"}>
-            Continue With Number
-          </Link>
-        </TouchableOpacity>
-      </View>
-    </ScrollView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  scrollViewContent: {
-    flexGrow: 1,
-    paddingBottom: 100, // Adjust this value according to the height of your button
-  },
   container: {
+    flex: 1,
+    backgroundColor: "#FFFFFF",
+  },
+  scrollViewContent: {
+    paddingBottom: 100,
+  },
+  header: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "#FFFFFF", // Background color
+    backgroundColor: "#FFFFFF",
     padding: 10,
     borderRadius: 5,
     borderWidth: 1,
-    borderColor: "#CCCCCC", // Border color
-  },
-  logoContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginRight: 10,
+    borderColor: "#CCCCCC",
   },
   logo: {
     width: 50,
     height: 50,
     borderRadius: 40,
-  },
-  verticalBorder: {
-    height: "100%",
-    width: 1,
-    backgroundColor: "#CCCCCC", // Border color
-    marginHorizontal: 5,
-  },
-  text: {
-    fontSize: 20,
-    fontWeight: "bold",
-    color: "#333333", // Text color
   },
   icon: {
     marginLeft: 10,
@@ -162,8 +145,8 @@ const styles = StyleSheet.create({
     marginLeft: "auto",
   },
   checkIconContainer: {
-    marginTop: 15, // Adjust as needed
-    flexDirection: "column", // Display icon and text in a column
+    marginTop: 15,
+    flexDirection: "column",
     alignItems: "center",
   },
   option: {
@@ -171,7 +154,7 @@ const styles = StyleSheet.create({
     gap: 23,
   },
   optionText: {
-    marginTop: 5, // Adjust as needed
+    marginTop: 5,
     left: 12,
   },
   inputContainer: {
@@ -205,7 +188,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 15,
     borderRadius: 10,
-    marginLeft: -90, // Adjust as needed
+    marginLeft: -90,
   },
   sendOTPText: {
     color: "blue",
@@ -236,6 +219,16 @@ const styles = StyleSheet.create({
   blue: {
     color: "blue",
     fontWeight: "700",
+  },
+  footer: {
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    right: 0,
+    backgroundColor: "#FFFFFF",
+    padding: 10,
+    borderTopWidth: 1,
+    borderTopColor: "#CCCCCC",
   },
   continueButton: {
     backgroundColor: "blue",

@@ -45,7 +45,6 @@ const WhySell = () => {
 
 const styles = StyleSheet.create({
   outerBorder: {
-    // padding: 10,
     top: 20,
   },
   innerBorder: {
@@ -78,7 +77,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     top: 12,
     backgroundColor: "#ebf3fb",
-    marginBottom: 30,
+    marginBottom: 80,
   },
   sellOnentomon: {
     fontSize: 20,
