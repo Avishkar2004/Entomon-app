@@ -11,21 +11,25 @@ import {
 import Stepper from "./Stepper";
 
 const PassCreation = () => {
+  // State variables for form inputs and FAQ accordion
   const [name, setName] = useState("");
   const [showFAQ, setShowFAQ] = useState(false); // State to control accordion visibility
   const [selectedQuestion, setSelectedQuestion] = useState(null); // State to track selected question
 
+  // Function to toggle FAQ answers visibility
   const toggleAnswer = (index) => {
     if (selectedQuestion === index) {
-      setSelectedQuestion(null);
+      setSelectedQuestion(null); // Collapse FAQ answer if already expanded
     } else {
-      setSelectedQuestion(index);
+      setSelectedQuestion(index); // Expand FAQ answer
     }
   };
 
   return (
     <View style={styles.container}>
+      {/* Header section */}
       <View style={styles.header}>
+        {/* Logo and icons */}
         <Image
           style={styles.logo}
           source={require("../../../assets/images/Logo.jpeg")}
@@ -36,8 +40,8 @@ const PassCreation = () => {
           size={24}
           color="blue"
         />
-
         <View style={styles.icons}>
+          {/* Additional icons */}
           <Ionicons
             name="call-outline"
             size={24}
@@ -58,8 +62,11 @@ const PassCreation = () => {
           />
         </View>
       </View>
+      {/* ScrollView for content */}
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
+        {/* Stepper component */}
         <Stepper />
+        {/* Texts and inputs */}
         <Text style={styles.verification}>
           We’ve sent a verification link to your email
         </Text>
@@ -67,7 +74,7 @@ const PassCreation = () => {
         <Text style={styles.verification}>
           We need these details to set up your account.
         </Text>
-
+        {/* Password input */}
         <View style={styles.inputWrapper}>
           <TextInput
             style={styles.input}
@@ -81,6 +88,7 @@ const PassCreation = () => {
             </Text>
           </TouchableOpacity>
         </View>
+        {/* Additional inputs */}
         <Text style={styles.verification2}>Suggest Password</Text>
         <View style={styles.inputContainer}>
           <TextInput
@@ -91,27 +99,29 @@ const PassCreation = () => {
         <View style={styles.inputContainer}>
           <TextInput style={styles.input} placeholder="Enter Display Name *" />
         </View>
+        {/* Commission photo */}
         <View style={styles.commisionPhoto}>
           <Image
             style={styles.photo}
             source={require("../../../assets/images/seller.png")}
           />
         </View>
-
         {/* Frequently Asked Questions */}
         <TouchableOpacity
-          onPress={() => setShowFAQ(!showFAQ)}
+          onPress={() => setShowFAQ(!showFAQ)} // Toggle FAQ visibility
           style={styles.faqHeader}
         >
           <Text style={styles.faqHeaderText}>Frequently Asked Questions</Text>
         </TouchableOpacity>
         {showFAQ && (
           <View style={styles.faqContent}>
+            {/* Map through FAQ data and render questions and answers */}
             {faqData.map((faq, index) => (
               <View key={index}>
                 <TouchableOpacity onPress={() => toggleAnswer(index)}>
                   <Text style={styles.faqQuestion}>{faq.question}</Text>
                 </TouchableOpacity>
+                {/* Render answer if question is selected */}
                 {selectedQuestion === index && (
                   <Text style={styles.faqAnswer}>{faq.answer}</Text>
                 )}
@@ -120,8 +130,9 @@ const PassCreation = () => {
           </View>
         )}
       </ScrollView>
-
+      {/* Footer section */}
       <View style={styles.footer}>
+        {/* Continue button */}
         <TouchableOpacity style={styles.continueButton}>
           <Text style={styles.continueText}>Continue</Text>
         </TouchableOpacity>

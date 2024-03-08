@@ -8,10 +8,12 @@ import WhySell from "./WhySell";
 import Stepper from "./Stepper";
 
 const Index = () => {
+  // State variables for form inputs and checkboxes
   const [name, setName] = useState("");
   const [isSelectedAllCategories, setIsSelectedAllCategories] = useState(false);
   const [isSelectedBooks, setIsSelectedBooks] = useState(false);
 
+  // Function to handle sending OTP
   const handleSendOTP = () => {
     // Implement send OTP functionality here
     console.log("Sending OTP...");
@@ -19,7 +21,9 @@ const Index = () => {
 
   return (
     <View style={styles.container}>
+      {/* Header section */}
       <View style={styles.header}>
+        {/* Logo and icons */}
         <Image
           style={styles.logo}
           source={require("../../../assets/images/Logo.jpeg")}
@@ -37,8 +41,11 @@ const Index = () => {
           style={[styles.icon, styles.questionIcon]}
         />
       </View>
+      {/* ScrollView for content */}
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
+        {/* Stepper component */}
         <Stepper />
+        {/* Input section */}
         <View style={styles.inputContainer}>
           <Text style={styles.label}>Full Name* :-</Text>
           <View style={styles.inputWrapper}>
@@ -56,15 +63,18 @@ const Index = () => {
             </TouchableOpacity>
           </View>
         </View>
+        {/* Email input field */}
         <View style={styles.inputContainer}>
           <Text style={styles.label}>Email :-</Text>
           <TextInput style={styles.input} placeholder="Email ID *" />
         </View>
+        {/* Checkbox section */}
         <View style={styles.options}>
           <Text style={styles.looking}>
             What are you looking to sell on Flipkart?
           </Text>
           <View style={styles.checkboxContainer}>
+            {/* Checkbox for selecting all categories */}
             <CheckBox
               title="All categories"
               checked={isSelectedAllCategories}
@@ -72,26 +82,31 @@ const Index = () => {
                 setIsSelectedAllCategories(!isSelectedAllCategories)
               }
             />
+            {/* Checkbox for selecting books */}
             <CheckBox
               title="Books"
               checked={isSelectedBooks}
               onPress={() => setIsSelectedBooks(!isSelectedBooks)}
             />
           </View>
+          {/* Input field for GSTIN */}
           <View style={styles.inputContainer}>
             <Text style={styles.label}>Enter GSTIN :-</Text>
             <TextInput style={styles.input} placeholder="Enter GSTIN *" />
           </View>
+          {/* Information about GSTIN */}
           <Text style={styles.gstin}>
             GSTIN is required to sell products on Flipkart. You can also share
             it in the final step.
           </Text>
-          {/* for showing why sell info  */}
+          {/* WhySell component */}
           <WhySell />
         </View>
       </ScrollView>
+      {/* Footer section */}
       <View style={styles.footer}>
         <View>
+          {/* Terms and conditions */}
           <Text style={styles.terms}>
             By continuing, I agree to Flipkart’s{" "}
             <Link href={"/Components/privacyPolicy"} style={styles.blue}>
@@ -102,6 +117,7 @@ const Index = () => {
               Privacy Policy
             </Link>
           </Text>
+          {/* Continue button */}
           <TouchableOpacity style={styles.continueButton}>
             <Link
               style={styles.continueText}
