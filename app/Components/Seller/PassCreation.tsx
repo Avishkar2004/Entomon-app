@@ -11,11 +11,7 @@ import {
 import Stepper from "./Stepper";
 
 const PassCreation = () => {
-  const [password, setPassword] = useState("");
   const [name, setName] = useState("");
-  const [fullName, setFullName] = useState("");
-  const [displayName, setDisplayName] = useState("");
-  const [error, setError] = useState("");
   const [showFAQ, setShowFAQ] = useState(false); // State to control accordion visibility
   const [selectedQuestion, setSelectedQuestion] = useState(null); // State to track selected question
 
@@ -24,18 +20,6 @@ const PassCreation = () => {
       setSelectedQuestion(null);
     } else {
       setSelectedQuestion(index);
-    }
-  };
-
-  const handleContinue = () => {
-    //? Validation
-    if (!password || !fullName || !displayName) {
-      setError("Please fill in all fields");
-      return;
-    }
-    if (password.length < 6) {
-      setError("Password must be at least 6 characters long.");
-      return;
     }
   };
 
@@ -74,7 +58,6 @@ const PassCreation = () => {
           />
         </View>
       </View>
-
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
         <Stepper />
         <Text style={styles.verification}>
@@ -89,9 +72,8 @@ const PassCreation = () => {
           <TextInput
             style={styles.input}
             placeholder="Create Password *"
-            secureTextEntry={true}
-            value={password}
-            onChangeText={(text) => setPassword(text)}
+            value={name}
+            onChangeText={(text) => setName(text)}
           />
           <TouchableOpacity style={styles.sendOTPButton}>
             <Text style={styles.sendOTPText}>
@@ -104,28 +86,43 @@ const PassCreation = () => {
           <TextInput
             style={styles.input}
             placeholder="Enter Your Full Name *"
-            value={fullName}
-            onChangeText={(text) => setFullName(text)}
           />
         </View>
         <View style={styles.inputContainer}>
-          <TextInput
-            style={styles.input}
-            placeholder="Enter Display Name *"
-            value={displayName}
-            onChangeText={(text) => setDisplayName(text)}
+          <TextInput style={styles.input} placeholder="Enter Display Name *" />
+        </View>
+        <View style={styles.commisionPhoto}>
+          <Image
+            style={styles.photo}
+            source={require("../../../assets/images/seller.png")}
           />
         </View>
 
-        {/* Error message */}
-        {error ? <Text style={styles.error}>{error}</Text> : null}
+        {/* Frequently Asked Questions */}
+        <TouchableOpacity
+          onPress={() => setShowFAQ(!showFAQ)}
+          style={styles.faqHeader}
+        >
+          <Text style={styles.faqHeaderText}>Frequently Asked Questions</Text>
+        </TouchableOpacity>
+        {showFAQ && (
+          <View style={styles.faqContent}>
+            {faqData.map((faq, index) => (
+              <View key={index}>
+                <TouchableOpacity onPress={() => toggleAnswer(index)}>
+                  <Text style={styles.faqQuestion}>{faq.question}</Text>
+                </TouchableOpacity>
+                {selectedQuestion === index && (
+                  <Text style={styles.faqAnswer}>{faq.answer}</Text>
+                )}
+              </View>
+            ))}
+          </View>
+        )}
       </ScrollView>
 
       <View style={styles.footer}>
-        <TouchableOpacity
-          style={styles.continueButton}
-          onPress={handleContinue}
-        >
+        <TouchableOpacity style={styles.continueButton}>
           <Text style={styles.continueText}>Continue</Text>
         </TouchableOpacity>
       </View>
@@ -181,10 +178,6 @@ const styles = StyleSheet.create({
   },
   questionIcon: {
     marginLeft: "auto",
-  },
-  error: {
-    color: "red",
-    fontSize: 20,
   },
   verification: {
     top: 25,
