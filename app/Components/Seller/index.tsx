@@ -9,87 +9,69 @@ import Stepper from "./Stepper";
 
 const Index = () => {
   const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [gstin, setGstin] = useState("");
   const [isSelectedAllCategories, setIsSelectedAllCategories] = useState(false);
   const [isSelectedBooks, setIsSelectedBooks] = useState(false);
+  const [error, setError] = useState("");
 
   const handleSendOTP = () => {
+    //? Validate inputs before sending otp
+    if (!name || !email || !gstin) {
+      setError("Please enter all the details.");
+      return;
+    }
     // Implement send OTP functionality here
     console.log("Sending OTP...");
   };
 
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <Image
-          style={styles.logo}
-          source={require("../../../assets/images/Logo.jpeg")}
-        />
-        <FontAwesome6
-          style={{ marginLeft: 12 }}
-          name="bag-shopping"
-          size={24}
-          color="blue"
-        />
-        <AntDesign
-          name="questioncircleo"
-          size={24}
-          color="blue"
-          style={[styles.icon, styles.questionIcon]}
-        />
-      </View>
+      <View style={styles.header}>{/* Header content */}</View>
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
         <Stepper />
+        {/* Form inputs */}
         <View style={styles.inputContainer}>
           <Text style={styles.label}>Full Name* :-</Text>
           <View style={styles.inputWrapper}>
             <TextInput
               style={styles.input}
-              placeholder="Enter Mobile Number *"
+              placeholder="Enter Full Name *"
               value={name}
-              onChangeText={(text) => setName(text)} // Update name state
+              onChangeText={(text) => setName(text)}
             />
-            <TouchableOpacity
-              style={styles.sendOTPButton}
-              onPress={handleSendOTP}
-            >
-              <Text style={styles.sendOTPText}>Send OTP</Text>
-            </TouchableOpacity>
           </View>
         </View>
         <View style={styles.inputContainer}>
           <Text style={styles.label}>Email :-</Text>
-          <TextInput style={styles.input} placeholder="Email ID *" />
+          <TextInput
+            style={styles.input}
+            placeholder="Email ID *"
+            value={email}
+            onChangeText={(text) => setEmail(text)}
+          />
         </View>
-        <View style={styles.options}>
-          <Text style={styles.looking}>
-            What are you looking to sell on Flipkart?
-          </Text>
-          <View style={styles.checkboxContainer}>
-            <CheckBox
-              title="All categories"
-              checked={isSelectedAllCategories}
-              onPress={() =>
-                setIsSelectedAllCategories(!isSelectedAllCategories)
-              }
-            />
-            <CheckBox
-              title="Books"
-              checked={isSelectedBooks}
-              onPress={() => setIsSelectedBooks(!isSelectedBooks)}
-            />
-          </View>
-          <View style={styles.inputContainer}>
-            <Text style={styles.label}>Enter GSTIN :-</Text>
-            <TextInput style={styles.input} placeholder="Enter GSTIN *" />
-          </View>
-          <Text style={styles.gstin}>
-            GSTIN is required to sell products on Flipkart. You can also share
-            it in the final step.
-          </Text>
-          {/* for showing why sell info  */}
-          <WhySell />
+        <View style={styles.inputContainer}>
+          <Text style={styles.label}>Enter GSTIN :-</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Enter GSTIN *"
+            value={gstin}
+            onChangeText={(text) => setGstin(text)}
+          />
         </View>
+        {/* Error message */}
+        {error ? <Text style={styles.error}>{error}</Text> : null}
+        {/* Checkbox */}
+        <View style={styles.checkboxContainer}>{/* Checkbox options */}</View>
+        <Text style={styles.gstin}>
+          GSTIN is required to sell products on Flipkart. You can also share it
+          in the final step.
+        </Text>
+        {/* WhySell component */}
+        <WhySell />
       </ScrollView>
+      {/* Footer */}
       <View style={styles.footer}>
         <View>
           <Text style={styles.terms}>
@@ -102,10 +84,13 @@ const Index = () => {
               Privacy Policy
             </Link>
           </Text>
-          <TouchableOpacity style={styles.continueButton}>
+          <TouchableOpacity
+            style={styles.continueButton}
+            onPress={handleSendOTP}
+          >
             <Link
-              style={styles.continueText}
               href={"/Components/Seller/PassCreation"}
+              style={styles.continueText}
             >
               Continue With Number
             </Link>
@@ -172,6 +157,10 @@ const styles = StyleSheet.create({
   inputWrapper: {
     flexDirection: "row",
     alignItems: "center",
+  },
+  error: {
+    color: "red",
+    fontSize: 12,
   },
   input: {
     flex: 1,
