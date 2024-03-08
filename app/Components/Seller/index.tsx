@@ -160,7 +160,7 @@ const styles = StyleSheet.create({
   },
   error: {
     color: "red",
-    fontSize: 12,
+    fontSize: 20,
   },
   input: {
     flex: 1,
