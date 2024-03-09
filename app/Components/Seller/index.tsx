@@ -3,27 +3,60 @@ import { ScrollView, View, Text, StyleSheet, Image } from "react-native";
 import { FontAwesome6, AntDesign } from "@expo/vector-icons";
 import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
 import { CheckBox } from "react-native-elements";
-import { Link } from "expo-router";
+import { Link, useNavigation } from "expo-router";
 import WhySell from "./WhySell";
 import Stepper from "./Stepper";
 
 const Index = () => {
-  // State variables for form inputs and checkboxes
-  const [name, setName] = useState("");
+  const navigation = useNavigation(); // Initialize useNavigation hook
+  const [number, setNumber] = useState("");
+  const [email, setEmail] = useState("");
+  const [gstin, setGstin] = useState("");
   const [isSelectedAllCategories, setIsSelectedAllCategories] = useState(false);
   const [isSelectedBooks, setIsSelectedBooks] = useState(false);
 
-  // Function to handle sending OTP
   const handleSendOTP = () => {
-    // Implement send OTP functionality here
     console.log("Sending OTP...");
+  };
+
+  const validateMobileNumber = (number) => {
+    // Basic mobile number validation (assuming it's a 10-digit number)
+    return /^\d{10}$/.test(number);
+  };
+
+  const validateEmail = (email) => {
+    // Basic email validation
+    return /\S+@\S+\.\S+/.test(email);
+  };
+
+  const validateGstin = (gstin) => {
+    // Basic GSTIN validation
+    return gstin.length === 15; // Assuming GSTIN is 15 characters long
+  };
+
+  const handleContinue = () => {
+    if (!validateMobileNumber(number)) {
+      alert("Please enter a valid number .");
+      return;
+    }
+
+    if (!validateEmail(email)) {
+      alert("Please enter a valid Email.");
+      return;
+    }
+
+    if (!validateGstin(gstin)) {
+      alert("Please enter a valid GSTIN.");
+      return;
+    } else {
+      // Navigate to the next page if validation passes
+      navigation.navigate("Components/Seller/PassCreation");
+    }
   };
 
   return (
     <View style={styles.container}>
-      {/* Header section */}
       <View style={styles.header}>
-        {/* Logo and icons */}
         <Image
           style={styles.logo}
           source={require("../../../assets/images/Logo.jpeg")}
@@ -41,19 +74,15 @@ const Index = () => {
           style={[styles.icon, styles.questionIcon]}
         />
       </View>
-      {/* ScrollView for content */}
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
-        {/* Stepper component */}
         <Stepper />
-        {/* Input section */}
         <View style={styles.inputContainer}>
-          <Text style={styles.label}>Full Name* :-</Text>
           <View style={styles.inputWrapper}>
             <TextInput
               style={styles.input}
               placeholder="Enter Mobile Number *"
-              value={name}
-              onChangeText={(text) => setName(text)} // Update name state
+              value={number}
+              onChangeText={(text) => setNumber(text)}
             />
             <TouchableOpacity
               style={styles.sendOTPButton}
@@ -63,18 +92,19 @@ const Index = () => {
             </TouchableOpacity>
           </View>
         </View>
-        {/* Email input field */}
         <View style={styles.inputContainer}>
-          <Text style={styles.label}>Email :-</Text>
-          <TextInput style={styles.input} placeholder="Email ID *" />
+          <TextInput
+            style={styles.input}
+            placeholder="Enter Email ID *"
+            value={email}
+            onChangeText={(text) => setEmail(text)}
+          />
         </View>
-        {/* Checkbox section */}
         <View style={styles.options}>
           <Text style={styles.looking}>
             What are you looking to sell on Flipkart?
           </Text>
           <View style={styles.checkboxContainer}>
-            {/* Checkbox for selecting all categories */}
             <CheckBox
               title="All categories"
               checked={isSelectedAllCategories}
@@ -82,31 +112,29 @@ const Index = () => {
                 setIsSelectedAllCategories(!isSelectedAllCategories)
               }
             />
-            {/* Checkbox for selecting books */}
             <CheckBox
               title="Books"
               checked={isSelectedBooks}
               onPress={() => setIsSelectedBooks(!isSelectedBooks)}
             />
           </View>
-          {/* Input field for GSTIN */}
           <View style={styles.inputContainer}>
-            <Text style={styles.label}>Enter GSTIN :-</Text>
-            <TextInput style={styles.input} placeholder="Enter GSTIN *" />
+            <TextInput
+              style={styles.input}
+              placeholder="Enter GSTIN *"
+              value={gstin}
+              onChangeText={(text) => setGstin(text)}
+            />
           </View>
-          {/* Information about GSTIN */}
           <Text style={styles.gstin}>
             GSTIN is required to sell products on Flipkart. You can also share
             it in the final step.
           </Text>
-          {/* WhySell component */}
           <WhySell />
         </View>
       </ScrollView>
-      {/* Footer section */}
       <View style={styles.footer}>
         <View>
-          {/* Terms and conditions */}
           <Text style={styles.terms}>
             By continuing, I agree to Flipkart’s{" "}
             <Link href={"/Components/privacyPolicy"} style={styles.blue}>
@@ -117,14 +145,11 @@ const Index = () => {
               Privacy Policy
             </Link>
           </Text>
-          {/* Continue button */}
-          <TouchableOpacity style={styles.continueButton}>
-            <Link
-              style={styles.continueText}
-              href={"/Components/Seller/PassCreation"}
-            >
-              Continue With Number
-            </Link>
+          <TouchableOpacity
+            style={styles.continueButton}
+            onPress={handleContinue}
+          >
+            <Text style={styles.continueText}>Continue With Number</Text>
           </TouchableOpacity>
         </View>
       </View>
